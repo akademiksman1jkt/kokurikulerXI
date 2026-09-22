@@ -2011,14 +2011,14 @@ function applyAnswersToForm(mySub) {
 
     // 1. PENCARIAN DATA 'det' DARI MISI_DETAILS (Berdasarkan Nomor Misi)
     const rawMisi = currentStudentData?.misiCode || currentStudentData?.misi || "";
-const missionTag = rawMisi.match(/MISSION\s*\d+/i)?.[0]?.toUpperCase();
+    const missionTag = rawMisi.match(/MISSION\s*\d+/i)?.[0]?.toUpperCase();
 
-let det = null; // <-- TAMBAHKAN 'let' DI SINI
-if (missionTag) {
-    const keyMatch = Object.keys(MISI_DETAILS).find(k => k.toUpperCase().includes(missionTag));
-    if (keyMatch) det = MISI_DETAILS[keyMatch];
-}
-if (!det) det = MISI_DETAILS[rawMisi] || {};
+    det = null; // HAPUS kata 'let' di sini (cukup 'det = null;')
+    if (missionTag) {
+        const keyMatch = Object.keys(MISI_DETAILS).find(k => k.toUpperCase().includes(missionTag));
+        if (keyMatch) det = MISI_DETAILS[keyMatch];
+    }
+    if (!det) det = MISI_DETAILS[rawMisi] || {};
 
     // 2. RENDER KARTU MISI & DESKRIPSI
     const elDesk = document.getElementById('detMisiDeskripsi');
