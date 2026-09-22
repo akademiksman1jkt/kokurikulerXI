@@ -1716,7 +1716,7 @@ function applyAnswersToForm(mySub) {
     updateChecklistUI();
 }
 
-        function renderGroupStatusTable(submissions) {
+        function renderGroupStatusTable(submissions) {function renderGroupStatusTable(submissions) {
     const tbody = document.getElementById('groupStatusTableBody');
     if (!tbody) return;
 
@@ -1729,11 +1729,21 @@ function applyAnswersToForm(mySub) {
 
     let rowsHtml = "";
 
-    // Helper untuk memastikan input benar-benar diisi (bukan null, undefined, "null", atau "-")
+    // Helper validasi input aman
     const isValidInput = (val) => {
         if (val === null || val === undefined) return false;
         const str = val.toString().trim().toLowerCase();
         return str !== "" && str !== "null" && str !== "undefined" && str !== "-";
+    };
+
+    // Helper fleksibel: Cek apakah ADA SALAH SATU property di objek 'sub' yang diisi dan cocok dengan kata kunci LKPD
+    const hasAnyValidField = (sub, keywords) => {
+        if (!sub || typeof sub !== 'object') return false;
+        return Object.keys(sub).some(key => {
+            const keyLower = key.toLowerCase();
+            const isMatchKey = keywords.some(kw => keyLower.includes(kw.toLowerCase()));
+            return isMatchKey && isValidInput(sub[key]);
+        });
     };
 
     members.forEach(memberNama => {
@@ -1741,48 +1751,21 @@ function applyAnswersToForm(mySub) {
         
         // Pencarian nama murid fleksibel
         const sub = (Array.isArray(submissions) ? submissions : []).find(s => {
-            const nameInDb = (s.nama || s.Nama || "").toString().trim().toLowerCase();
+            const nameInDb = (s.nama || s.Nama || s.nama_lengkap || "").toString().trim().toLowerCase();
             return nameInDb === cleanMember;
         });
-        
-        // Pengecekan per LKPD dengan validasi ketat
-        const hasLk1 = sub && (
-            isValidInput(sub.lk1_a1_nama) || 
-            isValidInput(sub.lk1_a1_hasil) || 
-            isValidInput(sub.lk1_aplikasi) ||
-            isValidInput(sub.lk1_c1_nama)
-        );
 
-        const hasLk2 = sub && (
-            isValidInput(sub.lk2_fokus) || 
-            isValidInput(sub.lk2_data1) || 
-            isValidInput(sub.lk2_koneksi) ||
-            isValidInput(sub.lk1_e_t1)
-        );
+        // 🟢 LKPD 1: Mencari property dengan kata kunci "lk1", "a1", "c1", "alat", "aplikasi", "observasi"
+        const hasLk1 = hasAnyValidField(sub, ['lk1', 'a1', 'c1', 'alat', 'aplikasi', 'obs']);
 
-        const hasLk3 = sub && (
-            isValidInput(sub.lk3_judul) || 
-            isValidInput(sub.lk3_format) || 
-            isValidInput(sub.steam_s) || 
-            isValidInput(sub.steam_t) || 
-            isValidInput(sub.steam_e) || 
-            isValidInput(sub.steam_a) || 
-            isValidInput(sub.steam_m) ||
-            isValidInput(sub.lk1_g_tekno) ||
-            isValidInput(sub.lk1_h_ide)
-        );
+        // 🟢 LKPD 2: Mencari property dengan kata kunci "lk2", "fokus", "data", "koneksi", "e_t1", "masalah"
+        const hasLk2 = hasAnyValidField(sub, ['lk2', 'fokus', 'data', 'koneksi', 'e_t1', 'masalah']);
 
-        // FIX: Tambahkan pengecekan ID Refleksi (LKPD 4)
-        const hasLk4 = sub && (
-            isValidInput(sub.ref_pandang) || 
-            isValidInput(sub.ref_kompleks) || 
-            isValidInput(sub.ref_tanya) || 
-            isValidInput(sub.ref_kontribusi) || 
-            isValidInput(sub.lk1_i_pandang) || 
-            isValidInput(sub.lk1_i_kompleks) || 
-            isValidInput(sub.lk4_kendala) || 
-            isValidInput(sub.lk4_kerjasama)
-        );
+        // 🟢 LKPD 3: Mencari property dengan kata kunci "lk3", "judul", "format", "steam", "tekno", "ide"
+        const hasLk3 = hasAnyValidField(sub, ['lk3', 'judul', 'format', 'steam', 'tekno', 'ide', 'solusi']);
+
+        // 🟢 LKPD 4 (Refleksi): Mencari property dengan kata kunci "ref", "pandang", "kompleks", "tanya", "kontribusi", "lk4", "kendala"
+        const hasLk4 = hasAnyValidField(sub, ['ref', 'pandang', 'kompleks', 'tanya', 'kontribusi', 'lk4', 'kendala', 'kerjasama', 'peran']);
 
         if(hasLk1) groupHasLk1 = true;
         if(hasLk2) groupHasLk2 = true;
