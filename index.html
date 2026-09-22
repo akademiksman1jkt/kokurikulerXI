@@ -2011,7 +2011,7 @@ function applyAnswersToForm(mySub) {
 
     // 1. TAMBAHKAN PENGAMBAN DATA 'det' DARI MISI_DETAILS
     const rawMisi = currentStudentData?.misiCode || currentStudentData?.misi || "";
-    let det = MISI_DETAILS[rawMisi];
+    det = MISI_DETAILS[rawMisi];
 
     // Jika pencarian langsung tidak cocok, cari kunci yang mirip (misal: "MISSION 01")
     if (!det && rawMisi) {
