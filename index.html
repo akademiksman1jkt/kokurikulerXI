@@ -1,0 +1,3649 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JURNAL KOKURIKULER</title>
+    
+    <!-- FAVICON LOGO SMAN 1 JAKARTA -->
+    <link rel="icon" type="image/png" href="https://iili.io/nnSW4xR.png">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        .modal-overlay-center {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(6px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.25s ease-in-out;
+}
+
+.modal-overlay-center.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-card-center {
+    background: #ffffff;
+    width: 88%;
+    max-width: 360px;
+    padding: 20px;
+    border-radius: 18px;
+    text-align: center;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+    transform: scale(0.9);
+    transition: all 0.25s ease-in-out;
+}
+
+.modal-overlay-center.active .modal-card-center {
+    transform: scale(1);
+}
+
+.modal-icon-wrapper {
+    width: 50px;
+    height: 50px;
+    background: #e0f2fe;
+    font-size: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px auto;
+}
+
+.modal-title-text {
+    font-size: 16px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 6px;
+}
+
+.modal-message-text {
+    font-size: 12px;
+    color: #64748b;
+    line-height: 1.4;
+    margin-bottom: 18px;
+}
+
+.modal-action-btns {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-modal-secondary {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    background: #f8fafc;
+    color: #475569;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.btn-modal-primary {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background: #0284c7;
+    color: #ffffff;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 12px;
+    cursor: pointer;
+}
+        :root {
+            --bg-body: #f8fafc;
+            --bg-surface: #ffffff;
+            --primary: #4f46e5;
+            --primary-gradient: linear-gradient(135deg, #4338ca 0%, #6366f1 100%);
+            --cta-gradient: linear-gradient(135deg, #4f46e5 0%, #0d9488 100%);
+            --sidebar-gradient: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+            --accent-gradient: linear-gradient(135deg, #059669 0%, #10b981 100%);
+            --card-gradient: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            --accent-emerald: #059669;
+            --accent-emerald-bg: #d1fae5;
+            --danger-bg: #fef2f2;
+            --danger-text: #dc2626;
+            --danger-border: #fecaca;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --shadow-card: 0 10px 25px -5px rgba(15, 23, 42, 0.05);
+            --shadow-hover: 0 20px 30px -10px rgba(79, 70, 229, 0.15);
+        }
+
+        /* RESET & BASE STYLES */
+        * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif; }
+        body { 
+            margin: 0; padding: 0; background-color: var(--bg-body); color: var(--text-dark); 
+            min-height: 100vh; font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased;
+        }
+
+        /* LOGIN SCREEN GLASSMORPHISM*/
+        .login-wrapper { display: flex; min-height: 100vh; align-items: center; justify-content: center; padding: 24px 16px; background: radial-gradient(circle at top left, #312e81 0%, #0f172a 60%, #020617 100%); }
+        .login-card { background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 24px; width: 100%; max-width: 450px; padding: 40px 32px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); position: relative; overflow: hidden; }
+        .login-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: var(--primary-gradient); }
+
+        .brand-header { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; }
+        .brand-logo-img { width: 52px; height: 52px; object-fit: contain; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15)); flex-shrink: 0; }
+        .brand-logo-navbar { width: 34px; height: 34px; object-fit: contain; flex-shrink: 0; }
+
+        .brand-title { font-size: 20px; font-weight: 800; color: var(--text-dark); margin: 0; line-height: 1.2; letter-spacing: -0.5px; }
+        .brand-subtitle { font-size: 13px; color: var(--text-muted); margin: 3px 0 0 0; font-weight: 500; }
+
+        .form-group { margin-bottom: 20px; }
+        .form-label { display: block; font-size: 13.5px; font-weight: 700; color: var(--text-dark); margin-bottom: 7px; }
+        
+        .form-input, .form-select { width: 100%; padding: 13px 16px; font-size: 14px; border: 1.5px solid var(--border-color); border-radius: 12px; outline: none; background: #ffffff; transition: all 0.2s ease; color: var(--text-dark); }
+        .form-input:focus, .form-select:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15); }
+
+        .btn-primary { width: 100%; background: var(--primary-gradient); color: white; border: none; padding: 14px; border-radius: 12px; font-size: 14.5px; font-weight: 700; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3); }
+        .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4); }
+        
+        .btn-secondary { background: #ffffff; color: var(--text-dark); border: 1.5px solid var(--border-color); padding: 10px 18px; border-radius: 12px; font-size: 13.5px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+        .btn-secondary:hover { background: #f8fafc; border-color: #94a3b8; }
+        
+        .btn-logout { background: var(--danger-bg); color: var(--danger-text); border: 1.5px solid var(--danger-border); padding: 7px 14px; border-radius: 10px; font-size: 12.5px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+        .btn-logout:hover { background: #fee2e2; }
+
+        /* DASHBOARD APP LAYOUT */
+        .app-layout { display: none; min-height: 100vh; flex-direction: column; }
+        .app-layout.active { display: flex; }
+        
+        .top-navbar { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-color); padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 20; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03); }
+        .nav-brand-group { display: flex; align-items: center; gap: 12px; }
+
+        .btn-toggle-sidebar { background: #f1f5f9; border: 1.5px solid var(--border-color); border-radius: 10px; padding: 8px 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; color: var(--text-dark); font-size: 13.5px; transition: all 0.2s; }
+        .btn-toggle-sidebar:hover { background: #e2e8f0; border-color: var(--primary); color: var(--primary); }
+
+        .body-container { display: flex; flex: 1; position: relative; }
+
+        /* SIDEBAR MENU DRAWER */
+        .sidebar { 
+            width: 280px; background: var(--sidebar-gradient); color: #f8fafc; padding: 24px 16px; 
+            display: flex; flex-direction: column; gap: 8px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); flex-shrink: 0; box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
+        }
+        .sidebar.collapsed { width: 0; padding: 24px 0; overflow: hidden; opacity: 0; }
+        
+        .sidebar-item { padding: 14px 16px; border-radius: 12px; font-size: 14px; font-weight: 600; color: #94a3b8; cursor: pointer; display: flex; align-items: center; gap: 12px; transition: all 0.2s ease; }
+        .sidebar-item:hover { background: rgba(255, 255, 255, 0.08); color: #ffffff; }
+        .sidebar-item.active { background: var(--primary-gradient); color: #ffffff; font-weight: 800; box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35); }
+
+        .sidebar-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 22; }
+        .sidebar-overlay.active { display: block; }
+
+        .container-app { width: 100%; max-width: 900px; margin: 0 auto; padding: 24px 20px 40px 20px; flex: 1; }
+        .content-section { display: none; }
+        .content-section.active { display: block; animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* MODAL POP-UP LIHAT JAWABAN TEMAN */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(5px); z-index: 999; align-items: center; justify-content: center; padding: 20px; }
+        .modal-overlay.active { display: flex; animation: fadeIn 0.2s ease; }
+        .modal-content { background: #ffffff; width: 100%; max-width: 650px; max-height: 85vh; border-radius: 20px; overflow-y: auto; padding: 24px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); position: relative; }
+        .btn-close-modal { position: absolute; top: 20px; right: 20px; background: #f1f5f9; border: none; width: 36px; height: 36px; border-radius: 50%; font-weight: bold; font-size: 16px; cursor: pointer; color: #64748b; transition: all 0.2s; }
+        .btn-close-modal:hover { background: #e2e8f0; color: #0f172a; }
+
+        /* BUTTON KEMBALI DI HEADER FORMS */
+        .btn-back-hub { display: inline-flex; align-items: center; gap: 8px; background: #ffffff; border: 1.5px solid var(--border-color); padding: 9px 16px; border-radius: 12px; font-size: 13.5px; font-weight: 700; color: var(--text-dark); cursor: pointer; margin-bottom: 20px; transition: all 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+        .btn-back-hub:hover { background: #f8fafc; border-color: var(--primary); color: var(--primary); transform: translateX(-2px); }
+
+        .page-title { font-size: 22px; font-weight: 800; margin: 0 0 6px 0; color: var(--text-dark); letter-spacing: -0.5px; }
+        .page-subtitle { font-size: 14px; color: var(--text-muted); margin: 0 0 24px 0; }
+
+        .card { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 20px; padding: 24px; margin-bottom: 24px; box-shadow: var(--shadow-card); }
+        .card-title { font-size: 17px; font-weight: 800; margin: 0 0 18px 0; color: var(--text-dark); border-bottom: 1.5px solid #f1f5f9; padding-bottom: 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+        
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        textarea.form-textarea { width: 100%; min-height: 100px; padding: 13px 16px; font-size: 14px; border: 1.5px solid var(--border-color); border-radius: 12px; outline: none; background: #ffffff; resize: vertical; color: var(--text-dark); transition: all 0.2s; }
+        textarea.form-textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15); }
+
+        /* HERO CTA TOMBOL UTAMA ISI JURNAL KOKURIKULER */
+        .hero-cta-card {
+            background: var(--cta-gradient);
+            color: #ffffff;
+            border-radius: 24px;
+            padding: 28px 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 16px 35px -5px rgba(79, 70, 229, 0.35);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-cta-card::after {
+            content: ''; position: absolute; top: -50%; right: -20%; width: 220px; height: 220px;
+            background: rgba(255, 255, 255, 0.1); border-radius: 50%; pointer-events: none;
+        }
+        .hero-cta-title { font-size: 22px; font-weight: 800; margin: 0 0 6px 0; line-height: 1.2; letter-spacing: -0.5px; }
+        .hero-cta-desc { font-size: 14px; opacity: 0.95; margin: 0; font-weight: 500; }
+        .btn-hero-cta {
+            background: #ffffff;
+            color: var(--primary);
+            border: none;
+            padding: 16px 32px;
+            border-radius: 16px;
+            font-size: 15.5px;
+            font-weight: 800;
+            cursor: pointer;
+            white-space: nowrap;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+            animation: pulseGlow 2s infinite;
+        }
+        .btn-hero-cta:hover { transform: scale(1.05); background: #f8fafc; box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25); }
+        @keyframes pulseGlow { 0% { box-shadow: 0 0 0 0 rgba(255,255,255,0.4); } 70% { box-shadow: 0 0 0 14px rgba(255,255,255,0); } 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); } }
+
+        /* TABEL MONITORING KELOMPOK BARU */
+        .group-status-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13.5px; }
+        .group-status-table th { background: #f1f5f9; color: var(--text-dark); padding: 10px 12px; text-align: center; font-weight: 800; border-bottom: 2px solid var(--border-color); }
+        .group-status-table th:first-child { text-align: left; }
+        .group-status-table td { padding: 12px; border-bottom: 1px solid var(--border-color); vertical-align: middle; text-align: center; }
+        .group-status-table td:first-child { text-align: left; }
+        .status-pill { padding: 3px 10px; border-radius: 20px; font-size: 11.5px; font-weight: 800; display: inline-block; text-align: center; }
+        .status-pill.done { background: #d1fae5; color: #059669; border: 1px solid #a7f3d0; }
+        .status-pill.yet { background: #f1f5f9; color: #94a3b8; border: 1px solid var(--border-color); }
+        .btn-lihat-isian { background: #eff6ff; border: 1px solid #bfdbfe; color: #1d4ed8; padding: 4px 10px; border-radius: 8px; font-size: 11.5px; font-weight: 700; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+        .btn-lihat-isian:hover { background: #dbeafe; transform: scale(1.05); }
+
+        /* DASHBOARD HUB MENU CARDS */
+        .hub-menu-grid { display: flex; flex-direction: column; gap: 14px; margin-top: 18px; }
+        .hub-menu-card {
+            background: var(--card-gradient);
+            border: 1.5px solid var(--border-color);
+            border-radius: 18px;
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: var(--shadow-card);
+        }
+        .hub-menu-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); border-color: #a5b4fc; }
+        .hub-menu-card:active { transform: scale(0.98); }
+        .hub-menu-info { display: flex; align-items: center; gap: 16px; }
+        .hub-menu-icon { width: 48px; height: 48px; border-radius: 14px; background: #e0e7ff; color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+        .hub-menu-title { font-weight: 800; font-size: 15.5px; color: var(--text-dark); margin: 0; }
+        .hub-menu-desc { font-size: 13px; color: var(--text-muted); margin: 3px 0 0 0; }
+
+        /* CHECKLIST STATUS BADGE MODERN */
+        .status-badge {
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+        .status-badge.pending { background: #f1f5f9; color: var(--text-muted); border: 1.5px solid var(--border-color); }
+        .status-badge.completed { background: var(--accent-emerald-bg); color: var(--accent-emerald); border: 1.5px solid #a7f3d0; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.2); }
+
+        .guide-box { background: #fffbe6; border: 1.5px solid #fde047; padding: 20px; border-radius: 18px; margin-bottom: 24px; font-size: 14.5px; line-height: 1.6; box-shadow: 0 4px 15px rgba(234, 179, 8, 0.08); }
+        .guide-box h4 { margin: 0 0 12px 0; color: #92400e; font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 8px; border-bottom: 1.5px solid #fef08a; padding-bottom: 8px; }
+
+        .mission-list { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; }
+        .mission-item { display: flex; flex-direction: column; gap: 3px; background: rgba(254, 240, 138, 0.4); padding: 12px 14px; border-radius: 12px; border-left: 4px solid #d97706; }
+        .mission-label { font-weight: 800; color: #78350f; font-size: 13.5px; }
+        .mission-value { color: #1e293b; font-size: 14px; line-height: 1.5; }
+
+        .member-badge-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+        .member-badge { background: #e0e7ff; color: var(--primary); border: 1px solid #c7d2fe; padding: 5px 12px; border-radius: 10px; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; gap: 5px; }
+
+        /* STEP BY STEP GUIDE CARD */
+        .step-guide-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 12px; }
+        .step-card { background: #ffffff; border: 1.5px solid var(--border-color); border-radius: 14px; padding: 14px 16px; }
+        .step-num { font-size: 12px; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px; }
+        .step-title { font-weight: 800; font-size: 14px; margin: 2px 0 4px 0; color: var(--text-dark); }
+        .step-desc { font-size: 12.5px; color: var(--text-muted); margin: 0; line-height: 1.4; }
+
+        /* KIRIM LAPORAN BUTTON & CARD */
+        .submit-final-card {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            color: white;
+            border-radius: 20px;
+            padding: 24px;
+            margin-top: 24px;
+            box-shadow: 0 -10px 25px rgba(15, 23, 42, 0.3);
+            position: sticky;
+            bottom: 16px;
+            z-index: 99;
+            transition: all 0.3s ease;
+        }
+        .submit-final-card.ready-to-submit {
+    border: 2px solid #10b981 !important;
+    animation: cardGlow 2s infinite;
+}
+
+@keyframes cardGlow {
+    0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6); }
+    70% { box-shadow: 0 0 0 16px rgba(16, 185, 129, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+        .btn-submit-final {
+            width: 100%;
+            background: var(--accent-gradient);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-submit-final:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(16, 185, 129, 0.45); }
+        .btn-submit-final:disabled { background: #475569; cursor: not-allowed; opacity: 0.7; box-shadow: none; }
+
+        .btn-export-word { background: #1e40af; color: white; border: none; padding: 12px 20px; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(30, 64, 175, 0.25); }
+        .btn-export-pdf { background: #b91c1c; color: white; border: none; padding: 12px 20px; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(185, 28, 28, 0.25); }
+
+        #draftDocumentRender { background: #ffffff; padding: 28px; border-radius: 16px; border: 1px solid var(--border-color); color: #000; font-family: Arial, sans-serif; line-height: 1.6; }
+
+        @media (max-width: 992px) {
+            .sidebar { 
+                position: fixed; top: 0; left: 0; bottom: 0; z-index: 25; 
+                transform: translateX(-100%); width: 270px;
+            }
+            .sidebar.mobile-open { transform: translateX(0); }
+            .hero-cta-card { flex-direction: column; align-items: flex-start; gap: 16px; padding: 20px; }
+            .btn-hero-cta { width: 100%; justify-content: center; }
+        }
+        @media (max-width: 640px) {
+            .form-row { grid-template-columns: 1fr; gap: 14px; }
+            .hub-menu-title { font-size: 14.5px; }
+            .hub-menu-desc { font-size: 12px; }
+            .card { padding: 18px; border-radius: 16px; }
+        }
+
+        /* NOTIFIKASI TOAST & DIALOG POP-UP CUSTOM */
+.custom-toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #ffffff;
+    color: var(--text-dark);
+    padding: 16px 20px;
+    border-radius: 14px;
+    box-shadow: 0 15px 30px rgba(15, 23, 42, 0.2);
+    border-left: 6px solid var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 99999;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    font-size: 14px;
+    font-weight: 600;
+}
+.custom-toast.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+.custom-toast.error { border-left-color: #ef4444; }
+.custom-toast.success { border-left-color: #10b981; }
+
+.custom-dialog-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 99998;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+.custom-dialog-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+.custom-dialog-box {
+    background: #ffffff;
+    width: 90%;
+    max-width: 420px;
+    border-radius: 20px;
+    padding: 24px;
+    text-align: center;
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+    transform: scale(0.9);
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.custom-dialog-overlay.active .custom-dialog-box {
+    transform: scale(1);
+}
+        @media (max-width: 768px) {
+            .submit-final-card {
+                padding: 12px 14px !important;
+                margin-top: 12px !important;
+                border-radius: 14px !important;
+                bottom: 8px !important;
+            }
+
+            .submit-final-card h3, 
+            .submit-final-card .card-title {
+                font-size: 14px !important;
+                margin-bottom: 4px !important;
+            }
+
+            .submit-final-card p {
+                display: block !important;
+                font-size: 11px !important;
+                line-height: 1.3 !important;
+                margin: 6px 0 10px 0 !important;
+                opacity: 0.9;
+            }
+
+            .submit-final-card .status-badge, 
+            .submit-final-card span {
+                font-size: 10px !important;
+                padding: 3px 8px !important;
+            }
+
+            .btn-submit-final, 
+            .submit-final-card button {
+                padding: 8px 12px !important;
+                font-size: 12px !important;
+                border-radius: 8px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- LOGIN SCREEN -->
+    <div class="login-wrapper" id="loginScreen">
+        <div class="login-card">
+            <div class="brand-header">
+                <img src="https://iili.io/nnSW4xR.png" alt="Logo SMAN 1 Jakarta" class="brand-logo-img">
+                <div>
+                    <h1 class="brand-title">JURNAL KOKURIKULER</h1>
+                    <p class="brand-subtitle">SMA Negeri 1 Jakarta</p>
+                </div>
+            </div>
+
+            <!-- FORM LOGIN MURID -->
+            <form id="formLoginMurid" onsubmit="handleLoginMurid(event)">
+                <h3 style="font-size: 16.5px; font-weight: 800; margin: 0 0 18px 0;">Akses Masuk Murid</h3>
+                <div class="form-group">
+                    <label class="form-label" for="usernameMurid">Username / NISN</label>
+                    <input type="text" id="usernameMurid" class="form-input" placeholder="Masukkan 10 digit NISN" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="passwordMurid">Kata Sandi (Password)</label>
+                    <input type="password" id="passwordMurid" class="form-input" placeholder="Masukkan kata sandi" required>
+                </div>
+                <button type="submit" class="btn-primary" id="btnLoginMurid">Masuk</button>
+            </form>
+
+            <!-- FORM LOGIN ADMIN -->
+            <form id="formLoginAdmin" style="display: none;" onsubmit="handleLoginAdmin(event)">
+                <h3 style="font-size: 16.5px; font-weight: 800; margin: 0 0 18px 0;">Akses Admin Guru</h3>
+                <div class="form-group">
+                    <label class="form-label" for="usernameAdmin">Username Admin</label>
+                    <input type="text" id="usernameAdmin" class="form-input" placeholder="Username admin guru" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="passwordAdmin">Kata Sandi Admin</label>
+                    <input type="password" id="passwordAdmin" class="form-input" placeholder="Kata sandi admin" required>
+                </div>
+                <button type="submit" class="btn-primary" style="background: linear-gradient(135deg, #0f172a 0%, #334155 100%);">Masuk Panel Admin</button>
+            </form>
+
+            <div style="margin-top:22px; text-align:center; padding-top:16px; border-top: 1px dashed var(--border-color);">
+                <button class="btn-secondary" id="btnSwitchAuth" onclick="toggleAuthMode()">🔒 Admin</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN DASHBOARD APP -->
+    <div class="app-layout" id="dashboardScreen">
+        
+        <!-- TOP NAVBAR WITH SIDEBAR TOGGLE -->
+        <header class="top-navbar">
+            <div class="nav-brand-group">
+                <button class="btn-toggle-sidebar" onclick="toggleSidebar()">
+                    <span>☰</span> Menu
+                </button>
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <img src="https://iili.io/nnSW4xR.png" alt="Logo SMAN 1 Jakarta" class="brand-logo-navbar">
+                    <span style="font-weight: 800; font-size: 15px; letter-spacing:-0.3px;">JURNAL KOKURIKULER</span>
+                </div>
+            </div>
+            <button class="btn-logout" onclick="handleLogout()">Keluar 🚪</button>
+        </header>
+
+        <div class="body-container">
+            
+            <!-- SIDEBAR NAVIGASI TERHUBUNG -->
+            <nav class="sidebar" id="sidebarMenu">
+                <div style="padding: 10px 12px 18px 12px; border-bottom: 1px dashed rgba(255,255,255,0.15); margin-bottom: 8px;">
+                    <div style="font-size:12px; color:#94a3b8; font-weight:700;">PORTAL JURNAL KOKURIKULER</div>
+                    <div style="font-size:16px; font-weight:800; color:#fff;">NEXT GEN NUSA</div>
+                </div>
+
+                <div class="sidebar-item item-murid active" onclick="openSection('secHub')">📌 Dashboard & Profil</div>
+                <div class="sidebar-item item-murid" onclick="openSection('secLkpd1')">🔬 LKPD 1: Eksplorasi Sains IPTEK</div>
+                <div class="sidebar-item item-murid" onclick="openSection('secLkpd2')">🏛️ LKPD 2: Eksplorasi Anjungan Daerah</div>
+                <div class="sidebar-item item-murid" onclick="openSection('secLkpd3')">🛠️ LKPD 3: Rancangan Projek</div>
+                <div class="sidebar-item item-murid" onclick="openSection('secLkpd4')">🧠 LKPD 4: Refleksi Mandiri</div>
+                <div class="sidebar-item item-murid" onclick="openSection('secDocs')">📸 Unggah Dokumentasi</div>
+                <div class="sidebar-item item-murid" onclick="openSection('secExport')">📄 Buat Laporan Jurnal Kelompok</div>
+                <div class="sidebar-item item-admin" style="display:none;" onclick="openSection('secAdminLaporan')">📥 Cek Laporan Masuk</div>
+                
+                <div class="sidebar-item item-admin" style="display:none;" onclick="openSection('secAdminPeserta')">👥 Kelola Data Murid</div>
+                <div class="sidebar-item item-admin" style="display:none;" onclick="openSection('secAdminKelompok')">⚙️ Plotting Kelas</div>
+            </nav>
+
+            <main class="container-app">
+
+                <!-- HALAMAN UTAMA DASHBOARD (HUB MENU) -->
+                <section class="content-section active" id="secHub">
+                    
+                    <!-- KARTU PROFIL MURID & KELOMPOK -->
+                    <div class="card" style="border-left: 6px solid var(--primary); background: linear-gradient(135deg, #ffffff 0%, #f5f3ff 100%);">
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;">
+                            <div>
+                                <span style="font-size: 11.5px; color: var(--primary); font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">Identitas Murid</span>
+                                <h3 id="detNama" style="margin: 2px 0 0 0; font-size: 19px; font-weight: 800;">-</h3>
+                            </div>
+                            <span id="detGroupId" style="background: var(--primary-gradient); color: white; font-weight: 800; padding: 6px 14px; border-radius: 12px; font-size: 13.5px; box-shadow: 0 4px 10px rgba(79, 70, 229, 0.25);">-</span>
+                        </div>
+
+                        <!-- PROGRESS BAR KELENGKAPAN INDIVIDU -->
+                        <div style="background: #e2e8f0; border-radius: 12px; height: 12px; width: 100%; overflow: hidden; margin-bottom: 14px; display: flex;">
+                            <div id="progressBarFill" style="background: var(--accent-gradient); width: 0%; height: 100%; transition: width 0.5s ease;"></div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; font-size: 12.5px; font-weight: 700; color: var(--text-muted); margin-bottom: 16px;">
+                            <span>Progress Mandiri Saya</span>
+                            <span id="progressPercentText" style="color: var(--accent-emerald);">0% Selesai</span>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; font-size: 13.5px; margin-bottom: 14px;">
+                            <div><span style="color: var(--text-muted);">NISN / Kelas:</span><br><strong id="detNisn">-</strong></div>
+                            <div><span style="color: var(--text-muted);">Kelompok:</span><br><strong id="detKelompok">-</strong></div>
+                            <div><span style="color: var(--text-muted);">Guru Pendamping:</span><br><strong id="detGuru">-</strong></div>
+                            <div style="grid-column: span 2;"><span style="color: var(--text-muted);">Rumah Adat & Anjungan Target:</span><br><strong id="detAnjungan" style="color:var(--primary); font-size:14.5px;">-</strong></div>
+                            
+                            <!-- TAMBAHAN: DAFTAR ANGGOTA KELOMPOK DI SINI -->
+                            <div style="grid-column: span 2; border-top: 1px dashed var(--border-color); padding-top: 10px; margin-top: 4px;">
+                                <span style="color: var(--text-muted);">Anggota Tim Se-Kelompok:</span>
+                                <div id="detListAnggota" style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px;">
+                                    <span style="color: var(--text-muted); font-style: italic; font-size: 13px;">Memuat anggota...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TOMBOL UTAMA (HERO CTA): LANGSUNG SCROLL KE MODUL LKPD -->
+                    <div class="hero-cta-card">
+                        <div>
+                            <h3 class="hero-cta-title">Jurnal Kokurikuler NEXT GEN NUSA</h3>
+                            <p class="hero-cta-desc">Mulai isi lembar kerja pengamatan sains IPTEK dan arsitektur rumah adat sekarang.</p>
+                        </div>
+                        <button class="btn-hero-cta" onclick="openFirstPendingLkpd()">
+                            🚀 ISI JURNAL KOKURIKULER
+                        </button>
+                    </div>
+
+                    <!-- KARTU BARU: MONITORING KOLEKTIF & INTIP JAWABAN TIM -->
+                    <div class="card" style="border-left: 6px solid var(--accent-emerald);">
+                        <div class="card-title">
+                            <span>👥 Status & Isian Anggota Kelompok (<span id="detGroupIdTitle">-</span>)</span>
+                            <button class="btn-secondary" style="padding:4px 12px; font-size:12px;" onclick="syncGroupStatusProgress()">🔄 Refresh Progress Tim</button>
+                        </div>
+                        <p style="font-size: 13.5px; color: var(--text-muted); margin: -8px 0 14px 0;">
+                            Tidak semua anggota harus mengisi jurnal. Jika Anda bertugas di lapangan (fotografer/wawancara), Anda tetap bisa melihat pekerjaan teman yang sudah mengisi dengan menekan tombol <strong>🔍 Lihat</strong> di bawah ini.
+                        </p>
+                        <div style="overflow-x: auto;">
+                            <table class="group-status-table">
+                                <thead>
+                                    <tr>
+                                        <th>Nama Anggota</th>
+                                        <th>LKPD 1</th>
+                                        <th>LKPD 2</th>
+                                        <th>LKPD 3</th>
+                                        <th>LKPD 4</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="groupStatusTableBody">
+                                    <tr>
+                                        <td colspan="6" style="text-align:center; color:var(--text-muted); padding:16px;">Memuat status anggota kelompok...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- PANDUAN PETUNJUK LANGKAH DEMI LANGKAH -->
+                    <div class="card" style="border: 1.5px solid #bfdbfe; background: #eff6ff;">
+                        <h3 class="card-title" style="color: #1e40af; border-bottom-color: #dbeafe;">
+                            📖 Panduan Kerja Kelompok (Role-Play)
+                        </h3>
+                        <div class="step-guide-grid">
+                            <div class="step-card">
+                                <span class="step-num">Langkah 1</span>
+                                <div class="step-title">Bagi Peran di Lapangan</div>
+                                <p class="step-desc">Tentukan siapa yang mencatat di HP, fotografer, pengukur maket, dan pewawancara.</p>
+                            </div>
+                            <div class="step-card">
+                                <span class="step-num">Langkah 2</span>
+                                <div class="step-title">Input Data Pengamatan</div>
+                                <p class="step-desc">Anggota yang bertugas mencatat, mulai mengisi form LKPD 1 s.d. 4 dari HP mereka.</p>
+                            </div>
+                            <div class="step-card">
+                                <span class="step-num">Langkah 3</span>
+                                <div class="step-title">Pantau Isian Teman</div>
+                                <p class="step-desc">Anggota lain bisa membaca jawaban tim dari tabel monitoring (tombol 'Lihat').</p>
+                            </div>
+                            <div class="step-card">
+                                <span class="step-num">Langkah 4</span>
+                                <div class="step-title">Kirim Laporan Bersama</div>
+                                <p class="step-desc">Jika kelompok sudah lengkap secara kolektif, klik "Kirim Laporan Resmi" ke Guru.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- DESKRIPSI MISI KHUSUS DETIL -->
+                    <div class="guide-box">
+                        <h4 id="detMisiJudul">🎯 Kartu Misi: MISSION 01 — ADAPT</h4>
+                        <div id="detMisiDeskripsi">Loading petunjuk misi...</div>
+                    </div>
+
+                    <!-- DAFTAR MENU LKPD DENGAN STATUS CHECKLIST OTOMATIS -->
+                    <h3 style="font-size: 17px; font-weight: 800; margin: 24px 0 12px 0; color:var(--text-dark);" id="daftarLkpdSection">📋 Modul Lembar Kerja Saya (Mandiri)</h3>
+                    
+                    <div class="hub-menu-grid">
+                        
+                        <!-- MENU LKPD 1 -->
+                        <div class="hub-menu-card" onclick="openSection('secLkpd1')">
+                            <div class="hub-menu-info">
+                                <div class="hub-menu-icon">🔬</div>
+                                <div>
+                                    <h4 class="hub-menu-title">LKPD 1: Eksplorasi Sains PP-IPTEK</h4>
+                                    <p class="hub-menu-desc">Pengamatan 3 wahana/alat peraga di Museum IPTEK</p>
+                                </div>
+                            </div>
+                            <span class="status-badge pending" id="badgeLkpd1">⏳ Belum Diisi</span>
+                        </div>
+
+                        <!-- MENU LKPD 2 -->
+                        <div class="hub-menu-card" onclick="openSection('secLkpd2')">
+                            <div class="hub-menu-info">
+                                <div class="hub-menu-icon">🏛️</div>
+                                <div>
+                                    <h4 class="hub-menu-title">LKPD 2: Arsitektur Rumah Adat</h4>
+                                    <p class="hub-menu-desc">Eksplorasi struktur & kearifan lokal anjungan daerah</p>
+                                </div>
+                            </div>
+                            <span class="status-badge pending" id="badgeLkpd2">⏳ Belum Diisi</span>
+                        </div>
+
+                        <!-- MENU LKPD 3 -->
+                        <div class="hub-menu-card" onclick="openSection('secLkpd3')">
+                            <div class="hub-menu-info">
+                                <div class="hub-menu-icon">🛠️</div>
+                                <div>
+                                    <h4 class="hub-menu-title">LKPD 3: Tantangan STEAM Proyek</h4>
+                                    <p class="hub-menu-desc">Perancangan karya prototype / maket kelompok</p>
+                                </div>
+                            </div>
+                            <span class="status-badge pending" id="badgeLkpd3">⏳ Belum Diisi</span>
+                        </div>
+
+                        <!-- MENU LKPD 4 -->
+                        <div class="hub-menu-card" onclick="openSection('secLkpd4')">
+                            <div class="hub-menu-info">
+                                <div class="hub-menu-icon">🧠</div>
+                                <div>
+                                    <h4 class="hub-menu-title">LKPD 4: Refleksi Mandiri</h4>
+                                    <p class="hub-menu-desc">Evaluasi tantangan tim & internalisasi kebudayaan</p>
+                                </div>
+                            </div>
+                            <span class="status-badge pending" id="badgeLkpd4">⏳ Belum Diisi</span>
+                        </div>
+
+                        <!-- MENU DOKUMENTASI -->
+                        <div class="hub-menu-card" onclick="openSection('secDocs')">
+                            <div class="hub-menu-info">
+                                <div class="hub-menu-icon">📸</div>
+                                <div>
+                                    <h4 class="hub-menu-title">Unggah Dokumentasi Foto</h4>
+                                    <p class="hub-menu-desc">Upload foto wahana IPTEK & Rumah Adat (Min 5 foto)</p>
+                                </div>
+                            </div>
+                            <span class="status-badge pending" id="badgeDocs">⏳ Belum Diisi</span>
+                        </div>
+
+                        <!-- MENU EKSPOR & MERGER KELOMPOK -->
+                        <div class="hub-menu-card" style="border-color: var(--accent-emerald); background: linear-gradient(135deg, #ffffff 0%, #ecfdf5 100%);" onclick="openSection('secExport')">
+                            <div class="hub-menu-info">
+                                <div class="hub-menu-icon" style="background:#d1fae5; color:var(--accent-emerald);">📄</div>
+                                <div>
+                                    <h4 class="hub-menu-title" style="color:var(--accent-emerald);">Buat Laporan Kelompok</h4>
+                                    <p class="hub-menu-desc">Cetak rangkuman dokumen PDF/Word untuk tugas kelompok</p>
+                                </div>
+                            </div>
+                            <span style="color:var(--accent-emerald); font-weight:800; font-size:18px;">➔</span>
+                        </div>
+
+                    </div>
+
+                    <!-- CARD KHUSUS SUBMIT FINAL LAPORAN KE GURU (VERSI HIGHLIGHT & STICKY) -->
+<div class="submit-final-card" id="cardSubmitFinal">
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
+        <h3 style="margin:0; font-size:18px; font-weight:800; color:#ffffff; display:flex; align-items:center; gap:8px;">
+            📬 Kirim Laporan Final Kelompok
+        </h3>
+        <span id="submitStatusBadge" style="background:#334155; color:#94a3b8; padding:5px 14px; border-radius:20px; font-size:12px; font-weight:800; border:1px solid #475569;">
+            🔒 LKPD Belum Lengkap
+        </span>
+    </div>
+    
+    <p style="font-size:13.5px; opacity:0.95; margin:0 0 18px 0; line-height:1.6; color:#e2e8f0;">
+        Jika kelompok Anda secara <strong style="color:#34d399;">kolektif (gabungan)</strong> telah menyelesaikan seluruh LKPD 1-4, tombol di bawah ini akan aktif untuk mengirimkan laporan.
+    </p>
+
+    <!-- TOMBOL KIRIM UTAMA -->
+    <button class="btn-submit-final" id="btnSubmitFinalLaporan" disabled onclick="submitFinalLaporanKeGuru()">
+        🚀 KIRIM LAPORAN AKHIR KELOMPOK
+    </button>
+</div>
+
+                    <!-- MENU PANEL ADMIN (KHUSUS ADMIN) -->
+                    <div class="hub-menu-card item-admin" style="display:none; border-color:var(--primary); margin-top:20px;" onclick="openSection('secAdminPeserta')">
+                        <div class="hub-menu-info">
+                            <div class="hub-menu-icon">👥</div>
+                            <div>
+                                <h4 class="hub-menu-title">Admin: Kelola Data Murid</h4>
+                                <p class="hub-menu-desc">Edit data & akun murid per kelas</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hub-menu-card item-admin" style="display:none; border-color:var(--primary); margin-top:10px;" onclick="openSection('secAdminKelompok')">
+                        <div class="hub-menu-info">
+                            <div class="hub-menu-icon">⚙️</div>
+                            <div>
+                                <h4 class="hub-menu-title">Plotting Kelas</h4>
+                                <p class="hub-menu-desc">Setting lokasi anjungan & misi</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- LKPD 1 -->
+                <section class="content-section" id="secLkpd1">
+                    <button class="btn-back-hub" onclick="backToHub()">⬅️ Kembali ke Menu Utama</button>
+                    <h2 class="page-title">LKPD 1: Eksplorasi Sains & Teknologi Terpadu (PP-IPTEK)</h2>
+                    <p class="page-subtitle">Amati dan uji coba minimal 3 wahana/alat peraga dari cabang sains bebas (Biologi, Kimia, Matematika, Komputer/Robotika, atau Fisika) yang relevan dengan kehidupan modern.</p>
+
+                    <div class="guide-box">
+                        <h4>💡 Panduan Pengisian LKPD 1 (Multidisiplin):</h4>
+                        Pilih 3 alat peraga dari zona mana saja di Museum IPTEK. Uji coba alat tersebut, catat fenomena menarik yang terjadi, dan jelaskan prinsip ilmu/sains (Biologi, Kimia, Matematika, Teknologi, atau Fisika) yang mendasarinya.
+                    </div>
+
+                    <div class="card">
+                        <h3 class="card-title">1. Alat Peraga / Wahana Sains Pertama</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Nama Alat Peraga / Wahana</label>
+                                <input type="text" id="lk1_alat1_nama" class="form-input" placeholder="Contoh: Generator Van De Graaff / Simulasi Gempa">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Zona & Cabang Sains</label>
+                                <input type="text" id="lk1_alat1_zona" class="form-input" placeholder="Contoh: Zona Fisika / Kelistrikan">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Hasil Observasi & Hasil Uji Coba Lapangan</label>
+                            <textarea id="lk1_alat1_hasil" class="form-textarea" placeholder="Contoh: Saat menyentuh bola generator, rambut berdiri karena terkumpulnya muatan listrik statis."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Prinsip Ilmiah / Konsep Sains Terkait</label>
+                            <textarea id="lk1_alat1_konsep" class="form-textarea" placeholder="Contoh: Prinsip induksi elektrostatik dan perpindahan elektron bebas."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3 class="card-title">2. Alat Peraga / Wahana Sains Kedua</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Nama Alat Peraga / Wahana</label>
+                                <input type="text" id="lk1_alat2_nama" class="form-input" placeholder="Contoh: Simulator Gempa Bumi">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Zona & Cabang Sains</label>
+                                <input type="text" id="lk1_alat2_zona" class="form-input" placeholder="Contoh: Zona Lingkungan / Geofisika">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Hasil Observasi & Hasil Uji Coba Lapangan</label>
+                            <textarea id="lk1_alat2_hasil" class="form-textarea" placeholder="Contoh: Platform simulasi berguncang dengan skala tertentu, struktur bangunan lentur terbukti lebih tahan."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Prinsip Ilmiah / Konsep Sains Terkait</label>
+                            <textarea id="lk1_alat2_konsep" class="form-textarea" placeholder="Contoh: Difusi gelombang seismik dan rekayasa struktur tahan gempa."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3 class="card-title">3. Alat Peraga / Wahana Sains Ketiga</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Nama Alat Peraga / Wahana</label>
+                                <input type="text" id="lk1_alat3_nama" class="form-input" placeholder="Contoh: Robot Lengan Otomatis">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Zona & Cabang Sains</label>
+                                <input type="text" id="lk1_alat3_zona" class="form-input" placeholder="Contoh: Zona Robotika / Ilmu Komputer">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Hasil Observasi & Hasil Uji Coba Lapangan</label>
+                            <textarea id="lk1_alat3_hasil" class="form-textarea" placeholder="Contoh: Lengan robot dapat memindahkan objek berdasarkan perintah sensor warna."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Prinsip Ilmiah / Konsep Sains Terkait</label>
+                            <textarea id="lk1_alat3_konsep" class="form-textarea" placeholder="Contoh: Sistem aktuator mekanik, mikrokontroler, dan logika sensor."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3 class="card-title">4. Relevansi Inovasi bagi Kehidupan Modern</h3>
+                        <div class="form-group">
+                            <label class="form-label">Bagaimana prinsip ilmu dari alat peraga di atas dapat dimanfaatkan untuk memecahkan masalah kehidupan sehari-hari?</label>
+                            <textarea id="lk1_aplikasi" class="form-textarea" placeholder="Contoh: Penerapan struktur bangunan tahan gempa di daerah rawan bencana atau sistem otomasi industri."></textarea>
+                        </div>
+                    </div>
+
+                    <button class="btn-primary" onclick="saveProgress('lkpd1')">💾 Simpan LKPD 1</button>
+                </section>
+
+                <!-- LKPD 2 -->
+                <section class="content-section" id="secLkpd2">
+                    <button class="btn-back-hub" onclick="backToHub()">⬅️ Kembali ke Menu Utama</button>
+                    <h2 class="page-title">LKPD 2: Observasi Arsitektur Rumah Adat & Anjungan Daerah</h2>
+                    <p class="page-subtitle">Eksplorasi struktur rumah adat, material lokal, tata ruang, serta kearifan lokal daerah sasaran proyek.</p>
+                    
+                    <div class="guide-box">
+                        <h4 id="lblPanduanMisiJudul">📌 Instruksi Khusus Rumah Adat Target</h4>
+                        <div id="lblPanduanMisiText">Loading panduan...</div>
+                    </div>
+
+                    <div class="card">
+                        <h3 class="card-title">1. Deskripsi Arsitektur Rumah Adat</h3>
+                        <div class="form-group">
+                            <label class="form-label">Gambaran Bentuk Bangunan, Struktur Atap, Panggung/Pondasi, dan Tata Ruang Rumah Adat</label>
+                            <textarea id="lk2_fokus" class="form-textarea" placeholder="Contoh: Menggunakan struktur rumah panggung tinggi dengan tiang kayu besar dan atap pelana melengkung dari ijuk."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3 class="card-title">2. Inventarisasi Data Kunci Sesuai Kartu Misi</h3>
+                        
+                        <div class="form-group">
+                            <label class="form-label" id="lblData1">Item Data 1: Karakteristik Bangunan / Ornamen Budaya</label>
+                            <textarea id="lk2_data1" class="form-textarea" placeholder="Contoh: Terdapat ukiran motif flora di dinding kayu dan tiang utama bangunan."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" id="lblData2">Item Data 2: Bentuk Adaptasi Lingkungan (Iklim / Bencana Gempa / Aliran Udara)</label>
+                            <textarea id="lk2_data2" class="form-textarea" placeholder="Contoh: Kolong rumah panggung berfungsi meredam guncangan gempa dan melindungi dari kelembaban tanah."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" id="lblData3">Item Data 3: Material Kayu / Bambu / Roof Tile / Sumber Daya Alam Lokal</label>
+                            <textarea id="lk2_data3" class="form-textarea" placeholder="Contoh: Menggunakan kayu ulin tahan air untuk tiang pancang dan ijuk kering untuk atap."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3 class="card-title">3. Integrasi Kebudayaan ↔ Teknologi Modern</h3>
+                        <div class="form-group">
+                            <label class="form-label">Analisis Kebudayaan & Sains: Mengapa struktur rumah adat tersebut terbukti kokoh dan ramah lingkungan?</label>
+                            <textarea id="lk2_koneksi" class="form-textarea" placeholder="Contoh: Penggunaan sistem pasak kayu tanpa paku memberikan fleksibilitas struktural saat terjadi pergeseran tanah."></textarea>
+                        </div>
+                    </div>
+
+                    <button class="btn-primary" onclick="saveProgress('lkpd2')">💾 Simpan LKPD 2</button>
+                </section>
+
+                <!-- LKPD 3 -->
+                <section class="content-section" id="secLkpd3">
+                    <button class="btn-back-hub" onclick="backToHub()">⬅️ Kembali ke Menu Utama</button>
+                    <h2 class="page-title">LKPD 3: Perancangan Proyek Akhir (Pendekatan STEAM)</h2>
+                    <p class="page-subtitle">Formulasikan prototype, maket rumah adat adaptif, media digital interaktif, atau karya inovasi proyek akhir kelompok.</p>
+                    
+                    <div class="guide-box">
+                        <h4 id="lblSteamTantanganJudul">🛠️ Tantangan Proyek Akhir Kelompok</h4>
+                        <div id="lblSteamTantanganText">Rancang solusi karya proyek akhir berdasarkan inspirasi observasi rumah adat dan museum IPTEK.</div>
+                    </div>
+
+                    <div class="card">
+                        <h3 class="card-title">Identitas Solusi Proyek Akhir</h3>
+                        <div class="form-group">
+                            <label class="form-label">Judul Prototype / Karya Proyek Akhir</label>
+                            <input type="text" id="lk3_judul" class="form-input" placeholder="Contoh: Maket Rumah Panggung Modular Antigempa">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Format Produk Final (Maket / Video / Aplikasi / Poster STEAM)</label>
+                            <input type="text" id="lk3_format" class="form-input" placeholder="Contoh: Maket fisik berskala 1:50 dilengkapi poster infografis STEAM">
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3 class="card-title">Matriks Pembobotan 5 Pilar STEAM Proyek</h3>
+                        
+                        <div class="form-group">
+                            <label class="form-label" style="color:var(--primary);">1. Science (Prinsip Sains, Pencahayaan, & Sirkulasi Udara Alami)</label>
+                            <textarea id="steam_s" class="form-textarea" placeholder="Contoh: Menerapkan prinsip konveksi termal untuk sirkulasi udara silang agar ruangan tetap sejuk."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="color:var(--primary);">2. Technology (Peralatan, Perangkat Digital, Material Lokal)</label>
+                            <textarea id="steam_t" class="form-textarea" placeholder="Contoh: Memanfaatkan alat potong presisi dan penggunaan QR Code tur virtual budaya."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="color:var(--primary);">3. Engineering (Mekanika Struktur Rumah Adat & Pasak Kayu)</label>
+                            <textarea id="steam_e" class="form-textarea" placeholder="Contoh: Merancang sistem sambungan sendi fleksibel pada pondasi tiang maket."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="color:var(--primary);">4. Arts (Estetika Ornamen Budaya, Ukiran, & Visual Karya)</label>
+                            <textarea id="steam_a" class="form-textarea" placeholder="Contoh: Mengaplikasikan pola ukiran tradisional daerah pada fasad eksterior bangunan."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="color:var(--primary);">5. Mathematics (Skala Maket, Simetri Bangunan, & Perhitungan Biaya)</label>
+                            <textarea id="steam_m" class="form-textarea" placeholder="Contoh: Menghitung skala perbandingan 1:50, tingkat simetri denah, dan estimasi anggaran."></textarea>
+                        </div>
+                    </div>
+
+                    <button class="btn-primary" onclick="saveProgress('lkpd3')">💾 Simpan LKPD 3</button>
+                </section>
+
+                <!-- LKPD 4 -->
+                <section class="content-section" id="secLkpd4">
+                    <button class="btn-back-hub" onclick="backToHub()">⬅️ Kembali ke Menu Utama</button>
+                    <h2 class="page-title">LKPD 4: Refleksi Pembelajaran & Kolaborasi Tim</h2>
+                    <p class="page-subtitle">Evaluasi tantangan kerja kelompok di lapangan, pemecahan masalah, serta apresiasi terhadap kearifan nusantara.</p>
+
+                    <div class="card">
+                        <div class="form-group">
+                            <label class="form-label">1. Kendala Utama di Lapangan & Strategi Pemecahannya</label>
+                            <textarea id="lk4_kendala" class="form-textarea" placeholder="Contoh: Kesulitan mengambil foto detail ornamen karena sudut pandang yang terbatas, diatasi dengan pembagian tugas sudut pemotretan."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">2. Refleksi Kolaborasi Tim & Internalisasi Nilai Kebudayaan Rumah Adat</label>
+                            <textarea id="lk4_kerjasama" class="form-textarea" placeholder="Contoh: Kami belajar pentingnya koordinasi tim serta menyadari tingginya kecerdasan ekologis pada arsitektur tradisional."></textarea>
+                        </div>
+                    </div>
+
+                    <button class="btn-primary" onclick="saveProgress('lkpd4')">💾 Simpan LKPD 4</button>
+                </section>
+
+                <!-- DOKUMENTASI DENGAN BATASAN KUOTA 5 FOTO KELOMPOK -->
+<section class="content-section" id="secDocs">
+    <button class="btn-back-hub" onclick="backToHub()">⬅️ Kembali ke Menu Utama</button>
+    <h2 class="page-title">Unggah Dokumentasi Lapangan (Maks. 5 Foto per Kelompok)</h2>
+    <p class="page-subtitle">Upload foto bukti pengamatan wahana IPTEK dan arsitektur rumah adat anjungan daerah secara bersama-sama dalam satu tim.</p>
+
+    <!-- KOTAK PANDUAN & NOTIFIKASI STATUS KUOTA -->
+    <div id="photoQuotaNotice" class="guide-box" style="background: #f0fdf4; border-color: #86efac;">
+        <h4 style="color: #166534; margin-bottom: 6px;">📊 Status Kuota Dokumentasi Kelompok</h4>
+        <p id="quotaNoticeText" style="margin: 0; color: #15803d; font-weight: 600; font-size: 13.5px;">Memeriksa kuota foto kelompok...</p>
+    </div>
+
+    <div class="card" id="uploadCardArea">
+        <h3 class="card-title">📸 Kelola Foto Dokumentasi Tim (<span id="countFotoBadge">0/5</span>)</h3>
+        
+        <!-- KONTROL TOMBOL UPLOAD (TERKUNCI OTOMATIS JIKA PENUH) -->
+        <div id="uploadInputWrapper" style="margin-bottom: 16px;">
+            <label class="form-label">Pilih File Foto Baru (Maksimal 2 MB per Foto)</label>
+            <input type="file" id="inputFotoKelompok" class="form-input" accept="image/*" multiple onchange="handleGroupFotoUpload(event)">
+            <small id="uploadHelperText" style="color: var(--text-muted); display: block; margin-top: 5px;">
+                *Total akumulasi foto kelompok dibatasi maksimal 5 buah. File di atas 2 MB akan otomatis ditolak sistem.
+            </small>
+        </div>
+
+        <!-- CONTAINER PREVIEW FOTO & TOMBOL HAPUS -->
+        <label class="form-label" style="margin-top: 14px; display: block;">Daftar Foto Tersimpan di Kelompok:</label>
+        <div id="previewGroupPhotosContainer" style="display:flex; gap:14px; margin-top:10px; flex-wrap:wrap;">
+            <em style="color: var(--text-muted); font-size: 13.5px;">Belum ada foto yang diunggah.</em>
+        </div>
+    </div>
+
+    <button class="btn-primary" id="btnSimpanGroupPhotos" onclick="saveGroupPhotosServer()">💾 Simpan</button>
+</section>
+
+                <!-- TAB EKSPOR LAPORAN KELOMPOK (VERSI BARU DENGAN MERGE DIKLIK) -->
+                <section class="content-section" id="secExport">
+                    <button class="btn-back-hub" onclick="backToHub()">⬅️ Kembali ke Menu Utama</button>
+                    <h2 class="page-title">Ekspor & Unduh Laporan Kelompok</h2>
+                    <p class="page-subtitle">Gabungkan data jawaban seluruh anggota tim serta dokumentasi foto untuk menghasilkan laporan akhir.</p>
+
+                    <!-- KOTAK KONTROL MERGE LAPORAN -->
+                    <div class="card" style="text-align: center; background: #f0f9ff; border-color: #bae6fd; margin-bottom: 20px;">
+                        <h3 style="margin-top: 0; color: #0369a1;">📢 Gabungkan Data Kelompok</h3>
+                        <p style="font-size: 13.5px; color: #0284c7; margin-bottom: 15px;">
+                            Klik tombol di bawah ini untuk menarik data isian LKPD seluruh anggota kelompok dan menyatukan 5 foto dokumentasi ke dalam preview laporan.
+                        </p>
+                        <button id="btnDoMerge" class="btn-primary" onclick="doMergeLaporan()" style="max-width: 340px; margin: 0 auto; display: block;">
+                            🔄 Buat Laporan Kelompok
+                        </button>
+                    </div>
+
+                    <!-- TOMBOL UNDUH (OTOMATIS MUNCUL SETELAH MERGE DIKLIK) -->
+                    <div id="exportActionButtons" style="display: none; gap: 10px; margin-bottom: 16px; flex-wrap: wrap;">
+                        <button class="btn-primary" onclick="downloadReportPDF()" style="background: #ef4444; flex: 1;">📄 Unduh PDF</button>
+                        <button class="btn-primary" onclick="downloadReportWord()" style="background: #2563eb; flex: 1;">📝 Unduh Word / Cetak</button>
+                    </div>
+
+                    <!-- AREA PREVIEW LAPORAN -->
+                    <div class="card">
+                        <h3 class="card-title">👁️ Pratinjau Laporan Kelompok</h3>
+                        <div id="reportPreviewArea">
+                            <div style="text-align: center; padding: 40px; color: var(--text-muted);">
+                                <span style="font-size: 40px; display: block; margin-bottom: 10px;">📋</span>
+                                <p>Silakan klik tombol <strong>"Buat Laporan Kelompok"</strong> di atas untuk memuat pratinjau laporan kelompok.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SECTION ADMIN: CEK LAPORAN MASUK -->
+                <section class="content-section" id="secAdminLaporan">
+                    <button class="btn-back-hub" onclick="backToHub()">⬅️ Kembali ke Menu Utama</button>
+                    <h2 class="page-title">Admin Panel: Cek & Verifikasi Laporan Murid</h2>
+                    <p class="page-subtitle">Pantau seluruh laporan akhir kelompok yang telah dikirim oleh murid per kelas.</p>
+
+                    <!-- KONTROL FILTER KELAS -->
+                    <div class="card" style="border-left: 6px solid var(--primary);">
+                        <h3 class="card-title">🔍 Filter Laporan Kelas</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Pilih Kelas</label>
+                                <select id="adminLaporanFilterKelas" class="form-select" onchange="fetchAdminSubmittedReports(); fetchAdminProgressRealtime();">
+                                    <option value="X-1">Kelas X-1</option>
+                                    <option value="X-2">Kelas X-2</option>
+                                    <option value="X-3">Kelas X-3</option>
+                                    <option value="X-4">Kelas X-4</option>
+                                    <option value="X-5">Kelas X-5</option>
+                                    <option value="X-6">Kelas X-6</option>
+                                    <option value="X-7">Kelas X-7</option>
+                                    <option value="X-8">Kelas X-8</option>
+                                    <option value="X-10">Kelas X-10</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="display: flex; align-items: flex-end;">
+                                <button class="btn-primary" onclick="fetchAdminSubmittedReports()" style="height: 48px;">
+                                    🔄 Muat Ulang Laporan
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 1. TABEL MONITORING PROGRES & FOTO REAL-TIME (LANGKAH 2) -->
+<div class="card" style="border-left: 6px solid #0284c7; margin-bottom: 24px;">
+    <div class="card-title" style="display:flex; justify-content:space-between; align-items:center;">
+        <span>📊 Progres Pengerjaan & Dokumentasi Kelompok</span>
+        <button class="btn-secondary" style="font-size: 12px; padding: 6px 12px;" onclick="fetchAdminProgressRealtime()">🔄 Refresh Progres</button>
+    </div>
+    <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">
+        Pantau kelengkapan LKPD 1-4 dan jumlah foto yang diunggah kelompok sebelum dikirim resmi.
+    </p>
+
+    <div style="overflow-x: auto;">
+        <table class="group-status-table">
+            <thead>
+                <tr>
+                    <th>Group ID</th>
+                    <th>Kontributor</th>
+                    <th>LKPD 1</th>
+                    <th>LKPD 2</th>
+                    <th>LKPD 3</th>
+                    <th>LKPD 4</th>
+                    <th>Foto</th>
+                    <th>Status Tim</th>
+                </tr>
+            </thead>
+            <tbody id="adminProgressTableBody">
+                <tr>
+                    <td colspan="8" style="text-align: center; color: var(--text-muted); padding: 16px;">
+                        Pilih kelas untuk memuat progres kelompok.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+                    <!-- TABEL DAFTAR LAPORAN MASUK -->
+                    <div class="card">
+                        <h3 class="card-title">📥 Daftar Laporan Terkirim</h3>
+                        <div style="overflow-x: auto;">
+                            <table class="group-status-table">
+                                <thead>
+                                    <tr>
+                                        <th>Group ID</th>
+                                        <th>Pengirim / Waktu</th>
+                                        <th>Status</th>
+                                        <th>Aksi Guru</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="adminReportsTableBody">
+                                    <tr>
+                                        <td colspan="4" style="text-align:center; color:var(--text-muted); padding:16px;">
+                                            Silakan pilih kelas untuk memuat daftar laporan.
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- AREA PREVIEW LAPORAN TERPILIH -->
+                    <div class="hub-menu-card item-admin" style="display:none; border-color:var(--accent-emerald); margin-top:10px;" onclick="openSection('secAdminLaporan')">
+    <div class="hub-menu-info">
+        <div class="hub-menu-icon" style="background:#d1fae5; color:var(--accent-emerald);">📥</div>
+        <div>
+            <h4 class="hub-menu-title">Admin: Cek Laporan Masuk</h4>
+            <p class="hub-menu-desc">Koreksi, unduh PDF/Word, dan verifikasi laporan kelompok murid</p>
+        </div>
+    </div>
+</div>
+                    <div class="card" id="adminReportPreviewCard" style="display: none;">
+                        <div class="card-title">
+                            <span id="adminPreviewTitle">👁️ Pratinjau Laporan Kelompok</span>
+                            <div style="display: flex; gap: 8px;">
+                                <button class="btn-primary" onclick="downloadAdminReportPDF()" style="background: #ef4444; padding: 6px 14px; font-size: 12px;">📄 Unduh PDF</button>
+                                <button class="btn-primary" onclick="downloadAdminReportWord()" style="background: #2563eb; padding: 6px 14px; font-size: 12px;">📝 Unduh Word</button>
+                            </div>
+                        </div>
+                        <div id="adminReportRenderArea" style="background: #ffffff; padding: 20px; border: 1px solid var(--border-color); border-radius: 12px;">
+                            <!-- Konten HTML Laporan Terkirim Ditinggalkan di sini -->
+                        </div>
+                    </div>
+                </section>
+                <!-- SECTION ADMIN: KELOLA DATA MURID -->
+                <section class="content-section" id="secAdminPeserta">
+                    <button class="btn-back-hub" onclick="backToHub()">⬅️ Kembali ke Menu Utama</button>
+                    <h2 class="page-title">Admin Panel: Kelola & Edit Data Murid</h2>
+                    <p class="page-subtitle">Pilih murid untuk mengedit atau menambah data baru.</p>
+
+                    <div class="card" style="border-left: 6px solid var(--primary);">
+                        <h3 class="card-title">🔍 Pilih Murid Terdaftar</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">1. Filter Kelas Target</label>
+                                <select id="adminFilterKelas" class="form-select" onchange="populateMuridDropdown()">
+                                    <option value="X-1">Kelas X-1</option><option value="X-2">Kelas X-2</option>
+                                    <option value="X-3">Kelas X-3</option><option value="X-4">Kelas X-4</option>
+                                    <option value="X-5">Kelas X-5</option><option value="X-6">Kelas X-6</option>
+                                    <option value="X-7">Kelas X-7</option><option value="X-8">Kelas X-8</option>
+                                    <option value="X-10">Kelas X-10</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">2. Pilih Nama Murid dari Dropdown</label>
+                                <select id="adminSelectMurid" class="form-select" onchange="onSelectMuridAdmin()">
+                                    <option value="">-- Tekan tombol Sinkronkan Data --</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button class="btn-primary" style="background: var(--accent-gradient);" onclick="syncAdminDatabase()">
+                            🔄 Sinkronkan Data
+                        </button>
+                    </div>
+
+                    <div class="card">
+                        <h3 class="card-title" id="lblFormStudentTitle">➕ Tambah / Edit Data Murid</h3>
+                        <form onsubmit="handleAddStudent(event)">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">NISN (Username)</label>
+                                    <input type="text" id="addNisn" class="form-input" placeholder="Masukkan 10 digit NISN" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Nama Lengkap</label>
+                                    <input type="text" id="addNama" class="form-input" placeholder="Masukkan nama murid" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Pilih Kelas</label>
+                                    <select id="addKelas" class="form-select">
+                                        <option value="X-1">Kelas X-1</option><option value="X-2">Kelas X-2</option>
+                                        <option value="X-3">Kelas X-3</option><option value="X-4">Kelas X-4</option>
+                                        <option value="X-5">Kelas X-5</option><option value="X-6">Kelas X-6</option>
+                                        <option value="X-7">Kelas X-7</option><option value="X-8">Kelas X-8</option>
+                                        <option value="X-10">Kelas X-10</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Pilih Kelompok</label>
+                                    <select id="addKelompok" class="form-select">
+                                        <option value="Kelompok 1">Kelompok 1</option><option value="Kelompok 2">Kelompok 2</option>
+                                        <option value="Kelompok 3">Kelompok 3</option><option value="Kelompok 4">Kelompok 4</option>
+                                        <option value="Kelompok 5">Kelompok 5</option><option value="Kelompok 6">Kelompok 6</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Password Murid</label>
+                                <input type="text" id="addPass" class="form-input" placeholder="Password default murid" required>
+                            </div>
+                            <div style="display: flex; gap: 12px;">
+                                <button type="submit" class="btn-primary" id="btnAddStudentBtn">💾 Simpan Data Murid</button>
+                                <button type="button" class="btn-secondary" onclick="resetFormMuridAdmin()">Batal / Reset</button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- SECTION ADMIN: PLOTTING KELAS -->
+                <section class="content-section" id="secAdminKelompok">
+                    <button class="btn-back-hub" onclick="backToHub()">⬅️ Kembali ke Menu Utama</button>
+                    <h2 class="page-title">⚙️ Plotting Kelas & Misi</h2>
+                    <p class="page-subtitle">Atur penugasan anjungan daerah dan kartu misi untuk setiap kelompok per kelas.</p>
+
+                    <div class="card" style="border-left: 6px solid var(--primary);">
+                        <h3 class="card-title">Setting Lokasi Anjungan & Misi</h3>
+                        <form onsubmit="handleUpdatePlottingAdmin(event)">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Pilih Kelas Target</label>
+                                    <select id="selKelasAdmin" class="form-select" onchange="updateAdminGroupIdLabel()">
+                                        <option value="X-1">Kelas X-1</option>
+                                        <option value="X-2">Kelas X-2</option>
+                                        <option value="X-3">Kelas X-3</option>
+                                        <option value="X-4">Kelas X-4</option>
+                                        <option value="X-5">Kelas X-5</option>
+                                        <option value="X-6">Kelas X-6</option>
+                                        <option value="X-7">Kelas X-7</option>
+                                        <option value="X-8">Kelas X-8</option>
+                                        <option value="X-10">Kelas X-10</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Pilih Kelompok</label>
+                                    <select id="selKelompokAdmin" class="form-select" onchange="updateAdminGroupIdLabel()">
+                                        <option value="Kelompok 1">Kelompok 1</option>
+                                        <option value="Kelompok 2">Kelompok 2</option>
+                                        <option value="Kelompok 3">Kelompok 3</option>
+                                        <option value="Kelompok 4">Kelompok 4</option>
+                                        <option value="Kelompok 5">Kelompok 5</option>
+                                        <option value="Kelompok 6">Kelompok 6</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="background:#e0e7ff; padding:12px 16px; border-radius:12px; margin-bottom:16px;">
+                                <span style="font-size:12px; color:var(--primary); font-weight:700;">GROUP ID:</span><br>
+                                <strong id="lblAdminGroupId" style="font-size:18px; color:var(--text-dark);">X1-K1</strong>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Pilih Misi Proyek</label>
+                                <select id="selMisiAdmin" class="form-select" onchange="autoFillMisiAdmin()">
+                                    <option value="MISSION 01 — ADAPT">MISSION 01 — ADAPT</option>
+                                    <option value="MISSION 02 — MOVE">MISSION 02 — MOVE</option>
+                                    <option value="MISSION 03 — FLOW">MISSION 03 — FLOW</option>
+                                    <option value="MISSION 04 — FOOD">MISSION 04 — FOOD</option>
+                                    <option value="MISSION 05 — CONNECT">MISSION 05 — CONNECT</option>
+                                    <option value="MISSION 06 — FUTURE">MISSION 06 — FUTURE</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Target Anjungan & Rumah Adat</label>
+                                <input type="text" id="adminAnjungan" class="form-input" placeholder="Contoh: Anjungan NTB (Rumah Dalam Loka)" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Deskripsi Misi</label>
+                                <textarea id="adminMisiDeskripsi" class="form-textarea" style="min-height:100px;"></textarea>
+                            </div>
+
+                            <button type="submit" class="btn-primary" id="btnSavePlottingBtn">💾 Simpan Plotting Kelas</button>
+                        </form>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+    <!-- LOGIKA JAVASCRIPT LENGKAP UTUH & MONITORING KELOMPOK KOLEKTIF -->
+    <script>
+        const API_ENDPOINTS = {
+            "X-1": "",
+            "X-2": "",
+           
+        };
+        window.adminReportsMap = {};
+
+        function getApiUrl(kelas) {
+            return API_ENDPOINTS[kelas] || API_ENDPOINTS["X-1"];
+        }
+
+        let currentAuthMode = 'murid';
+        let currentStudentData = null;
+        let mergedSubmissionsData = [];
+        let fotoIptekBase64 = [];
+        let fotoAnjunganBase64 = [];
+        let adminCachedStudents = [];
+
+        // TRACKER CHECKLIST STATUS MANDIRI SAYA
+        let completionStatus = {
+            lkpd1: false,
+            lkpd2: false,
+            lkpd3: false,
+            lkpd4: false,
+            docs: false
+        };
+
+        const MISI_DETAILS = {
+            "MISSION 01 — ADAPT": {
+                tanya: "Bagaimana arsitektur rumah adat menyesuaikan diri dengan kondisi iklim, potensi gempa, atau tata ruang kebudayaan lokal?",
+                amati: "Amati bentuk rumah panggung, konstruksi atap, sirkulasi udara alami, dan material kayu/bambu di rumah adat.",
+                data: "Minimal 3 karakteristik bangunan, 2 bentuk adaptasi lingkungan, 1 jenis material utama, 5 dokumentasi.",
+                iptek: "Hubungkan dengan ilmu sains dari Museum IPTEK (misal: simulasi gempa, struktur material, atau ventilasi alami).",
+                steam: "Rancang prototype maket rumah adat masa depan yang tangguh bencana dan ramah lingkungan.",
+                d1: "Item Data 1: Minimal 3 Karakteristik Utama Arsitektur Rumah Adat",
+                d2: "Item Data 2: Minimal 2 Bentuk Adaptasi (Gempa / Iklim Tropis / Aliran Udara)",
+                d3: "Item Data 3: Minimal 1 Jenis Material Utama (Kayu / Bambu / Atap Ijuk)"
+            },
+            "MISSION 02 — MOVE": {
+                tanya: "Bagaimana teknologi tradisional dan alat kerja lokal membantu masyarakat menyelesaikan pekerjaan fisik?",
+                amati: "Amati perkakas tradisional, alat penumbuk, perahu, mekanisme roda, atau pasak kayu di rumah adat.",
+                data: "Minimal 1 teknologi/alat tradisional, fungsi, cara kerja, analisis mekanisme, 5 dokumentasi.",
+                iptek: "Hubungkan dengan prinsip mekanika/robotika/gaya dari wahana Museum IPTEK.",
+                steam: "Rancang prototype alat sederhana pendukung aktivitas rumah adat.",
+                d1: "Item Data 1: Nama Alat / Mekanisme Tradisional yang Diamati",
+                d2: "Item Data 2: Fungsi Utama & Cara Kerja Mekanisnya",
+                d3: "Item Data 3: Analisis Energi / Prinsip Kerja Sainsnya"
+            },
+            "MISSION 03 — FLOW": {
+                tanya: "Bagaimana rumah adat memanfaatkan sirkulasi pencahayaan alami, aliran udara, serta sistem air?",
+                amati: "Amati posisi jendela, atap tinggi, drainase sekitar anjungan, dan sistem pencahayaan alami.",
+                data: "Minimal 1 sistem ventilasi/air, cara kerja, manfaat lingkungan, 5 dokumentasi.",
+                iptek: "Hubungkan dengan ilmu fisika/lingkungan dari Museum IPTEK (misal: tekanan udara/aliran fluid).",
+                steam: "Rancang prototype sistem sirkulasi udara / pemanen air hujan mandiri.",
+                d1: "Item Data 1: Sistem Aliran Udara / Air / Cahaya yang Diamati",
+                d2: "Item Data 2: Manfaat bagi Kenyamanan Penghuni Rumah Adat",
+                d3: "Item Data 3: Analisis Sains Aliran Lingkungannya"
+            },
+            "MISSION 04 — FOOD": {
+                tanya: "Bagaimana rumah adat menyediakan lumbung pangan lokal dan teknologi penyimpanan alami?",
+                amati: "Amati lumbung padi (leuit/rangkang), tempat penyimpanan pangan, dan wadah pengolahan tradisional.",
+                data: "Minimal 2 cara penyimpanan/pangan lokal, bahan wadah, kondisi suhu/kelembaban, 5 dokumentasi.",
+                iptek: "Hubungkan dengan ilmu bioteknologi/kimia pangan dari wahana Museum IPTEK.",
+                steam: "Rancang model/prototype lumbung pangan efisien berbasis material alami.",
+                d1: "Item Data 1: Bentuk Lumbung / Wadah Penyimpanan Pangan Tradisional",
+                d2: "Item Data 2: Cara Menjaga Keawetan Pangan dari Hama / Kelembaban",
+                d3: "Item Data 3: Prinsip Sains / Kimia Pangan yang Terlibat"
+            },
+            "MISSION 05 — CONNECT": {
+                tanya: "Bagaimana media teknologi dapat membantu mengenalkan keunikan arsitektur rumah adat kepada generasi muda?",
+                amati: "Amati ukiran, simbol filosofis budaya, ornamen rumah adat, dan sajian visual di anjungan.",
+                data: "Minimal 3 simbol/ornamen rumah adat, makna filosofisnya, 5 dokumentasi, 1 gagasan media digital.",
+                iptek: "Gunakan inspirasi teknologi komputer/interaktif yang ada di Museum IPTEK.",
+                steam: "Rancang Digital Cultural Experience (aplikasi interaktif, QR cerita budaya, atau maket 3D).",
+                d1: "Item Data 1: Minimal 3 Ornamen / Simbol Filosofis Rumah Adat",
+                d2: "Item Data 2: Makna Kebudayaan & Nilai Historisnya",
+                d3: "Item Data 3: Gagasan Media Teknologi Digital untuk Mempromosikannya"
+            },
+            "MISSION 06 — FUTURE": {
+                tanya: "Apa kearifan lokal arsitektur rumah adat yang dapat diintegrasikan menjadi inovasi bangunan masa depan?",
+                amati: "Amati penggunaan material ramah lingkungan, struktur pasak tanpa paku, dan tata hijau di anjungan.",
+                data: "Minimal 2 kearifan arsitektur lokal, keunggulannya, 5 dokumentasi.",
+                iptek: "Hubungkan satu keunggulan rumah adat dengan konsep sains modern dari Museum IPTEK.",
+                steam: "Rancang concept innovation bangunan ramah lingkungan masa depan.",
+                d1: "Item Data 1: Minimal 2 Keunggulan Arsitektur Rumah Adat Nusantara",
+                d2: "Item Data 2: Alasan Ilmiah Mengapa Konstruksi Tersebut Berkelanjutan",
+                d3: "Item Data 3: Inovasi Konsep Bangunan Masa Depan yang Ditawarkan"
+            }
+        };
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebarMenu');
+            let overlay = document.getElementById('sidebarOverlay');
+            
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.id = 'sidebarOverlay';
+                overlay.className = 'sidebar-overlay';
+                overlay.onclick = toggleSidebar;
+                document.body.appendChild(overlay);
+            }
+
+            if (window.innerWidth <= 992) {
+                sidebar.classList.toggle('mobile-open');
+                overlay.classList.toggle('active');
+            } else {
+                sidebar.classList.toggle('collapsed');
+            }
+        }
+        document.addEventListener("DOMContentLoaded", function() {
+    closeSidebarMobile();
+});
+
+function closeSidebarMobile() {
+    if (window.innerWidth <= 992) {
+        const sidebar = document.getElementById('sidebarMenu');
+        const overlay = document.getElementById('sidebarOverlay');
+        if (sidebar) sidebar.classList.remove('mobile-open');
+        if (overlay) overlay.classList.remove('active');
+    }
+}
+
+        function toggleAuthMode() {
+            if(currentAuthMode === 'murid') {
+                currentAuthMode = 'admin';
+                document.getElementById('formLoginMurid').style.display = 'none';
+                document.getElementById('formLoginAdmin').style.display = 'block';
+                document.getElementById('btnSwitchAuth').innerText = '👤 Masuk sebagai Murid';
+            } else {
+                currentAuthMode = 'murid';
+                document.getElementById('formLoginAdmin').style.display = 'none';
+                document.getElementById('formLoginMurid').style.display = 'block';
+                document.getElementById('btnSwitchAuth').innerText = '🔒 Masuk sebagai Admin Guru';
+            }
+        }
+
+        function openSection(secId) {
+            document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
+            const targetSidebar = Array.from(document.querySelectorAll('.sidebar-item')).find(item => {
+                return item.getAttribute('onclick') && item.getAttribute('onclick').includes(secId);
+            });
+            if (targetSidebar) targetSidebar.classList.add('active');
+
+            document.querySelectorAll('.content-section').forEach(el => el.classList.remove('active'));
+            document.getElementById(secId).classList.add('active');
+            window.scrollTo({top: 0, behavior: 'smooth'});
+
+            if (window.innerWidth <= 992) {
+                const sidebar = document.getElementById('sidebarMenu');
+                const overlay = document.getElementById('sidebarOverlay');
+                if (sidebar) sidebar.classList.remove('mobile-open');
+                if (overlay) overlay.classList.remove('active');
+            }
+
+            if(secId === 'secExport') updateDraftPreview();
+            if(secId === 'secDocs') {
+        loadGroupPhotosQuota();
+    }
+        }
+
+        function backToHub() {
+            openSection('secHub');
+        }
+
+        function openFirstPendingLkpd() {
+            const targetElement = document.getElementById('daftarLkpdSection');
+            if (targetElement) {
+                targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function updateChecklistUI() {
+            const updateBadge = (id, isDone) => {
+                const badge = document.getElementById(id);
+                if (badge) {
+                    if (isDone) {
+                        badge.className = "status-badge completed";
+                        badge.innerHTML = "✅ Selesai";
+                    } else {
+                        badge.className = "status-badge pending";
+                        badge.innerHTML = "⏳ Belum Diisi";
+                    }
+                }
+            };
+
+            updateBadge('badgeLkpd1', completionStatus.lkpd1);
+            updateBadge('badgeLkpd2', completionStatus.lkpd2);
+            updateBadge('badgeLkpd3', completionStatus.lkpd3);
+            updateBadge('badgeLkpd4', completionStatus.lkpd4);
+            updateBadge('badgeDocs', completionStatus.docs);
+
+            const totalTasks = 5;
+            const completedTasks = Object.values(completionStatus).filter(Boolean).length;
+            const percent = Math.round((completedTasks / totalTasks) * 100);
+
+            const fillEl = document.getElementById('progressBarFill');
+            const textEl = document.getElementById('progressPercentText');
+            if(fillEl) fillEl.style.width = `${percent}%`;
+            if(textEl) textEl.innerText = `${percent}% Selesai`;
+        }
+
+        // FUNGSI UTAMA SINKRONISASI STATUS KOLEKTIF & MODAL INTIP JAWABAN
+        async function syncGroupStatusProgress() {
+            if(!currentStudentData) return;
+            const gId = currentStudentData.groupId;
+            const targetUrl = getApiUrl(currentStudentData.kelas);
+
+            const tbody = document.getElementById('groupStatusTableBody');
+            tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:var(--text-muted); padding:16px;">Memperbarui status isian kelompok...</td></tr>`;
+
+            try {
+                const res = await fetch(`${targetUrl}?action=getGroupSubmissions&groupId=${encodeURIComponent(gId)}`);
+                const data = await res.json();
+
+                if (data.status === "success" && data.submissions) {
+                    mergedSubmissionsData = data.submissions;
+                    renderGroupStatusTable(data.submissions);
+                }
+            } catch (err) {
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:red; padding:16px;">Gagal memuat status tim. Tekan tombol Refresh.</td></tr>`;
+            }
+        }
+        async function loadStudentOwnAnswers() {
+    if (!currentStudentData) return;
+    const targetUrl = getApiUrl(currentStudentData.kelas);
+    
+    // 🟢 1. CEK CADANGAN LOKAL DAHULU
+    const localBackup = localStorage.getItem(`backup_lkpd_${currentStudentData.groupId}_${currentStudentData.nisn}`);
+    if (localBackup) {
+        try {
+            const mySub = JSON.parse(localBackup);
+            applyAnswersToForm(mySub);
+        } catch(e){}
+    }
+
+    // 2. AMBIL DATA TERBARU DARI SERVER
+    try {
+        const res = await fetch(`${targetUrl}?action=getGroupSubmissions&groupId=${encodeURIComponent(currentStudentData.groupId)}`);
+        const data = await res.json();
+        
+        if (data.status === "success" && data.submissions) {
+            const mySub = data.submissions.find(s => s.nama.trim().toLowerCase() === currentStudentData.nama.trim().toLowerCase() || s.nisn === currentStudentData.nisn);
+            if (mySub) {
+                applyAnswersToForm(mySub);
+            }
+        }
+    } catch(err) {
+        console.warn("Menggunakan data lokal karena gagal koneksi:", err);
+    }
+}
+
+// Fungsi pembantu mengisi form
+function applyAnswersToForm(mySub) {
+    if (document.getElementById('lk1_alat1_nama')) document.getElementById('lk1_alat1_nama').value = mySub.lk1_a1_nama || '';
+    if (document.getElementById('lk1_alat1_zona')) document.getElementById('lk1_alat1_zona').value = mySub.lk1_a1_zona || '';
+    if (document.getElementById('lk1_alat1_hasil')) document.getElementById('lk1_alat1_hasil').value = mySub.lk1_a1_hasil || '';
+    if (document.getElementById('lk1_alat1_konsep')) document.getElementById('lk1_alat1_konsep').value = mySub.lk1_a1_konsep || '';
+
+    if (document.getElementById('lk1_alat2_nama')) document.getElementById('lk1_alat2_nama').value = mySub.lk1_a2_nama || '';
+    if (document.getElementById('lk1_alat2_zona')) document.getElementById('lk1_alat2_zona').value = mySub.lk1_a2_zona || '';
+    if (document.getElementById('lk1_alat2_hasil')) document.getElementById('lk1_alat2_hasil').value = mySub.lk1_a2_hasil || '';
+    if (document.getElementById('lk1_alat2_konsep')) document.getElementById('lk1_alat2_konsep').value = mySub.lk1_a2_konsep || '';
+
+    if (document.getElementById('lk1_alat3_nama')) document.getElementById('lk1_alat3_nama').value = mySub.lk1_a3_nama || '';
+    if (document.getElementById('lk1_alat3_zona')) document.getElementById('lk1_alat3_zona').value = mySub.lk1_a3_zona || '';
+    if (document.getElementById('lk1_alat3_hasil')) document.getElementById('lk1_alat3_hasil').value = mySub.lk1_a3_hasil || '';
+    if (document.getElementById('lk1_alat3_konsep')) document.getElementById('lk1_alat3_konsep').value = mySub.lk1_a3_konsep || '';
+    if (document.getElementById('lk1_aplikasi')) document.getElementById('lk1_aplikasi').value = mySub.lk1_aplikasi || '';
+
+    if (document.getElementById('lk2_fokus')) document.getElementById('lk2_fokus').value = mySub.lk2_fokus || '';
+    if (document.getElementById('lk2_data1')) document.getElementById('lk2_data1').value = mySub.lk2_data1 || '';
+    if (document.getElementById('lk2_data2')) document.getElementById('lk2_data2').value = mySub.lk2_data2 || '';
+    if (document.getElementById('lk2_data3')) document.getElementById('lk2_data3').value = mySub.lk2_data3 || '';
+    if (document.getElementById('lk2_koneksi')) document.getElementById('lk2_koneksi').value = mySub.lk2_koneksi || '';
+
+    if (document.getElementById('lk3_judul')) document.getElementById('lk3_judul').value = mySub.lk3_judul || '';
+    if (document.getElementById('lk3_format')) document.getElementById('lk3_format').value = mySub.lk3_format || '';
+    if (document.getElementById('steam_s')) document.getElementById('steam_s').value = mySub.steam_s || '';
+    if (document.getElementById('steam_t')) document.getElementById('steam_t').value = mySub.steam_t || '';
+    if (document.getElementById('steam_e')) document.getElementById('steam_e').value = mySub.steam_e || '';
+    if (document.getElementById('steam_a')) document.getElementById('steam_a').value = mySub.steam_a || '';
+    if (document.getElementById('steam_m')) document.getElementById('steam_m').value = mySub.steam_m || '';
+
+    if (document.getElementById('lk4_kendala')) document.getElementById('lk4_kendala').value = mySub.lk4_kendala || '';
+    if (document.getElementById('lk4_kerjasama')) document.getElementById('lk4_kerjasama').value = mySub.lk4_kerjasama || '';
+
+    completionStatus.lkpd1 = !!(mySub.lk1_a1_nama || mySub.lk1_a1_hasil);
+    completionStatus.lkpd2 = !!(mySub.lk2_fokus || mySub.lk2_data1);
+    completionStatus.lkpd3 = !!(mySub.lk3_judul || mySub.steam_s);
+    completionStatus.lkpd4 = !!(mySub.lk4_kendala || mySub.lk4_kerjasama);
+    updateChecklistUI();
+}
+
+        function renderGroupStatusTable(submissions) {
+    const tbody = document.getElementById('groupStatusTableBody');
+    if (!tbody) return;
+
+    const members = currentStudentData.groupMembers || [currentStudentData.nama];
+    
+    let groupHasLk1 = false;
+    let groupHasLk2 = false;
+    let groupHasLk3 = false;
+    let groupHasLk4 = false;
+
+    let rowsHtml = "";
+
+    // Helper untuk memastikan input benar-benar diisi (bukan null, undefined, "null", atau "-")
+    const isValidInput = (val) => {
+        if (val === null || val === undefined) return false;
+        const str = val.toString().trim().toLowerCase();
+        return str !== "" && str !== "null" && str !== "undefined" && str !== "-";
+    };
+
+    members.forEach(memberNama => {
+        const cleanMember = memberNama.trim().toLowerCase();
+        
+        // Pencarian nama murid fleksibel
+        const sub = (Array.isArray(submissions) ? submissions : []).find(s => {
+            const nameInDb = (s.nama || s.Nama || "").toString().trim().toLowerCase();
+            return nameInDb === cleanMember;
+        });
+        
+        // Pengecekan per LKPD dengan validasi ketat
+        const hasLk1 = sub && (
+            isValidInput(sub.lk1_a1_nama) || 
+            isValidInput(sub.lk1_a1_hasil) || 
+            isValidInput(sub.lk1_aplikasi)
+        );
+
+        const hasLk2 = sub && (
+            isValidInput(sub.lk2_fokus) || 
+            isValidInput(sub.lk2_data1) || 
+            isValidInput(sub.lk2_koneksi)
+        );
+
+        const hasLk3 = sub && (
+            isValidInput(sub.lk3_judul) || 
+            isValidInput(sub.lk3_format) || 
+            isValidInput(sub.steam_s) || 
+            isValidInput(sub.steam_t) || 
+            isValidInput(sub.steam_e) || 
+            isValidInput(sub.steam_a) || 
+            isValidInput(sub.steam_m)
+        );
+
+        const hasLk4 = sub && (
+            isValidInput(sub.lk4_kendala) || 
+            isValidInput(sub.lk4_kerjasama)
+        );
+
+        if(hasLk1) groupHasLk1 = true;
+        if(hasLk2) groupHasLk2 = true;
+        if(hasLk3) groupHasLk3 = true;
+        if(hasLk4) groupHasLk4 = true;
+
+        const isSelf = cleanMember === (currentStudentData.nama || "").trim().toLowerCase();
+
+        // UBAH CHECKLIST MENU UTAMA JIKA INI AKUN SAYA
+        if (isSelf) {
+            completionStatus.lkpd1 = hasLk1;
+            completionStatus.lkpd2 = hasLk2;
+            completionStatus.lkpd3 = hasLk3;
+            completionStatus.lkpd4 = hasLk4;
+            if (typeof updateChecklistUI === "function") updateChecklistUI();
+        }
+
+        const makePill = (isDone) => isDone 
+            ? `<span class="status-pill done">✅</span>` 
+            : `<span class="status-pill yet">-</span>`;
+
+        let btnLihat = `<span style="color:#94a3b8; font-size:11px;">Belum Ada</span>`;
+        if(sub && (hasLk1 || hasLk2 || hasLk3 || hasLk4)) {
+            btnLihat = `<button class="btn-lihat-isian" onclick="viewMemberAnswers('${memberNama.replace(/'/g, "\\'")}')">🔍 Lihat</button>`;
+        }
+
+        rowsHtml += `
+            <tr>
+                <td><strong>${memberNama}</strong> ${isSelf ? '<span style="font-size:11px; color:var(--primary); font-weight:800;">(Saya)</span>' : ''}</td>
+                <td style="text-align:center;">${makePill(hasLk1)}</td>
+                <td style="text-align:center;">${makePill(hasLk2)}</td>
+                <td style="text-align:center;">${makePill(hasLk3)}</td>
+                <td style="text-align:center;">${makePill(hasLk4)}</td>
+                <td style="text-align:center;">${btnLihat}</td>
+            </tr>
+        `;
+    });
+
+    tbody.innerHTML = rowsHtml;
+
+    // CEK SYARAT KELOMPOK UNTUK TOMBOL KIRIM LAPORAN
+    const hasPhotos = (typeof currentGroupPhotos !== 'undefined' && currentGroupPhotos.length > 0) || completionStatus.docs;
+    const btnSubmit = document.getElementById('btnSubmitFinalLaporan');
+    const submitBadge = document.getElementById('submitStatusBadge');
+
+    if (groupHasLk1 && groupHasLk2 && groupHasLk3 && groupHasLk4 && hasPhotos) {
+        if(btnSubmit) btnSubmit.disabled = false;
+        if(submitBadge) {
+            submitBadge.style.background = "#059669";
+            submitBadge.style.color = "#ffffff";
+            submitBadge.innerText = "✅ Tim Lengkap & Foto Terunggah, Siap Dikirim";
+        }
+    } else {
+        if(btnSubmit) btnSubmit.disabled = true;
+        if(submitBadge) {
+            submitBadge.style.background = "#334155";
+            submitBadge.style.color = "#94a3b8";
+            submitBadge.innerText = "🔒 LKPD / Foto Tim Belum Lengkap";
+        }
+    }
+}
+
+        // FUNGSI MEMBUKA MODAL INTIP JAWABAN TEMAN
+        function viewMemberAnswers(memberNama) {
+    // 1. Cek apakah variabel array data tersedia
+    if (!mergedSubmissionsData || !Array.isArray(mergedSubmissionsData) || mergedSubmissionsData.length === 0) {
+        alert("Data isian kelompok belum dimuat dari server. Silakan klik tombol 'Refresh Progress Tim'.");
+        return;
+    }
+
+    const targetNama = (memberNama || "").trim().toLowerCase();
+
+    // 2. Pencarian aman (Abaikan perbedaan kapital & cegah error jika nama kosong)
+    const sub = mergedSubmissionsData.find(s => {
+        const namaDb = s && (s.nama || s.Nama || "");
+        return namaDb.toString().trim().toLowerCase() === targetNama;
+    });
+
+    if (!sub) {
+        alert(`Data isian untuk "${memberNama}" belum tersimpan di server.`);
+        return;
+    }
+
+    // 3. Cek keberadaan elemen Modal HTML
+    const elTitle = document.getElementById('modalMemberName');
+    const elContent = document.getElementById('modalMemberContent');
+    const elModal = document.getElementById('modalViewAnswers');
+
+    if (!elTitle || !elContent || !elModal) {
+        alert("⚠️ Elemen modal HTML (modalViewAnswers) tidak ditemukan di halaman ini.");
+        return;
+    }
+
+    // 4. Set Judul Modal
+    elTitle.innerText = `Isian LKPD: ${sub.nama || sub.Nama || memberNama}`;
+
+    // 5. Pembantu format teks aman (Konversi ke String dulu baru replace)
+    const v = (val) => {
+        if (val === null || val === undefined || val.toString().trim() === "") {
+            return '<i style="color:#94a3b8;">(Kosong)</i>';
+        }
+        return String(val).replace(/\n/g, '<br>');
+    };
+
+    // 6. Susun Teks HTML
+    let html = `
+        <div style="margin-bottom:14px; padding:16px; background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:12px;">
+            <h4 style="margin:0 0 10px 0; color:#1e3a8a; font-size:15px; border-bottom:1px dashed #cbd5e1; padding-bottom:6px;">🔬 LKPD 1: Eksplorasi Sains</h4>
+            <p style="margin:4px 0;"><strong>Wahana 1:</strong> ${v(sub.lk1_a1_nama)} (${v(sub.lk1_a1_zona)})</p>
+            <p style="margin:4px 0 10px 0; font-size:13px; color:#475569;">${v(sub.lk1_a1_hasil)}</p>
+            <p style="margin:4px 0;"><strong>Wahana 2:</strong> ${v(sub.lk1_a2_nama)}</p>
+            <p style="margin:4px 0 10px 0; font-size:13px; color:#475569;">${v(sub.lk1_a2_hasil)}</p>
+            <p style="margin:4px 0;"><strong>Relevansi Kehidupan:</strong><br><span style="font-size:13.5px;">${v(sub.lk1_aplikasi)}</span></p>
+        </div>
+
+        <div style="margin-bottom:14px; padding:16px; background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:12px;">
+            <h4 style="margin:0 0 10px 0; color:#1e3a8a; font-size:15px; border-bottom:1px dashed #cbd5e1; padding-bottom:6px;">🏛️ LKPD 2: Arsitektur Rumah Adat</h4>
+            <p style="margin:4px 0;"><strong>Deskripsi Bentuk & Tata Ruang:</strong><br><span style="font-size:13.5px;">${v(sub.lk2_fokus)}</span></p>
+            <p style="margin:8px 0 4px 0;"><strong>Data Kunci 1:</strong><br><span style="font-size:13.5px;">${v(sub.lk2_data1)}</span></p>
+        </div>
+
+        <div style="margin-bottom:14px; padding:16px; background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:12px;">
+            <h4 style="margin:0 0 10px 0; color:#1e3a8a; font-size:15px; border-bottom:1px dashed #cbd5e1; padding-bottom:6px;">🛠️ LKPD 3: Tantangan STEAM</h4>
+            <p style="margin:4px 0;"><strong>Judul Proyek:</strong> <strong style="color:#059669;">${v(sub.lk3_judul)}</strong> (${v(sub.lk3_format)})</p>
+            <p style="margin:8px 0 4px 0;"><strong>[S] Science:</strong> ${v(sub.steam_s)}</p>
+            <p style="margin:4px 0;"><strong>[T] Technology:</strong> ${v(sub.steam_t)}</p>
+        </div>
+
+        <div style="margin-bottom:14px; padding:16px; background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:12px;">
+            <h4 style="margin:0 0 10px 0; color:#1e3a8a; font-size:15px; border-bottom:1px dashed #cbd5e1; padding-bottom:6px;">🧠 LKPD 4: Refleksi</h4>
+            <p style="margin:4px 0;"><strong>Kendala & Solusi Lapangan:</strong><br><span style="font-size:13.5px;">${v(sub.lk4_kendala)}</span></p>
+            <p style="margin:8px 0 4px 0;"><strong>Refleksi Kolaborasi & Budaya:</strong><br><span style="font-size:13.5px;">${v(sub.lk4_kerjasama)}</span></p>
+        </div>
+    `;
+
+    elContent.innerHTML = html;
+    elModal.classList.add('active');
+}
+
+        function closeModal() {
+            document.getElementById('modalViewAnswers').classList.remove('active');
+        }
+
+        async function handleLoginMurid(e) {
+    e.preventDefault();
+    const u = document.getElementById('usernameMurid').value.trim();
+    const p = document.getElementById('passwordMurid').value.trim();
+    const btn = document.getElementById('btnLoginMurid');
+    btn.innerText = "Memuat..."; btn.disabled = true;
+
+    const uniqueEndpoints = [...new Set(Object.values(API_ENDPOINTS))];
+    let loggedInUser = null;
+
+    for (const url of uniqueEndpoints) {
+        if (!url || !url.includes("script.google.com/macros/s/")) continue;
+        try {
+            const formData = new URLSearchParams();
+            formData.append("action", "login");
+            formData.append("nisn", u);
+            formData.append("password", p);
+
+            const res = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: formData.toString()
+            });
+
+            if (res.ok) {
+                const text = await res.text();
+                if (text.trim().startsWith('{')) {
+                    const data = JSON.parse(text);
+                    if (data.status === "success") {
+                        loggedInUser = data;
+                        break;
+                    }
+                }
+            }
+        } catch (err) { console.warn("Skip URL:", url); }
+    }
+
+    btn.innerText = "Masuk"; btn.disabled = false;
+
+    if (loggedInUser) {
+        const st = loggedInUser.user;
+        const ms = loggedInUser.misi || {};
+
+        currentStudentData = {
+            nisn: st.nisn, 
+            nama: st.nama, 
+            kelas: st.kelas || "X-1", 
+            kelompok: st.kelompok || "Kelompok 1",
+            groupId: st.groupId || "X1-K1",
+            groupMembers: st.groupMembers || [st.nama],
+            misiCode: ms.misiCode || "MISSION 01 — ADAPT",
+            anjungan: ms.anjungan || "Anjungan NTB (Rumah Dalam Loka)",
+            guruPendamping: st.guruPendamping || "Nurul Faozi, S.Pd."
+        };
+
+        updateUIProfile();
+        
+        loadGroupPhotosQuota(); 
+
+        // 🟢 DIPANGGIL DI SINI: CEK STATUS PENGIIRIMAN LAPORAN KELOMPOK
+        checkGroupSubmittedStatus();
+
+        syncGroupStatusProgress(); // Ambil Data Teman Sekelompok saat Login
+        loadStudentOwnAnswers();
+        document.querySelectorAll('.item-murid').forEach(el => el.style.display = 'flex');
+        document.querySelectorAll('.item-admin').forEach(el => el.style.display = 'none');
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('dashboardScreen').classList.add('active');
+        backToHub();
+    } else {
+        showToast("Gagal Login: NISN atau Password salah!", "error");
+    }
+}
+
+        function updateUIProfile() {
+    const mCode = currentStudentData.misiCode;
+    const det = MISI_DETAILS[mCode] || MISI_DETAILS["MISSION 01 — ADAPT"];
+
+    // Fungsi pembantu aman (bebas crash jika ID elemen tidak ada di HTML)
+    const setText = (id, text) => {
+        const el = document.getElementById(id);
+        if (el) el.innerText = text || '-';
+    };
+
+    // 1. Pengisian Teks Identitas Profil
+    setText('detNama', currentStudentData.nama);
+    setText('detNisn', `${currentStudentData.nisn} (${currentStudentData.kelas})`);
+    setText('detKelompok', currentStudentData.kelompok);
+    setText('detGroupId', currentStudentData.groupId);
+    setText('detGroupIdTitle', currentStudentData.groupId);
+    setText('lblKelompokMerger', `${currentStudentData.kelas} ${currentStudentData.kelompok} (Group ID: ${currentStudentData.groupId})`);
+    setText('detAnjungan', currentStudentData.anjungan);
+    setText('detGuru', currentStudentData.guruPendamping);
+
+    // 2. Render Kartu Misi & Deskripsi
+    const elJudul = document.getElementById('detMisiJudul');
+    if (elJudul) elJudul.innerText = `🎯 Kartu Misi Proyek: ${currentStudentData.misiCode}`;
+
+    const elDesk = document.getElementById('detMisiDeskripsi');
+    if (elDesk) {
+        elDesk.innerHTML = `
+            <div class="mission-list">
+                <div class="mission-item">
+                    <span class="mission-label">📌 Pertanyaan Utama Misi</span>
+                    <span class="mission-value"><strong>${det.tanya}</strong></span>
+                </div>
+                <div class="mission-item">
+                    <span class="mission-label">🔍 Fokus Observasi</span>
+                    <span class="mission-value">${det.amati}</span>
+                </div>
+                <div class="mission-item">
+                    <span class="mission-label">📸 Target Data (Min. 5 Foto)</span>
+                    <span class="mission-value">${det.data}</span>
+                </div>
+                <div class="mission-item">
+                    <span class="mission-label">🧪 Integrasi Sains & Budaya</span>
+                    <span class="mission-value">${det.iptek}</span>
+                </div>
+                <div class="mission-item">
+                    <span class="mission-label">🛠️ Tantangan STEAM Proyek</span>
+                    <span class="mission-value">${det.steam}</span>
+                </div>
+            </div>
+        `;
+    }
+    
+    setText('lblPanduanMisiJudul', `📌 Misi Rumah Adat: ${currentStudentData.misiCode} (${currentStudentData.anjungan})`);
+    
+    const elPanduanText = document.getElementById('lblPanduanMisiText');
+    if (elPanduanText) {
+        elPanduanText.innerHTML = `
+            <div style="margin-bottom: 8px;"><strong>Fokus Pengamatan Arsitektur:</strong> ${det.amati}</div>
+            <div><strong>Data Wajib Dikumpulkan:</strong> ${det.data}</div>
+        `;
+    }
+
+    setText('lblData1', det.d1);
+    setText('lblData2', det.d2);
+    setText('lblData3', det.d3);
+    setText('lblSteamTantanganJudul', `🛠️ Tantangan Proyek STEAM: ${currentStudentData.misiCode}`);
+    setText('lblSteamTantanganText', det.steam);
+
+    updateChecklistUI();
+
+    // 3. Render Daftar Anggota Kelompok di Profil
+    const containerAnggota = document.getElementById('detListAnggota');
+    if (containerAnggota) {
+        const members = currentStudentData.groupMembers || [currentStudentData.nama];
+        if (members.length > 0) {
+            containerAnggota.innerHTML = members.map(namaMem => {
+                const isSelf = namaMem.trim().toLowerCase() === currentStudentData.nama.trim().toLowerCase();
+                return `<span class="member-badge">${namaMem} ${isSelf ? '(Saya)' : ''}</span>`;
+            }).join(' ');
+        } else {
+            containerAnggota.innerHTML = `<span style="color: var(--text-muted); font-size: 13px;">Belum ada data anggota.</span>`;
+        }
+    }
+}
+
+        function handleLoginAdmin(e) {
+            e.preventDefault();
+            const u = document.getElementById('usernameAdmin').value.trim();
+            const p = document.getElementById('passwordAdmin').value.trim();
+
+            if(u === "admin.guru" && p === "admin123") {
+                document.querySelectorAll('.item-murid').forEach(el => el.style.display = 'none');
+                document.querySelectorAll('.item-admin').forEach(el => el.style.display = 'flex');
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('dashboardScreen').classList.add('active');
+                openSection('secAdminPeserta');
+            } else { alert("Password Admin Salah!"); }
+        }
+
+        function handleLogout() {
+            document.getElementById('dashboardScreen').classList.remove('active');
+            document.getElementById('loginScreen').style.display = 'flex';
+        }
+
+        function saveProgress(type) {
+    if (!currentStudentData || !currentStudentData.groupId) {
+        showToast("⚠️ Data siswa tidak ditemukan. Silakan login ulang!", "error");
+        return;
+    }
+
+    const targetUrl = getApiUrl(currentStudentData ? currentStudentData.kelas : "X-1");
+    const getVal = (id) => document.getElementById(id) ? document.getElementById(id).value.trim() : "";
+
+    // 1. Susun payload langsung di tingkat paling luar (top-level)
+    const payload = {
+        action: "saveLKPD",
+        nisn: currentStudentData.nisn || "",
+        nama: currentStudentData.nama || "",
+        kelas: currentStudentData.kelas || "X-1",
+        kelompok: currentStudentData.kelompok || "Kelompok 1",
+        groupId: currentStudentData.groupId || "X1-K1",
+        anjungan: currentStudentData.anjungan || "",
+        misiCode: currentStudentData.misiCode || "",
+
+        // Data Isian LKPD 1 - 4
+        lk1_a1_nama: getVal('lk1_alat1_nama'), lk1_a1_zona: getVal('lk1_alat1_zona'), lk1_a1_hasil: getVal('lk1_alat1_hasil'), lk1_a1_konsep: getVal('lk1_alat1_konsep'),
+        lk1_a2_nama: getVal('lk1_alat2_nama'), lk1_a2_zona: getVal('lk1_alat2_zona'), lk1_a2_hasil: getVal('lk1_alat2_hasil'), lk1_a2_konsep: getVal('lk1_alat2_konsep'),
+        lk1_a3_nama: getVal('lk1_alat3_nama'), lk1_a3_zona: getVal('lk1_alat3_zona'), lk1_a3_hasil: getVal('lk1_alat3_hasil'), lk1_a3_konsep: getVal('lk1_alat3_konsep'),
+        lk1_aplikasi: getVal('lk1_aplikasi'),
+
+        lk2_fokus: getVal('lk2_fokus'), lk2_data1: getVal('lk2_data1'), lk2_data2: getVal('lk2_data2'), lk2_data3: getVal('lk2_data3'), lk2_koneksi: getVal('lk2_koneksi'),
+        lk3_judul: getVal('lk3_judul'), lk3_format: getVal('lk3_format'),
+        steam_s: getVal('steam_s'), steam_t: getVal('steam_t'), steam_e: getVal('steam_e'), steam_a: getVal('steam_a'), steam_m: getVal('steam_m'),
+        lk4_kendala: getVal('lk4_kendala'), lk4_kerjasama: getVal('lk4_kerjasama')
+    };
+
+    // 2. Simpan cadangan lokal
+    localStorage.setItem(`backup_lkpd_${payload.groupId}_${payload.nisn}`, JSON.stringify(payload));
+
+    showToast("Menyimpan data...", "info");
+
+    // 3. Kirim payload JSON murni
+    fetch(targetUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+    })
+    .then(res => res.json())
+    .then(data => {
+        if(data.status === "success") {
+            if (type) completionStatus[type] = true;
+            updateChecklistUI();
+            syncGroupStatusProgress();
+            showToast("✅ Tersimpan! Data LKPD berhasil disinkronkan.", "success");
+            backToHub();
+        } else {
+            showToast("⚠️ " + (data.message || "Gagal menyimpan"), "error");
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        showToast("⚠️ Gagal kirim ke server, tapi data tersimpan di HP/Browser ini.", "error");
+        if (type) completionStatus[type] = true;
+        updateChecklistUI();
+        backToHub();
+    });
+}
+
+       async function submitFinalLaporanKeGuru() {
+    if (!currentStudentData) {
+        showToast("⚠️ Silakan login terlebih dahulu!", "error");
+        return;
+    }
+
+    const btn = document.getElementById('btnSubmitFinalLaporan');
+    const isRevisi = btn && btn.innerText.includes("Revisi");
+
+    const setuju = await showCustomConfirm(
+        isRevisi ? "Kirim Revisi Laporan?" : "Kirim Laporan Final?", 
+        isRevisi 
+            ? "Laporan terbaru akan digantikan di server. Lanjutkan?" 
+            : "Laporan kelompok akan dikirimkan. Pastikan seluruh isian sudah benar!", 
+        "🚀"
+    );
+
+    if (!setuju) return;
+
+    if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = `⌛ Memproses Laporan di Server...`;
+    }
+
+    try {
+        const targetUrl = getApiUrl(currentStudentData.kelas);
+
+        // SKEMA BARU: Payload sangat ringan, HTML akan disusun penuh oleh Apps Script
+        const payload = {
+            action: "submitFinalLaporan",
+            groupId: currentStudentData.groupId || "",
+            nisn: currentStudentData.nisn || "",
+            nama: currentStudentData.nama || "",
+            kelas: currentStudentData.kelas || ""
+        };
+
+        // Kirim via POST JSON murni
+        const res = await fetch(targetUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify(payload)
+        });
+
+        const resData = await res.json();
+
+        if (resData.status === "success") {
+            showToast("✅ " + (isRevisi ? "Revisi laporan berhasil menimpa data lama!" : "Laporan berhasil dikirim!"), "success");
+            if (typeof checkGroupSubmittedStatus === "function") {
+                setTimeout(() => { checkGroupSubmittedStatus(); }, 1000);
+            }
+        } else {
+            showToast("⚠️ Server: " + (resData.message || "Gagal memproses laporan"), "error");
+        }
+
+    } catch (err) {
+        console.error("Error submit report:", err);
+        showToast("⚠️ Terjadi kesalahan koneksi. Silakan coba lagi.", "error");
+    } finally {
+        if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = `🔄 Kirim Revisi Laporan Kelompok`;
+        }
+    }
+}
+        function fetchAndMergeGroupData() {
+            const gId = currentStudentData ? currentStudentData.groupId : "X1-K1";
+            const targetUrl = getApiUrl(currentStudentData ? currentStudentData.kelas : "X-1");
+            alert(`Mengambil seluruh isian kelompok dengan Group ID (${gId})...`);
+
+            fetch(`${targetUrl}?action=getGroupSubmissions&groupId=${encodeURIComponent(gId)}`)
+            .then(res => res.json())
+            .then(data => {
+                if(data.status === "success" && data.submissions.length > 0) {
+                    mergedSubmissionsData = data.submissions;
+                    alert(`✅ Berhasil membuat laproan ${data.submissions.length} isian anggota kelompok!`);
+                    updateDraftPreview();
+                } else { alert(`Belum ada anggota lain yang simpan data.`); }
+            })
+            .catch(err => alert("Gagal: " + err.message));
+        }
+
+        function handleFotoUpload(event, targetPreviewId) {
+            const files = event.target.files;
+            const previewContainer = document.getElementById(targetPreviewId);
+            previewContainer.innerHTML = '';
+
+            if (targetPreviewId === 'previewIptek') fotoIptekBase64 = [];
+            if (targetPreviewId === 'previewAnjungan') fotoAnjunganBase64 = [];
+
+            Array.from(files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const base64Data = e.target.result;
+                    if (targetPreviewId === 'previewIptek') fotoIptekBase64.push(base64Data);
+                    if (targetPreviewId === 'previewAnjungan') fotoAnjunganBase64.push(base64Data);
+
+                    const img = document.createElement('img');
+                    img.src = base64Data; img.style.width = '90px'; img.style.height = '90px'; img.style.objectFit = 'cover'; img.style.borderRadius = '10px'; img.style.border = '1.5px solid #cbd5e1';
+                    previewContainer.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function generateDraftHTML(submissions = [], photos = []) {
+    const user = currentStudentData || {};
+    
+    // 🟢 1. PARSE & NORMALISASI DATA FOTO KELOMPOK
+    let rawPhotos = (photos && photos.length > 0) ? photos : (typeof currentGroupPhotos !== 'undefined' ? currentGroupPhotos : []);
+    
+    // Jika data foto dikirim sebagai String JSON dari Google Sheets, parse dahulu
+    if (typeof rawPhotos === 'string') {
+        try { 
+            rawPhotos = JSON.parse(rawPhotos); 
+        } catch(e) { 
+            rawPhotos = []; 
+        }
+    }
+    
+    const groupPhotos = Array.isArray(rawPhotos) ? rawPhotos : [];
+
+    const groupMembers = user.groupMembers || [user.nama || 'Murid'];
+    const memberListHtml = groupMembers.map((m, idx) => `<li>${idx + 1}. ${m}</li>`).join("");
+
+    // Helper untuk menggabungkan isian murid dari submissions
+    const mergeField = (fieldKeys) => {
+        if (!submissions || submissions.length === 0) return `<em style="color:#94a3b8;">(Belum diisi)</em>`;
+        
+        let foundValues = [];
+        submissions.forEach(sub => {
+            fieldKeys.forEach(key => {
+                if (sub[key] && String(sub[key]).trim() !== "") {
+                    foundValues.push(`<strong>${sub.nama || 'Anggota'}:</strong> ${sub[key]}`);
+                }
+            });
+        });
+
+        return foundValues.length > 0 
+            ? foundValues.join("<br>") 
+            : `<em style="color:#94a3b8;">(Belum diisi)</em>`;
+    };
+
+    // 🟢 2. FUNGSI EKSTRAK URL / BASE64 FOTO SECARA AMAN
+    const getCleanImgUrl = (item) => {
+        if (!item) return '';
+        
+        // Ambil properti .url jika item berbentuk Objek JSON {"id": "...", "url": "..."}
+        let url = (typeof item === 'object' && item !== null && item.url) ? item.url : String(item);
+        url = url.trim();
+
+        // Jika berbentuk Base64 (data:image/...) atau URL HTTP biasa, kembalikan langsung
+        if (url.startsWith('data:image') || url.startsWith('http')) {
+            return url;
+        }
+
+        // Jika berupa File ID Google Drive biasa, ubah ke URL Thumbnail
+        const match = url.match(/[-\w]{25,}/);
+        if (match && match[0]) {
+            return `https://drive.google.com/thumbnail?id=${match[0]}&sz=w800`;
+        }
+        
+        return url;
+    };
+
+    // 🟢 3. SUSUN TAMPILAN FOTO DOKUMENTASI (GRID FOTO)
+    let photosHtml = "";
+    if (groupPhotos && groupPhotos.length > 0) {
+        photosHtml = `<div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;">`;
+        groupPhotos.forEach((item, index) => {
+            const imgUrl = getCleanImgUrl(item);
+
+            if (imgUrl) {
+                photosHtml += `
+                    <div style="flex: 1 1 calc(33.333% - 10px); max-width: calc(33.333% - 10px); box-sizing: border-box; text-align: center; border: 1px solid #cbd5e1; padding: 6px; border-radius: 6px; background: #f8fafc;">
+                        <img src="${imgUrl}" 
+                             style="width: 100%; height: 120px; object-fit: cover; border-radius: 4px; display: block;" 
+                             alt="Dokumentasi ${index + 1}" />
+                        <span style="font-size: 10px; color: #475569; display: block; margin-top: 4px; font-weight: bold;">Dokumentasi #${index + 1}</span>
+                    </div>
+                `;
+            }
+        });
+        photosHtml += `</div>`;
+    } else {
+        photosHtml = `<p style="font-size: 12px; color: #94a3b8; font-style: italic;">Belum ada dokumentasi foto yang diunggah oleh kelompok ini.</p>`;
+    }
+
+    return `
+        <div style="font-family: Arial, sans-serif; color: #1e293b; padding: 20px; line-height: 1.6; background: #ffffff;">
+            <div style="text-align: center; border-bottom: 2.5px solid #0284c7; padding-bottom: 10px; margin-bottom: 15px;">
+                <h2 style="margin: 0; color: #0284c7; font-size: 18px; text-transform: uppercase;">LAPORAN KOKURIKULER GABUNGAN KELOMPOK</h2>
+                <h3 style="margin: 4px 0 0; font-size: 13px; font-weight: 500; color: #475569;">NEXT GEN NUSA — SMA Negeri 1 Jakarta</h3>
+            </div>
+
+            <table style="width: 100%; font-size: 12px; margin-bottom: 15px; border-collapse: collapse; background: #f8fafc; border: 1px solid #cbd5e1;">
+                <tr><td style="padding: 6px 10px; font-weight: bold; width: 140px;">Group ID / Kelas</td><td style="padding: 6px 10px;">: <strong>${user ? user.groupId : '-'}</strong> (${user ? user.kelas : '-'} / ${user ? user.kelompok : '-'})</td></tr>
+                <tr><td style="padding: 6px 10px; font-weight: bold;">Anjungan Target</td><td style="padding: 6px 10px;">: ${user ? (user.anjungan || '-') : '-'} [${user ? (user.misiCode || '-') : '-'}]</td></tr>
+            </table>
+
+            <h4 style="border-left: 4px solid #0284c7; padding-left: 8px; color: #0f172a; margin-top: 15px; font-size:13px;">I. DAFTAR ANGGOTA KELOMPOK TIM LAPANGAN</h4>
+            <ul style="font-size: 12px; margin: 5px 0 15px 15px; padding: 0; list-style-type: none;">
+                ${memberListHtml}
+            </ul>
+
+            <h4 style="border-left: 4px solid #0284c7; padding-left: 8px; color: #0f172a; margin-top: 15px; font-size:13px;">II. LKPD 1: EKSPLORASI SAINS & TEKNOLOGI TERPADU (PP-IPTEK)</h4>
+            <div style="font-size: 12px; margin-bottom:12px;">
+                <strong>Wahana 1:</strong>
+                <p style="margin:2px 0; color:#475569;"><em>Hasil Observasi:</em></p>
+                ${mergeField(['lk1_alat1_hasil', 'lk1_alat1_nama', 'lk1_alat1_zona', 'lk1_a1_hasil', 'lk1_a1_nama', 'lk1_a1_zona'])}
+                <p style="margin:2px 0; color:#475569;"><em>Prinsip Sains & Konsep:</em></p>
+                ${mergeField(['lk1_alat1_konsep', 'lk1_a1_konsep'])}
+            </div>
+            <div style="font-size: 12px; margin-bottom:12px;">
+                <strong>Wahana 2:</strong>
+                <p style="margin:2px 0; color:#475569;"><em>Hasil Observasi:</em></p>
+                ${mergeField(['lk1_alat2_hasil', 'lk1_alat2_nama', 'lk1_alat2_zona', 'lk1_a2_hasil', 'lk1_a2_nama', 'lk1_a2_zona'])}
+                <p style="margin:2px 0; color:#475569;"><em>Prinsip Sains & Konsep:</em></p>
+                ${mergeField(['lk1_alat2_konsep', 'lk1_a2_konsep'])}
+            </div>
+            <div style="font-size: 12px; margin-bottom:12px;">
+                <strong>Wahana 3:</strong>
+                <p style="margin:2px 0; color:#475569;"><em>Hasil Observasi:</em></p>
+                ${mergeField(['lk1_alat3_hasil', 'lk1_alat3_nama', 'lk1_alat3_zona', 'lk1_a3_hasil', 'lk1_a3_nama', 'lk1_a3_zona'])}
+                <p style="margin:2px 0; color:#475569;"><em>Prinsip Sains & Konsep:</em></p>
+                ${mergeField(['lk1_alat3_konsep', 'lk1_a3_konsep'])}
+            </div>
+            <p style="font-size:12px;"><strong>Relevansi Kehidupan Modern:</strong><br>${mergeField(['lk1_aplikasi'])}</p>
+
+            <h4 style="border-left: 4px solid #0284c7; padding-left: 8px; color: #0f172a; margin-top: 15px; font-size:13px;">III. LKPD 2: OBSERVASI ARSITEKTUR RUMAH ADAT</h4>
+            <div style="font-size: 12px;">
+                <p style="margin:4px 0;"><strong>Fokus Observasi:</strong><br>${mergeField(['lk2_fokus'])}</p>
+                <p style="margin:4px 0;"><strong>Data Karakteristik Bangunan:</strong><br>${mergeField(['lk2_data1'])}</p>
+                <p style="margin:4px 0;"><strong>Bentuk Adaptasi Lingkungan:</strong><br>${mergeField(['lk2_data2'])}</p>
+                <p style="margin:4px 0;"><strong>Integrasi Kebudayaan & Sains:</strong><br>${mergeField(['lk2_koneksi'])}</p>
+            </div>
+
+            <h4 style="border-left: 4px solid #0284c7; padding-left: 8px; color: #0f172a; margin-top: 15px; font-size:13px;">IV. LKPD 3: PERANCANGAN PROYEK (STEAM)</h4>
+            <div style="font-size: 12px;">
+                <p style="margin:4px 0;"><strong>Judul Proyek:</strong><br>${mergeField(['lk3_judul'])}</p>
+                <p style="margin:4px 0;"><strong>Format Produk:</strong><br>${mergeField(['lk3_format'])}</p>
+                <p style="margin:4px 0;"><strong>[S] Science:</strong> ${mergeField(['steam_s'])}</p>
+                <p style="margin:4px 0;"><strong>[T] Technology:</strong> ${mergeField(['steam_t'])}</p>
+                <p style="margin:4px 0;"><strong>[E] Engineering:</strong> ${mergeField(['steam_e'])}</p>
+                <p style="margin:4px 0;"><strong>[A] Arts:</strong> ${mergeField(['steam_a'])}</p>
+                <p style="margin:4px 0;"><strong>[M] Mathematics:</strong> ${mergeField(['steam_m'])}</p>
+            </div>
+
+            <h4 style="border-left: 4px solid #0284c7; padding-left: 8px; color: #0f172a; margin-top: 15px; font-size:13px;">V. LKPD 4: REFLEKSI MANDIRI</h4>
+            <div style="font-size: 12px;">
+                <p style="margin:4px 0;"><strong>Kendala Lapangan & Solusi:</strong><br>${mergeField(['lk4_kendala'])}</p>
+                <p style="margin:4px 0;"><strong>Refleksi Kolaborasi Tim:</strong><br>${mergeField(['lk4_kerjasama'])}</p>
+            </div>
+
+            <!-- 🟢 SEKSI VI: DOKUMENTASI FOTO KELOMPOK -->
+            <h4 style="border-left: 4px solid #0284c7; padding-left: 8px; color: #0f172a; margin-top: 15px; font-size:13px;">VI. DOKUMENTASI FOTO KELOMPOK LAPANGAN</h4>
+            ${photosHtml}
+        </div>
+    `;
+}
+
+async function updateDraftPreview() {
+    const renderArea = document.getElementById('draftDocumentRender');
+    if (!renderArea) return;
+
+    if (!currentStudentData || !currentStudentData.groupId) {
+        renderArea.innerHTML = `<div style="text-align:center; padding:30px; color:#ef4444;">⚠️ Silakan login terlebih dahulu.</div>`;
+        return;
+    }
+
+    renderArea.innerHTML = `<div style="text-align:center; padding:30px; color:#0284c7;">🔄 Mengambil & menggabungkan isian seluruh anggota kelompok...</div>`;
+
+    try {
+        const targetUrl = getApiUrl ? getApiUrl(currentStudentData.kelas) : SCRIPT_URL;
+        const response = await fetch(`${targetUrl}?action=getGroupSubmissions&groupId=${encodeURIComponent(currentStudentData.groupId)}`);
+        const result = await response.json();
+
+        if (result.status === "success" && result.submissions && result.submissions.length > 0) {
+            renderArea.innerHTML = generateDraftHTML(result.submissions);
+        } else {
+            renderArea.innerHTML = `<div style="text-align:center; padding:30px; color:#64748b;">⚠️ Belum ada isian LKPD dari anggota kelompok ini yang tersimpan di server.</div>`;
+        }
+    } catch (err) {
+        console.error("Error fetching group submissions:", err);
+        renderArea.innerHTML = `<div style="text-align:center; padding:30px; color:#ef4444;">⚠️ Gagal memuat data gabungan kelompok. Periksa koneksi internet.</div>`;
+    }
+}
+
+// 🟢 FUNGSI UNDUH PDF SISI SISWA (LENGKAP DENGAN ISIAN LKPD & FOTO)
+function exportToPDF() {
+    // Ambil elemen pratinjau laporan yang sedang tampil di layar
+    const element = document.getElementById('printableReport') || 
+                    document.getElementById('reportPreviewArea') || 
+                    document.getElementById('draftDocumentRender');
+
+    if (!element || !element.innerText.trim() || element.innerText.includes("Silakan klik tombol")) {
+        showToast("⚠️ Silakan klik tombol 'Buat Laporan Kelompok' terlebih dahulu!", "error");
+        return;
+    }
+
+    const gId = (currentStudentData && currentStudentData.groupId) ? currentStudentData.groupId : "Kelompok";
+    showToast("⏳ Memproses unduhan PDF...", "info");
+
+    const opt = {
+        margin:       [10, 10, 10, 10],
+        filename:     `Laporan_Jurnal_NEXT GEN NUSA_${gId}.pdf`,
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true, logging: false },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    if (typeof html2pdf !== 'undefined') {
+        html2pdf().set(opt).from(element).save().then(() => {
+            showToast("✅ Berhasil mengunduh PDF!", "success");
+        }).catch(err => {
+            console.error("PDF Error:", err);
+            showToast("⚠️ Gagal mengunduh PDF. Coba gunakan fitur Cetak/Word.", "error");
+        });
+    } else {
+        showToast("⚠️ Pustaka PDF belum terluat sempurna. Silakan refresh halaman.", "error");
+    }
+}
+
+// 🟢 FUNGSI UNDUH WORD SISI SISWA (SESUAI PRATINJAU, ISI LKPD UTUH, & FOTO AMAN)
+// 🟢 FUNGSI UNDUH WORD SISI SISWA (INSTAN, BEBAS CORS, & GAMBAR TAMPIL UTUH)
+function exportToWord() {
+    // 1. Ambil elemen pratinjau yang sedang tampil di layar
+    const element = document.getElementById('printableReport') || 
+                    document.getElementById('reportPreviewArea') || 
+                    document.getElementById('draftDocumentRender');
+
+    if (!element || !element.innerText.trim() || element.innerText.includes("Silakan klik tombol")) {
+        showToast("⚠️ Silakan klik tombol 'Buat Laporan Kelompok' terlebih dahulu!", "error");
+        return;
+    }
+
+    const gId = (currentStudentData && currentStudentData.groupId) ? currentStudentData.groupId : "Kelompok";
+    showToast("⏳ Memproses dokumen Word...", "info");
+
+    // 2. Duplikasi elemen agar tampilan di browser tidak berubah
+    const clone = element.cloneNode(true);
+
+    // 3. Ambil data foto langsung dari memori JavaScript aplikasi
+    const photos = (typeof currentGroupPhotos !== 'undefined' && Array.isArray(currentGroupPhotos)) ? currentGroupPhotos : [];
+    const imgElements = clone.querySelectorAll('table img, .card img');
+
+    // Injeksi langsung data URL / Base64 dari memori ke elemen klon
+    imgElements.forEach((img, idx) => {
+        if (photos[idx]) {
+            const rawSrc = (typeof photos[idx] === 'object' && photos[idx].url) ? photos[idx].url : photos[idx];
+            if (rawSrc) {
+                img.setAttribute('src', rawSrc);
+            }
+        }
+    });
+
+    const bodyContent = clone.innerHTML;
+
+    // 4. Header HTML khusus Microsoft Word agar format tabel & posisi gambar presisi
+    const htmlHeader = `
+        <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+        <head>
+            <meta charset='utf-8'>
+            <title>Laporan Jurnal Kokurikuler NEXT GEN NUSA</title>
+            <style>
+                body { font-family: Arial, sans-serif; font-size: 11pt; line-height: 1.5; color: #1e293b; }
+                table { border-collapse: collapse; width: 100%; margin-bottom: 15px; }
+                td, th { border: 1px solid #cbd5e1; padding: 6px 10px; font-size: 10pt; }
+                h2, h3, h4 { color: #0284c7; }
+                img { width: 100%; max-width: 250px; height: auto; border-radius: 6px; display: block; margin: 0 auto 6px auto; }
+            </style>
+        </head>
+        <body>
+    `;
+    const htmlFooter = "</body></html>";
+
+    const fullContent = htmlHeader + bodyContent + htmlFooter;
+    const blob = new Blob(['\ufeff' + fullContent], { type: 'application/msword' });
+    
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `Laporan_Jurnal_NEXT GEN NUSA_${gId}.doc`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(a.href);
+
+    showToast("✅ Berhasil mengunduh dokumen Word!", "success");
+}
+
+// Menyelaraskan panggilan nama fungsi
+function downloadReportPDF() { exportToPDF(); }
+function downloadReportWord() { exportToWord(); }
+// LOGIKA ADMIN GURU
+function updateAdminGroupIdLabel() {
+    const kls = document.getElementById('selKelasAdmin').value.replace(/[^0-9]/g, '');
+    const kel = document.getElementById('selKelompokAdmin').value.replace(/[^0-9]/g, '');
+    document.getElementById('lblAdminGroupId').innerText = `X${kls}-K${kel}`;
+}
+
+function autoFillMisiAdmin() {
+    const m = document.getElementById('selMisiAdmin').value;
+    const det = MISI_DETAILS[m] || {};
+    document.getElementById('adminMisiDeskripsi').value = 
+        `Pertanyaan Utama: ${det.tanya || '-'}\n` +
+        `Apa yang Diamati: ${det.amati || '-'}\n` +
+        `Data Dikumpulkan: ${det.data || '-'}\n` +
+        `Koneksi Sains & Budaya: ${det.iptek || '-'}\n` +
+        `Tantangan STEAM Proyek: ${det.steam || '-'}`;
+}
+
+async function syncAdminDatabase() {
+    const kls = document.getElementById('adminFilterKelas').value;
+    alert(`Mengambil database murid untuk Kelas ${kls}...`);
+    try {
+        const res = await fetch(`${getApiUrl(kls)}?action=getAllDataAdmin`);
+        const data = await res.json();
+        if (data.status === "success" && data.murid) {
+            adminCachedStudents = data.murid; 
+            populateMuridDropdown();
+            alert(`✅ Sukses memuat ${data.murid.length} murid!`);
+        }
+    } catch (err) { alert("Gagal: " + err.message); }
+}
+
+function populateMuridDropdown() {
+    const kls = document.getElementById('adminFilterKelas').value;
+    const selectEl = document.getElementById('adminSelectMurid');
+    selectEl.innerHTML = '<option value="">-- Pilih Murid --</option>';
+    adminCachedStudents.filter(s => s.kelas === kls).forEach(s => {
+        const opt = document.createElement('option'); 
+        opt.value = s.nisn; 
+        opt.textContent = `${s.nama} (${s.kelompok})`; 
+        selectEl.appendChild(opt);
+    });
+}
+
+        function onSelectMuridAdmin() {
+            const s = adminCachedStudents.find(s => s.nisn === document.getElementById('adminSelectMurid').value);
+            if (s) {
+                document.getElementById('addNisn').value = s.nisn; document.getElementById('addNama').value = s.nama;
+                document.getElementById('addKelas').value = s.kelas; document.getElementById('addKelompok').value = s.kelompok;
+                document.getElementById('addPass').value = s.pass || "123456";
+                document.getElementById('lblFormStudentTitle').innerText = `✏️ Edit Data Murid: ${s.nama}`;
+            }
+        }
+
+        function resetFormMuridAdmin() {
+            document.getElementById('addNisn').value = ''; document.getElementById('addNama').value = ''; document.getElementById('addPass').value = '';
+            document.getElementById('adminSelectMurid').value = ''; document.getElementById('lblFormStudentTitle').innerText = '➕ Tambah / Edit Data Murid';
+        }
+
+        function handleUpdatePlottingAdmin(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btnSavePlottingBtn'); btn.innerText = "Mengirim..."; btn.disabled = true;
+            const kls = document.getElementById('selKelasAdmin').value;
+            const dataObj = { groupId: document.getElementById('lblAdminGroupId').innerText, kelas: kls, kelompok: document.getElementById('selKelompokAdmin').value, misiCode: document.getElementById('selMisiAdmin').value, misiDeskripsi: document.getElementById('adminMisiDeskripsi').value, anjungan: document.getElementById('adminAnjungan').value };
+            const formData = new URLSearchParams(); formData.append("action", "savePlotting"); formData.append("data", JSON.stringify(dataObj));
+            fetch(getApiUrl(kls), { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: formData.toString() })
+            .then(res => res.json()).then(data => { btn.innerText = "💾 Simpan Plotting Kelompok"; btn.disabled = false; alert("✅ " + data.message); });
+        }
+
+        function handleAddStudent(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btnAddStudentBtn'); btn.innerText = "Menambahkan..."; btn.disabled = true;
+            const kls = document.getElementById('addKelas').value;
+            const dataObj = { nisn: document.getElementById('addNisn').value, pass: document.getElementById('addPass').value, nama: document.getElementById('addNama').value, kelas: kls, kelompok: document.getElementById('addKelompok').value };
+            const formData = new URLSearchParams(); formData.append("action", "addStudent"); formData.append("data", JSON.stringify(dataObj));
+            fetch(getApiUrl(kls), { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: formData.toString() })
+            .then(res => res.json()).then(data => { btn.innerText = "💾 Simpan Data Murid"; btn.disabled = false; alert("✅ " + data.message); resetFormMuridAdmin(); syncAdminDatabase(); });
+        }
+    let currentGroupPhotos = []; // Menyimpan daftar foto kelompok
+
+// 1. Memuat data foto dan kuota saat menu dibuka
+async function loadGroupPhotosQuota() {
+    if (!currentStudentData) return;
+    const targetUrl = getApiUrl(currentStudentData.kelas);
+    const gId = currentStudentData.groupId;
+
+    try {
+        const res = await fetch(`${targetUrl}?action=getGroupPhotos&groupId=${encodeURIComponent(gId)}`);
+        const data = await res.json();
+
+        if (data.status === "success") {
+            // 🟢 PENGAMAN: Pastikan photos selalu berupa Array yang valid
+            let photosArr = [];
+            if (Array.isArray(data.photos)) {
+                photosArr = data.photos;
+            } else if (typeof data.photos === 'string' && data.photos.trim() !== '') {
+                try { photosArr = JSON.parse(data.photos); } catch(e) { photosArr = []; }
+            }
+
+            currentGroupPhotos = photosArr;
+
+            // 🟢 TANDAI SELESAI JIKA ADA MINIMAL 1 FOTO TERPANTAU
+            if (currentGroupPhotos.length > 0) {
+                completionStatus.docs = true;
+            } else {
+                completionStatus.docs = false;
+            }
+
+            updateChecklistUI();
+            renderGroupPhotosUI();
+
+            // Sync ulang tabel tim agar indikator foto dan LKPD sinkron
+            if (typeof syncGroupStatusProgress === 'function') {
+                syncGroupStatusProgress();
+            }
+        }
+    } catch (err) {
+        console.warn("Gagal memuat data foto kelompok:", err);
+    }
+}
+
+// 2. Merender UI (Notifikasi, Tombol Kunci, Pratinjau, dan Tombol Hapus)
+function renderGroupPhotosUI() {
+    const totalPhotos = currentGroupPhotos.length;
+    const quotaBadge = document.getElementById('countFotoBadge');
+    const noticeText = document.getElementById('quotaNoticeText');
+    const noticeBox = document.getElementById('photoQuotaNotice');
+    const inputWrapper = document.getElementById('uploadInputWrapper');
+    const container = document.getElementById('previewGroupPhotosContainer');
+
+    if(quotaBadge) quotaBadge.innerText = `${totalPhotos}/5`;
+
+    // Aturan Notifikasi & Penguncian Tombol Upload jika Penuh (5/5)
+    if (totalPhotos >= 5) {
+        noticeBox.style.background = "#fef2f2";
+        noticeBox.style.borderColor = "#fecaca";
+        noticeText.style.color = "#dc2626";
+        noticeText.innerHTML = `⚠️ <strong>Batas Kuota Penuh (5/5 Foto)!</strong> Anggota kelompok tidak dapat mengunggah foto baru. Hapus salah satu foto di bawah ini jika ingin menggantinya.`;
+        
+        inputWrapper.style.opacity = "0.5";
+        inputWrapper.style.pointerEvents = "none";
+    } else {
+        noticeBox.style.background = "#f0fdf4";
+        noticeBox.style.borderColor = "#86efac";
+        noticeText.style.color = "#15803d";
+        noticeText.innerHTML = `✅ <strong>Kuota Tersedia (${totalPhotos}/5 Foto).</strong> Anda masih dapat mengunggah ${5 - totalPhotos} foto lagi untuk kelompok ini.`;
+        
+        inputWrapper.style.opacity = "1";
+        inputWrapper.style.pointerEvents = "auto";
+    }
+
+    if (currentGroupPhotos.length === 0) {
+        container.innerHTML = `<em style="color: var(--text-muted); font-size: 13.5px;">Belum ada foto yang diunggah oleh kelompok ini.</em>`;
+        return;
+    }
+
+    // Render daftar foto beserta tombol hapus
+    container.innerHTML = currentGroupPhotos.map((photo, index) => `
+        <div style="position: relative; border: 1.5px solid var(--border-color); border-radius: 12px; padding: 6px; background: #ffffff; box-shadow: 0 2px 6px rgba(0,0,0,0.05);">
+            <img src="${photo.url}" style="width: 110px; height: 90px; object-fit: cover; border-radius: 8px; display: block;">
+            <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px; text-align: center; max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                Oleh: ${photo.uploadedBy || 'Tim'}
+            </div>
+            <!-- Tombol Hapus Foto -->
+            <button onclick="deleteGroupPhoto('${photo.id || index}')" style="width: 100%; margin-top: 6px; background: #fee2e2; color: #dc2626; border: 1px solid #fecaca; border-radius: 6px; font-size: 11px; font-weight: 700; cursor: pointer; padding: 3px 0;">
+                🗑️ Hapus
+            </button>
+        </div>
+    `).join('');
+}
+
+// 3. Validasi Ukuran File (Maksimal 2 MB) & Kuota saat Dipilih
+async function handleGroupFotoUpload(event) {
+    const files = event.target.files;
+    if (!files || files.length === 0) return;
+
+    const remainingQuota = 5 - currentGroupPhotos.length;
+    if (files.length > remainingQuota) {
+        showToast(`Anda memilih ${files.length} foto, kuota tersisa hanya ${remainingQuota} lagi!`, "error");
+        event.target.value = ""; 
+        return;
+    }
+
+    const MAX_SIZE = 5 * 1024 * 1024; // Batas input file awal 5 MB
+    let invalidFiles = 0;
+
+    showToast("Memproses & mengompres foto...", "info");
+
+    for (let file of Array.from(files)) {
+        if (file.size > MAX_SIZE) {
+            invalidFiles++;
+            continue;
+        }
+
+        try {
+            // Kompres gambar terlebih dahulu sebelum dimasukkan ke array
+            const compressedBase64 = await compressImage(file, 500, 0.4);
+
+            currentGroupPhotos.push({
+                id: 'foto_' + Date.now() + Math.random().toString(36).substring(2, 7),
+                url: compressedBase64,
+                uploadedBy: (currentStudentData && currentStudentData.nama) ? currentStudentData.nama : 'Tim'
+            });
+        } catch (err) {
+            console.error("Gagal kompres foto:", err);
+        }
+    }
+
+    renderGroupPhotosUI();
+
+    if (invalidFiles > 0) {
+        alert(`⚠️ Ada ${invalidFiles} foto yang ukurannya terlalu besar (> 5 MB) dan dilewati.`);
+    }
+    
+    event.target.value = ""; // Reset input file
+}
+
+// 4. Fungsi Menghapus Foto dari Daftar Lokal
+async function deleteGroupPhoto(photoIdOrIndex) {
+    const setuju = await showCustomConfirm(
+        "Hapus Foto Kelompok?", 
+        "Apakah Anda yakin ingin menghapus foto ini dari album dokumentasi kelompok?", 
+        "🗑️"
+    );
+
+    if (!setuju) return;
+
+    // 1. Hapus foto dari array lokal
+    currentGroupPhotos = currentGroupPhotos.filter((p, idx) => {
+        const matchId = p.id && p.id.toString() === photoIdOrIndex.toString();
+        const matchIdx = idx.toString() === photoIdOrIndex.toString();
+        return !matchId && !matchIdx;
+    });
+
+    // 2. Render ulang tampilan di browser
+    renderGroupPhotosUI();
+
+    // 3. 🟢 OTOMATIS SINKRONKAN KE GOOGLE SHEETS
+    // Agar perubahan permanen dan foto tidak muncul lagi saat pindah menu
+    showToast("Memperbarui data di server...", "info");
+    
+    if (typeof saveGroupPhotosServer === "function") {
+        saveGroupPhotosServer();
+    }
+}
+
+// 5. Menyimpan Data Foto ke Server Kelompok
+async function saveGroupPhotosServer() {
+    if (!currentStudentData || !currentStudentData.groupId) {
+        showToast("⚠️ Data kelompok / Group ID tidak ditemukan. Silakan login ulang!", "error");
+        return;
+    }
+
+    const setuju = await showCustomConfirm(
+        "Simpan Foto Kelompok?", 
+        "Apakah Anda yakin ingin menyinkronkan seluruh foto dokumentasi kelompok ini ke server?", 
+        "📸"
+    );
+
+    if (!setuju) return;
+
+    const targetUrl = getApiUrl(currentStudentData.kelas);
+    showToast("Menyinkronkan dokumentasi foto ke server kelompok...", "info");
+
+    // Ratakan struktur payload agar langsung dibaca oleh code.gs
+    const payload = {
+        action: "saveGroupPhotos",
+        groupId: currentStudentData.groupId,
+        nisn: currentStudentData.nisn || "",
+        nama: currentStudentData.nama || "Siswa",
+        photos: currentGroupPhotos
+    };
+
+    fetch(targetUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+    })
+    .then(res => res.json())
+    .then(result => {
+        if (result.status === "success") {
+            completionStatus.docs = (currentGroupPhotos.length > 0);
+            if (typeof updateChecklistUI === "function") updateChecklistUI();
+            if (typeof syncGroupStatusProgress === "function") syncGroupStatusProgress();
+            showToast("✅ Dokumentasi foto kelompok berhasil disimpan!", "success");
+            backToHub();
+        } else {
+            showToast("Gagal menyimpan foto: " + (result.message || "Error server"), "error");
+        }
+    })
+    .catch(err => {
+        console.error("Error saveGroupPhotosServer:", err);
+        showToast("Terjadi kesalahan jaringan saat menyimpan foto.", "error");
+    });
+}
+
+        // ==========================================
+        // FUNGSI MERGE & RENDER LAPORAN
+        // ==========================================
+
+        async function doMergeLaporan() {
+            if (!currentStudentData) {
+                showToast("⚠️ Silakan login terlebih dahulu!", "error");
+                return;
+            }
+
+            const targetUrl = getApiUrl(currentStudentData.kelas);
+            const gId = currentStudentData.groupId;
+            const btnMerge = document.getElementById('btnDoMerge');
+            const containerPreview = document.getElementById('reportPreviewArea');
+            const actionButtons = document.getElementById('exportActionButtons');
+
+            if(btnMerge) {
+                btnMerge.disabled = true;
+                btnMerge.innerText = "⏳ Menggabungkan Data Kelompok...";
+            }
+            if(containerPreview) {
+                containerPreview.innerHTML = `
+                    <div style="text-align:center; padding: 40px; color: var(--text-muted);">
+                        <div class="spinner" style="margin: 0 auto 15px;"></div>
+                        <p>Sedang mengambil data isian LKPD dan 5 foto dokumentasi kelompok <strong>${gId}</strong>...</p>
+                    </div>
+                `;
+            }
+
+            try {
+                const resLKPD = await fetch(`${targetUrl}?action=getGroupSubmissions&groupId=${encodeURIComponent(gId)}`);
+                const dataLKPD = await resLKPD.json();
+
+                const resPhotos = await fetch(`${targetUrl}?action=getGroupPhotos&groupId=${encodeURIComponent(gId)}`);
+                const dataPhotos = await resPhotos.json();
+
+                if (dataLKPD.status === "success") {
+                    const submissions = dataLKPD.submissions || [];
+                    const groupPhotos = dataPhotos.photos || [];
+
+                    currentGroupPhotos = groupPhotos;
+                    renderMergedReportPreview(submissions, groupPhotos);
+
+                    if(actionButtons) actionButtons.style.display = "flex";
+                    showToast(`✅ Laporan Kelompok (${gId}) berhasil digabungkan!`, "success");
+                } else {
+                    showToast("Gagal menggabungkan laporan: " + (dataLKPD.message || "Data tidak ditemukan."), "error");
+                }
+            } catch (err) {
+                console.error(err);
+                showToast("Terjadi kesalahan jaringan saat menggabungkan laporan.", "error");
+                if(containerPreview) {
+                    containerPreview.innerHTML = `<p style="color:red; text-align:center;">Gagal memuat preview laporan. Silakan coba lagi.</p>`;
+                }
+            } finally {
+                if(btnMerge) {
+                    btnMerge.disabled = false;
+                    btnMerge.innerHTML = "🔄 Buat Laporan Kelompok";
+                }
+            }
+        }
+
+        function renderMergedReportPreview(submissions, photos) {
+    const container = document.getElementById('reportPreviewArea');
+    if (!container) return;
+
+    const subs = submissions || [];
+    const allGroupMembers = (currentStudentData && currentStudentData.groupMembers && currentStudentData.groupMembers.length > 0) 
+        ? currentStudentData.groupMembers 
+        : [(currentStudentData ? currentStudentData.nama : 'Murid')];
+
+    const namaAnggotaList = allGroupMembers.map(mNama => {
+        return `<li><strong>${mNama}</strong></li>`;
+    }).join('');
+
+    // 🟢 FUNGSI MERGE BISA MEMBACA BANYAK KEY SEKALIGUS (ARRAY ATAL STRING)
+    const mergeField = (fieldKeys) => {
+        const keys = Array.isArray(fieldKeys) ? fieldKeys : [fieldKeys];
+        const items = [];
+        
+        subs.forEach(s => {
+            keys.forEach(key => {
+                const val = s[key] ? String(s[key]).trim() : "";
+                const author = s.nama ? String(s.nama).trim() : "Murid";
+                
+                if (val && val !== "-" && val !== "(Belum diisi)") {
+                    // Mencegah duplikasi data jika key alternatif menemukan string yang sama
+                    const isAlreadyAdded = items.some(item => item.includes(val));
+                    if (!isAlreadyAdded) {
+                        items.push(`
+                            <div style="margin-bottom:6px; background:#ffffff; padding:6px 10px; border-radius:4px; border-left:3px solid #0284c7; font-size:12px;">
+                                ${val.replace(/\n/g, '<br>')}
+                                <br><span style="font-size:10px; color:#0284c7; font-style:italic; font-weight:600;">✍️ Ditulis oleh: ${author}</span>
+                            </div>
+                        `);
+                    }
+                }
+            });
+        });
+
+        return items.length > 0 ? items.join("") : '<em style="color:#94a3b8; font-size:12px;">(Belum diisi)</em>';
+    };
+
+    // 🟢 FUNGSI HELPER EKSTRAK LINK FOTO AGAR TIDAK SILANG DI WORD/PDF
+    function getSafePhotoUrl(photoObj) {
+        if (!photoObj) return "";
+        let url = (typeof photoObj === 'object' && photoObj !== null && photoObj.url) ? photoObj.url : String(photoObj);
+        url = url.trim();
+
+        // Jika gambar sudah dalam bentuk Base64 (data:image/...)
+        if (url.startsWith("data:image")) return url;
+
+        // Jika berupa URL Google Drive, ubah ke URL Thumbnail Google Drive yang bisa dibuka publik
+        const match = url.match(/[-\w]{25,}/);
+        if (match && match[0]) {
+            return `https://lh3.googleusercontent.com/d/${match[0]}=s800`;
+        }
+
+        return url;
+    }
+
+    // 🟢 RENDER TABEL FOTO RAMAH MS WORD DAN PDF (DESKRIPSI DI TENGAH BWAH)
+    let photosHTML = '';
+    if (photos && photos.length > 0) {
+        photosHTML = `
+            <table style="width: 100%; border-collapse: collapse; margin-top: 10px; table-layout: fixed;">
+                <tr>
+        `;
+
+        photos.forEach((p, idx) => {
+            const safeSrc = getSafePhotoUrl(p);
+            const author = (typeof p === 'object' && p.uploadedBy) ? p.uploadedBy : 'Tim';
+
+            // Setiap 2 foto, buat baris tabel baru
+            if (idx > 0 && idx % 2 === 0) {
+                photosHTML += `</tr><tr>`;
+            }
+
+            photosHTML += `
+                <td style="width: 50%; padding: 6px; vertical-align: top; text-align: center;">
+                    <div style="border: 1px solid #cbd5e1; border-radius: 8px; padding: 8px; background: #fafafa; text-align: center;">
+                        <img src="${safeSrc}" 
+                             crossorigin="anonymous" 
+                             style="width: 100%; max-height: 180px; object-fit: cover; border-radius: 6px; display: block; margin: 0 auto 8px auto;" 
+                             alt="Foto ${idx + 1}" />
+                        <div style="font-size: 11px; color: #475569; font-weight: bold; text-align: center; width: 100%; display: block;">
+                            Foto ${idx + 1} (${author})
+                        </div>
+                    </div>
+                </td>
+            `;
+        });
+
+        // Sempurnakan sisa kolom jika jumlah foto ganjil
+        if (photos.length % 2 !== 0) {
+            photosHTML += `<td style="width: 50%;"></td>`;
+        }
+
+        photosHTML += `
+                </tr>
+            </table>
+        `;
+    } else {
+        photosHTML = `<p style="font-style: italic; color: #94a3b8; font-size: 13px;">Belum ada foto dokumentasi yang diunggah.</p>`;
+    }
+
+    // RENDER LENGKAP LAPORAN GABUNGAN KELOMPOK
+    container.innerHTML = `
+        <div id="printableReport" style="background: #ffffff; padding: 25px; border-radius: 8px; border: 1px solid #e2e8f0; font-family: sans-serif; color: #1e293b; line-height: 1.6;">
+            <div style="text-align: center; border-bottom: 2.5px solid #0284c7; padding-bottom: 12px; margin-bottom: 20px;">
+                <h2 style="margin: 0; color: #0284c7; font-size: 18px; text-transform: uppercase;">LAPORAN KOKURIKULER GABUNGAN KELOMPOK</h2>
+                <h3 style="margin: 4px 0 0; font-size: 13px; font-weight: 500; color: #475569;">NEXT GEN NUSA — SMA Negeri 1 Jakarta</h3>
+            </div>
+
+            <table style="width: 100%; margin-bottom: 20px; font-size: 13px; border-collapse: collapse; background: #f8fafc; border: 1px solid #e2e8f0;">
+                <tr>
+                    <td style="padding: 6px 10px; font-weight: bold; width: 140px;">Kelas / Kelompok</td>
+                    <td style="padding: 6px 10px;">: ${currentStudentData.kelas} / ${currentStudentData.kelompok} (Group ID: ${currentStudentData.groupId})</td>
+                </tr>
+                <tr>
+                    <td style="padding: 6px 10px; font-weight: bold;">Anjungan Target</td>
+                    <td style="padding: 6px 10px;">: ${currentStudentData.anjungan} (${currentStudentData.misiCode})</td>
+                </tr>
+                <tr>
+                    <td style="padding: 6px 10px; font-weight: bold;">Guru Pendamping</td>
+                    <td style="padding: 6px 10px;">: ${currentStudentData.guruPendamping || 'Nurul Faozi, S.Pd.'}</td>
+                </tr>
+            </table>
+
+            <h4 style="border-left: 4px solid #0284c7; padding-left: 8px; margin: 15px 0 8px; color: #0f172a;">I. DAFTAR ANGGOTA KELOMPOK TIM LAPANGAN</h4>
+            <ol style="margin: 0; padding-left: 20px; font-size: 13px;">
+                ${namaAnggotaList}
+            </ol>
+
+            <h4 style="border-left: 4px solid #0284c7; padding-left: 8px; margin: 20px 0 8px; color: #0f172a;">II. LKPD 1: EKSPLORASI SAINS & TEKNOLOGI TERPADU (PP-IPTEK)</h4>
+            <div style="font-size: 13px; display: flex; flex-direction: column; gap: 8px;">
+                <!-- 🟢 WAHANA 1 (MEMERIKSA SEMUA VARIABEL) -->
+                <div style="background:#f8fafc; padding:8px 12px; border-radius:6px; border:1px solid #e2e8f0;">
+                    <strong>1. Wahana Pertama:</strong>
+                    <p style="margin:4px 0 2px;"><em>Hasil Observasi & Nama Alat:</em></p>
+                    ${mergeField(['lk1_alat1_hasil', 'lk1_alat1_nama', 'lk1_alat1_zona', 'lk1_a1_hasil', 'lk1_a1_nama', 'lk1_a1_zona'])}
+                    <p style="margin:4px 0 2px;"><em>Prinsip Sains:</em></p>
+                    ${mergeField(['lk1_alat1_konsep', 'lk1_a1_konsep'])}
+                </div>
+
+                <!-- 🟢 WAHANA 2 (MEMERIKSA SEMUA VARIABEL) -->
+                <div style="background:#f8fafc; padding:8px 12px; border-radius:6px; border:1px solid #e2e8f0;">
+                    <strong>2. Wahana Kedua:</strong>
+                    <p style="margin:4px 0 2px;"><em>Hasil Observasi & Nama Alat:</em></p>
+                    ${mergeField(['lk1_alat2_hasil', 'lk1_alat2_nama', 'lk1_alat2_zona', 'lk1_a2_hasil', 'lk1_a2_nama', 'lk1_a2_zona'])}
+                    <p style="margin:4px 0 2px;"><em>Prinsip Sains:</em></p>
+                    ${mergeField(['lk1_alat2_konsep', 'lk1_a2_konsep'])}
+                </div>
+
+                <!-- 🟢 WAHANA 3 (MEMERIKSA SEMUA VARIABEL) -->
+                <div style="background:#f8fafc; padding:8px 12px; border-radius:6px; border:1px solid #e2e8f0;">
+                    <strong>3. Wahana Ketiga:</strong>
+                    <p style="margin:4px 0 2px;"><em>Hasil Observasi & Nama Alat:</em></p>
+                    ${mergeField(['lk1_alat3_hasil', 'lk1_alat3_nama', 'lk1_alat3_zona', 'lk1_a3_hasil', 'lk1_a3_nama', 'lk1_a3_zona'])}
+                    <p style="margin:4px 0 2px;"><em>Prinsip Sains:</em></p>
+                    ${mergeField(['lk1_alat3_konsep', 'lk1_a3_konsep'])}
+                </div>
+
+                <p style="margin:4px 0;"><strong>Relevansi Kehidupan Modern:</strong><br>${mergeField(['lk1_aplikasi'])}</p>
+            </div>
+
+            <h4 style="border-left: 4px solid #0284c7; padding-left: 8px; margin: 20px 0 8px; color: #0f172a;">III. LKPD 2: OBSERVASI ARSITEKTUR RUMAH ADAT</h4>
+            <div style="font-size: 13px; line-height: 1.5;">
+                <p><strong>Deskripsi Arsitektur Bangunan:</strong><br>${mergeField(['lk2_fokus'])}</p>
+                <p><strong>Item Data 1 (Karakteristik):</strong><br>${mergeField(['lk2_data1'])}</p>
+                <p><strong>Item Data 2 (Adaptasi Lingkungan):</strong><br>${mergeField(['lk2_data2'])}</p>
+                <p><strong>Item Data 3 (Material Utama):</strong><br>${mergeField(['lk2_data3'])}</p>
+                <p><strong>Integrasi Kebudayaan ↔ Sains Modern:</strong><br>${mergeField(['lk2_koneksi'])}</p>
+            </div>
+
+            <h4 style="border-left: 4px solid #0284c7; padding-left: 8px; margin: 20px 0 8px; color: #0f172a;">IV. LKPD 3: PERANCANGAN PROYEK (STEAM)</h4>
+            <div style="font-size: 13px;">
+                <p><strong>Judul Proyek / Prototype:</strong><br>${mergeField(['lk3_judul'])}</p>
+                <p><strong>Format Produk:</strong><br>${mergeField(['lk3_format'])}</p>
+                <p><strong>1. Science:</strong> ${mergeField(['steam_s'])}</p>
+                <p><strong>2. Technology:</strong> ${mergeField(['steam_t'])}</p>
+                <p><strong>3. Engineering:</strong> ${mergeField(['steam_e'])}</p>
+                <p><strong>4. Arts:</strong> ${mergeField(['steam_a'])}</p>
+                <p><strong>5. Mathematics:</strong> ${mergeField(['steam_m'])}</p>
+            </div>
+
+            <h4 style="border-left: 4px solid #0284c7; padding-left: 8px; margin: 20px 0 8px; color: #0f172a;">V. LKPD 4: REFLEKSI MANDIRI & TIM</h4>
+            <div style="font-size: 13px;">
+                <p><strong>Kendala Lapangan & Pemecahannya:</strong><br>${mergeField(['lk4_kendala'])}</p>
+                <p><strong>Refleksi Kolaborasi & Budaya:</strong><br>${mergeField(['lk4_kerjasama'])}</p>
+            </div>
+
+            <h4 style="border-left: 4px solid #0284c7; padding-left: 8px; margin: 20px 0 8px; color: #0f172a;">VI. LAMPIRAN DOKUMENTASI LAPANGAN KELOMPOK</h4>
+            ${photosHTML}
+        </div>
+    `;
+}
+
+        function downloadReportPDF() { exportToPDF(); }
+        function downloadReportWord() { exportToWord(); }
+
+            // FUNGSI NOTIFIKASI MELAYANG (REPLACE ALERT)
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('customToast');
+            const toastMsg = document.getElementById('toastMessage');
+            const toastIcon = document.getElementById('toastIcon');
+
+            if (!toast) return;
+
+            toast.className = `custom-toast ${type} show`;
+            toastMsg.innerText = message;
+
+            if (type === 'success') toastIcon.innerText = '✅';
+            else if (type === 'error') toastIcon.innerText = '⚠️';
+            else toastIcon.innerText = '🔔';
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3500);
+        }
+
+    let adminCachedReports = [];
+        let currentAdminSelectedReport = null;
+
+        // 1. Mengambil Daftar Laporan Terkirim dari Server Apps Script
+        async function fetchAdminSubmittedReports() {
+            const kls = document.getElementById('adminLaporanFilterKelas').value;
+            const tbody = document.getElementById('adminReportsTableBody');
+            tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--text-muted); padding:16px;">Memuat laporan terkirim untuk Kelas ${kls}...</td></tr>`;
+            
+            document.getElementById('adminReportPreviewCard').style.display = 'none';
+
+            try {
+                const targetUrl = getApiUrl(kls);
+                const res = await fetch(`${targetUrl}?action=getSubmittedReports&kelas=${encodeURIComponent(kls)}`);
+                const data = await res.json();
+
+                if (data.status === "success" && data.reports) {
+                    adminCachedReports = data.reports;
+                    renderAdminReportsTable(data.reports);
+                } else {
+                    tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--text-muted); padding:16px;">Belum ada kelompok di Kelas ${kls} yang mengirimkan laporan final.</td></tr>`;
+                }
+            } catch (err) {
+                console.error(err);
+                tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#ef4444; padding:16px;">Gagal mengambil data laporan. Pastikan fungsi Google Apps Script terpasang.</td></tr>`;
+            }
+        }
+
+        function renderAdminReportsTable(reports) {
+    const tbody = document.getElementById('adminReportsTableBody');
+    const targetKelas = document.getElementById('adminLaporanFilterKelas').value;
+
+    const klsNum = targetKelas.replace(/[^0-9]/g, '');
+
+    const daftarKelompok = [
+        "Kelompok 0", "Kelompok 1", "Kelompok 2", "Kelompok 3", 
+        "Kelompok 4", "Kelompok 5", "Kelompok 6"
+    ];
+
+    let htmlRows = "";
+
+    daftarKelompok.forEach(namaKelompok => {
+        const kelNum = namaKelompok.replace(/[^0-9]/g, '');
+        const expectedGroupId = `X${klsNum}-K${kelNum}`;
+
+        const report = reports.find(r => 
+            r.groupId && r.groupId.trim().toUpperCase() === expectedGroupId.toUpperCase()
+        );
+
+        const isSubmitted = report && (
+            (report.laporanHtmlBase64 && report.laporanHtmlBase64.length > 50) || 
+            (report.laporanHtml && report.laporanHtml.length > 50) ||
+            (report.timestamp && report.timestamp !== "Gabungan Isian" && report.timestamp !== "Belum Kirim")
+        );
+
+        if (isSubmitted) {
+            // 🟢 SIMPAN OBJEK KE DOKUMEN GLOBAL MAP BERDASARKAN GROUP ID
+            window.adminReportsMap[report.groupId] = report;
+
+            htmlRows += `
+                <tr>
+                    <td>
+                        <strong style="color:var(--primary);">${report.groupId}</strong><br>
+                        <small style="color:var(--text-muted);">${namaKelompok === "Kelompok 0" ? "Kelompok Demo / Uji Coba" : namaKelompok}</small>
+                    </td>
+                    <td style="text-align:left;">
+                        <strong>${report.nama}</strong> (${report.nisn})<br>
+                        <small style="color:var(--text-muted);">${report.timestamp || 'Terkirim'}</small>
+                    </td>
+                    <td><span class="status-pill done">✅ Sudah Kirim</span></td>
+                    <td>
+                        <!-- 🟢 PARAMETER ONCLICK CUKUP MENGIRIM GROUP ID -->
+                        <button class="btn-lihat-isian" onclick="openAdminReportByGroupId('${report.groupId}')">👁️ Buka Laporan</button>
+                    </td>
+                </tr>
+            `;
+        } else {
+            const pengirimNama = (report && report.nama) ? report.nama : "Belum ada pengirim";
+            const pengirimNisn = (report && report.nisn) ? `(${report.nisn})` : "";
+
+            htmlRows += `
+                <tr style="background: #fff5f5;">
+                    <td>
+                        <strong style="color:#dc2626;">${expectedGroupId}</strong><br>
+                        <small style="color:var(--text-muted);">${namaKelompok === "Kelompok 0" ? "Kelompok Demo / Uji Coba" : namaKelompok}</small>
+                    </td>
+                    <td style="text-align:left; color:#991b1b;">
+                        <em>${pengirimNama} ${pengirimNisn}</em><br>
+                        <small style="color:#ef4444;">(Siswa belum klik Kirim Laporan Final)</small>
+                    </td>
+                    <td>
+                        <span class="status-pill" style="background:#fee2e2; color:#dc2626; border:1px solid #fecaca;">
+                            ⏳ Belum Kirim Laporan
+                        </span>
+                    </td>
+                    <td>
+                        <button class="btn-secondary" style="padding:4px 8px; font-size:11px; cursor:not-allowed; opacity:0.6;" disabled>
+                            🔒 Belum Ada Laporan
+                        </button>
+                    </td>
+                </tr>
+            `;
+        }
+    });
+
+    tbody.innerHTML = htmlRows;
+}
+
+        function decodeBase64Utf8(base64Str) {
+    try {
+        const binaryString = atob(base64Str);
+        const bytes = new Uint8Array(binaryString.length);
+        for (let i = 0; i < binaryString.length; i++) {
+            bytes[i] = binaryString.charCodeAt(i);
+        }
+        return new TextDecoder('utf-8').decode(bytes);
+    } catch (e) {
+        console.error("Gagal decode UTF-8:", e);
+        return atob(base64Str); // Fallback
+    }
+}
+
+// PERBARUI FUNGSI PREVIEW ADMIN
+// 🟢 TAMBAHKAN 'async' DI DEPAN FUNGSI
+function openAdminReportByGroupId(groupId) {
+    const rep = window.adminReportsMap[groupId];
+    if (!rep) {
+        showToast("⚠️ Data laporan tidak ditemukan!", "error");
+        return;
+    }
+
+    currentAdminSelectedReport = rep;
+    
+    const titleEl = document.getElementById('adminPreviewTitle');
+    if (titleEl) {
+        titleEl.innerText = `👁️ Laporan Kelompok ${rep.groupId || ''} (${rep.nama || ''})`;
+    }
+
+    // 1. Ambil array isian LKPD kelompok ini dari memori frontend
+    let subs = [];
+    if (typeof allSubmissions !== 'undefined' && Array.isArray(allSubmissions)) {
+        subs = allSubmissions.filter(s => String(s.groupId || s.group_id || '').trim().toUpperCase() === String(groupId).trim().toUpperCase());
+    } else if (window.submissions && Array.isArray(window.submissions)) {
+        subs = window.submissions.filter(s => String(s.groupId || s.group_id || '').trim().toUpperCase() === String(groupId).trim().toUpperCase());
+    }
+
+    // Jika di database sudah ada laporanHtml utuh dari server (bukan ringkasan), pakai itu. Jika belum/ringkasan, render dari data memori/rep.
+    let rawContent = rep.laporanHtml || rep.laporanHtmlBase64 || "";
+    let isShortSummary = rawContent.includes("Status Laporan Resmi Server") || (!rawContent.trim().startsWith("<") && rawContent.length < 1000);
+
+    let htmlContent = "";
+    if (!isShortSummary && rawContent.trim().startsWith("<")) {
+        htmlContent = rawContent;
+    } else {
+        // 2. Render ulang struktur utuh persis menu gabungkan laporan siswa
+        let listMurid = subs.length > 0 ? subs.map(s => s.nama).filter((v,i,a)=>a.indexOf(v)===top) : [rep.nama];
+        
+        function getMergedVal(keys) {
+            let items = [];
+            subs.forEach(s => {
+                keys.forEach(k => {
+                    if (s[k] && String(s[k]).trim() !== "") {
+                        let val = String(s[k]).trim().replace(/\n/g, '<br>');
+                        if (items.indexOf(val) === -1) items.push('• ' + val + ` <small style="color:#0284c7;">(${s.nama})</small>`);
+                    }
+                });
+            });
+            return items.length > 0 ? items.join('<br>') : '<em style="color:#94a3b8;">(Data belum diinput murid)</em>';
+        }
+
+        htmlContent = `
+            <div style="font-family: Arial, sans-serif; color: #1e293b; padding: 25px; line-height: 1.6; background: #ffffff; border-radius: 8px; border: 1px solid #e2e8f0;">
+                <div style="text-align: center; border-bottom: 2.5px solid #0284c7; padding-bottom: 12px; margin-bottom: 20px;">
+                    <h2 style="margin: 0; color: #0284c7; font-size: 18px; text-transform: uppercase;">LAPORAN KOKURIKULER GABUNGAN KELOMPOK</h2>
+                    <h3 style="margin: 4px 0 0; font-size: 13px; font-weight: 500; color: #475569;">NEXT GEN NUSA — SMA Negeri 1 Jakarta</h3>
+                </div>
+
+                <table style="width: 100%; margin-bottom: 20px; font-size: 12.5px; border-collapse: collapse; background: #f8fafc; border: 1px solid #e2e8f0;">
+                    <tr>
+                        <td style="padding: 6px 10px; font-weight: bold; width: 140px;">Kelompok / ID</td>
+                        <td style="padding: 6px 10px;">: <strong>${rep.groupId || '-'}</strong> (${rep.kelas || '-'})</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 6px 10px; font-weight: bold;">Pengirim (Ketua)</td>
+                        <td style="padding: 6px 10px;">: ${rep.nama || '-'} (${rep.nisn || '-'})</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 6px 10px; font-weight: bold;">Waktu Sinkron</td>
+                        <td style="padding: 6px 10px;">: ${rep.timestamp || 'Terkirim'} WIB</td>
+                    </tr>
+                </table>
+
+                <h4 style="border-left: 4px solid #0284c7; padding-left: 8px; margin: 15px 0 8px; color: #0f172a;">I. DAFTAR ANGGOTA TIM LAPANGAN</h4>
+                <p style="font-size: 12.5px; margin: 0 0 15px 12px;">${Array.isArray(listMurid) ? listMurid.join(', ') : rep.nama}</p>
+
+                <h4 style="border-left: 4px solid #0284c7; padding-left: 8px; margin: 20px 0 8px; color: #0f172a;">II. LKPD 1: EKSPLORASI SAINS & TEKNOLOGI TERPADU (PP-IPTEK)</h4>
+                <div style="font-size: 12.5px; margin-bottom: 10px;">
+                    <strong>1. Wahana Pertama:</strong><br>${getMergedVal(['lk1_a1_hasil', 'lk1_a1_nama', 'lk1_a1_konsep'])}<br><br>
+                    <strong>2. Wahana Kedua:</strong><br>${getMergedVal(['lk1_a2_hasil', 'lk1_a2_nama', 'lk1_a2_konsep'])}<br><br>
+                    <strong>3. Wahana Ketiga:</strong><br>${getMergedVal(['lk1_a3_hasil', 'lk1_a3_nama', 'lk1_a3_konsep'])}<br><br>
+                    <strong>Relevansi Kehidupan:</strong><br>${getMergedVal(['lk1_aplikasi'])}
+                </div>
+
+                <h4 style="border-left: 4px solid #0284c7; padding-left: 8px; margin: 20px 0 8px; color: #0f172a;">III. LKPD 2: OBSERVASI ARSITEKTUR RUMAH ADAT</h4>
+                <div style="font-size: 12.5px; margin-bottom: 10px;">
+                    <strong>Deskripsi Arsitektur:</strong><br>${getMergedVal(['lk2_fokus'])}<br><br>
+                    <strong>Karakteristik & Material:</strong><br>${getMergedVal(['lk2_data1', 'lk2_data3'])}<br><br>
+                    <strong>Adaptasi Lingkungan:</strong><br>${getMergedVal(['lk2_data2'])}<br><br>
+                    <strong>Integrasi Kebudayaan & Sains:</strong><br>${getMergedVal(['lk2_koneksi'])}
+                </div>
+
+                <h4 style="border-left: 4px solid #0284c7; padding-left: 8px; margin: 20px 0 8px; color: #0f172a;">IV. LKPD 3: PERANCANGAN PROYEK (STEAM)</h4>
+                <div style="font-size: 12.5px; margin-bottom: 10px;">
+                    <strong>Judul & Format:</strong><br>${getMergedVal(['lk3_judul', 'lk3_format'])}<br><br>
+                    <strong>STEAM Breakdown:</strong><br>${getMergedVal(['steam_s', 'steam_t', 'steam_e', 'steam_a', 'steam_m'])}
+                </div>
+
+                <h4 style="border-left: 4px solid #0284c7; padding-left: 8px; margin: 20px 0 8px; color: #0f172a;">V. LKPD 4: REFLEKSI MANDIRI & TIM</h4>
+                <div style="font-size: 12.5px; margin-bottom: 10px;">
+                    <strong>Kendala & Solusi:</strong><br>${getMergedVal(['lk4_kendala'])}<br><br>
+                    <strong>Refleksi Kolaborasi:</strong><br>${getMergedVal(['lk4_kerjasama'])}
+                </div>
+            </div>
+        `;
+    }
+
+    const renderArea = document.getElementById('adminReportRenderArea');
+    if (renderArea) {
+        renderArea.innerHTML = htmlContent;
+    }
+
+    const cardContainer = document.getElementById('adminReportPreviewCard');
+    if (cardContainer) {
+        cardContainer.style.display = 'block';
+        cardContainer.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+
+// LAKUKAN HAL YANG SAMA UNTUK FUNGSI INI
+function previewAdminReport(index) {
+    const rep = adminCachedReports[index];
+    if (!rep) return;
+
+    currentAdminSelectedReport = rep;
+    
+    document.getElementById('adminPreviewTitle').innerText = `👁️ Laporan Kelompok ${rep.groupId} (${rep.nama})`;
+    
+    // PERBAIKAN: Decode Base64 
+    let htmlContent = "";
+    if (rep.laporanHtmlBase64) {
+        try {
+            htmlContent = atob(rep.laporanHtmlBase64);
+        } catch(e) {
+            htmlContent = `<p style="color:red;">Gagal membaca format laporan (Error Decode Base64).</p>`;
+        }
+    } else if (rep.laporanHtml) {
+        htmlContent = rep.laporanHtml;
+    } else {
+        htmlContent = `<p style="color:red;">Format laporan tidak valid atau kosong.</p>`;
+    }
+
+    document.getElementById('adminReportRenderArea').innerHTML = htmlContent;
+    document.getElementById('adminReportPreviewCard').style.display = 'block';
+    document.getElementById('adminReportPreviewCard').scrollIntoView({ behavior: 'smooth' });
+}
+
+// 1. UNDUH PDF DAN WORD (Mengambil 100% Tampilan & CSS Pratinjau di Layar)
+function downloadAdminReportPDF() {
+    const element = document.getElementById('adminReportRenderArea') || document.getElementById('pratinjauLaporan');
+    if (!element || !element.innerText.trim()) {
+        showToast("⚠️ Isi pratinjau laporan kosong!", "error");
+        return;
+    }
+
+    showToast("⏳ Membuka jendela PDF presisi...", "info");
+
+    // Ambil seluruh link CSS dan tag <style> yang ada di halaman web saat ini
+    const stylesheets = Array.from(document.querySelectorAll('link[rel="stylesheet"], style'))
+        .map(el => el.outerHTML)
+        .join('\n');
+
+    const printWin = window.open('', '_blank');
+    printWin.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Laporan_Kelompok_Resmi</title>
+            ${stylesheets}
+            <style>
+                body { 
+                    background: #ffffff !important; 
+                    padding: 20px !important; 
+                    font-family: Arial, sans-serif;
+                }
+                @page { size: A4 portrait; margin: 8mm; }
+                @media print {
+                    body { padding: 0 !important; }
+                }
+            </style>
+        </head>
+        <body>
+            <div style="width: 100%; max-width: 800px; margin: 0 auto;">
+                ${element.innerHTML}
+            </div>
+        </body>
+        </html>
+    `);
+
+    printWin.document.close();
+
+    // Tunggu gambar & font termuat sempurna sebelum memicu dialog PDF browser
+    setTimeout(() => {
+        printWin.focus();
+        printWin.print();
+        printWin.close();
+        showToast("✅ Cetak/Simpan PDF selesai!", "success");
+    }, 1000);
+}
+
+// 2. UNDUH WORD (Menerjemahkan Tampilan Pratinjau ke Format MS Word)
+function downloadAdminReportWord() {
+    const element = document.getElementById('adminReportRenderArea') || document.getElementById('pratinjauLaporan');
+    if (!element || !element.innerText.trim()) {
+        showToast("⚠️ Isi pratinjau laporan kosong!", "error");
+        return;
+    }
+
+    showToast("⏳ Mengunduh laporan ke format Word...", "info");
+
+    const bodyContent = element.innerHTML;
+    const gId = (typeof currentAdminSelectedReport !== 'undefined' && currentAdminSelectedReport.groupId) ? currentAdminSelectedReport.groupId : "Kelompok";
+
+    // Styling Khusus agar MS Word meniru persis tampilan di gambar pratinjau
+    const htmlHeader = `
+        <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+        <head>
+            <meta charset='utf-8'>
+            <title>Laporan Resmi</title>
+            <style>
+                body { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11pt; color: #1e293b; padding: 20px; }
+                
+                /* Header Judul Utama */
+                h2, h3 { color: #0284c7 !important; text-align: center; font-weight: bold; margin-bottom: 4px; }
+                
+                /* Subjudul Bab dengan Garis Biru Tegak di Kiri */
+                h4, .section-title, [class*="title"] { 
+                    color: #0f172a; 
+                    font-size: 12pt; 
+                    font-weight: bold; 
+                    border-left: 4px solid #0284c7 !important; 
+                    padding-left: 8px !important; 
+                    margin-top: 18px; 
+                    margin-bottom: 10px; 
+                }
+
+                /* Box Kartu Isian Jawaban */
+                div, .card { 
+                    border-radius: 6px; 
+                }
+                
+                /* Teks Isian & Penanda 'Ditulis oleh' */
+                i, em { color: #0284c7; font-size: 9.5pt; }
+                
+                /* Tabel Informasi & Lampiran Foto */
+                table { border-collapse: collapse; width: 100%; margin-top: 10px; margin-bottom: 15px; }
+                td, th { border: 1px solid #e2e8f0; padding: 8px; font-size: 10pt; text-align: left; vertical-align: top; }
+                
+                /* Pengaturan Gambar Dokumentasi */
+                img { max-width: 140px; height: auto; border-radius: 6px; display: inline-block; margin: 5px; }
+            </style>
+        </head>
+        <body>
+    `;
+    const htmlFooter = "</body></html>";
+
+    const fullContent = htmlHeader + bodyContent + htmlFooter;
+    const blob = new Blob(['\ufeff' + fullContent], { type: 'application/msword' });
+    
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `Laporan_Resmi_${gId}.doc`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(a.href);
+
+    showToast("✅ File Word berhasil diunduh!", "success");
+}
+    // MEMANGGIL DATA PROGRES + FOTO DARI BACKEND
+async function fetchAdminProgressRealtime() {
+    const kls = document.getElementById('adminLaporanFilterKelas').value;
+    const tbody = document.getElementById('adminProgressTableBody');
+    if (!kls) return;
+
+    tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:16px;">Memuat progres & foto Kelas ${kls}...</td></tr>`;
+
+    try {
+        const targetUrl = getApiUrl(kls);
+        const res = await fetch(`${targetUrl}?action=getGroupProgressAdmin&kelas=${encodeURIComponent(kls)}`);
+        const data = await res.json();
+
+        if (data.status === "success" && data.progress) {
+            renderAdminProgressTable(data.progress, kls);
+        }
+    } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; color:red; padding:16px;">Gagal mengambil data progres.</td></tr>`;
+    }
+}
+
+// RENDERING DOKUMENTASI & KELENGKAPAN KE TABEL ADMIN
+function renderAdminProgressTable(progressMap, targetKelas) {
+    const tbody = document.getElementById('adminProgressTableBody');
+    const klsNum = targetKelas.replace(/[^0-9]/g, '');
+    
+    // 🟢 TAMBAHKAN "Kelompok 0" DI PALING DEPAN
+    const daftarKelompok = ["Kelompok 0", "Kelompok 1", "Kelompok 2", "Kelompok 3", "Kelompok 4", "Kelompok 5", "Kelompok 6"];
+
+    let html = "";
+
+    daftarKelompok.forEach(namaKel => {
+        const kelNum = namaKel.replace(/[^0-9]/g, '');
+        const gId = `X${klsNum}-K${kelNum}`;
+        const p = progressMap[gId] || { lk1: false, lk2: false, lk3: false, lk4: false, photosCount: 0, contributors: [] };
+
+        const pill = (isDone) => isDone ? `<span class="status-pill done">✅</span>` : `<span class="status-pill yet">-</span>`;
+        const contributorsText = p.contributors.length > 0 ? p.contributors.join(", ") : "<em style='color:#94a3b8;'>Belum ada isian</em>";
+
+        const isFullyDone = p.lk1 && p.lk2 && p.lk3 && p.lk4 && p.photosCount >= 5;
+        const totalStatus = isFullyDone 
+            ? `<span style="color:#059669; font-weight:800; font-size:12px;">✅ Lengkap</span>` 
+            : `<span style="color:#d97706; font-weight:700; font-size:12px;">⏳ Belum Lengkap</span>`;
+
+        html += `
+            <tr>
+                <td><strong>${gId}</strong><br><small style="color:var(--text-muted);">${namaKel === "Kelompok 0" ? "Demo" : namaKel}</small></td>
+                <td style="text-align:left; font-size:12px; max-width:200px;">${contributorsText}</td>
+                <td>${pill(p.lk1)}</td>
+                <td>${pill(p.lk2)}</td>
+                <td>${pill(p.lk3)}</td>
+                <td>${pill(p.lk4)}</td>
+                <td><strong>📷 ${p.photosCount}/5</strong></td>
+                <td>${totalStatus}</td>
+            </tr>
+        `;
+    });
+
+    tbody.innerHTML = html;
+}
+        document.addEventListener("DOMContentLoaded", function() {
+    if (window.innerWidth <= 992) {
+        const sidebar = document.querySelector('.sidebar');
+        if (sidebar) {
+            sidebar.classList.remove('mobile-open');
+        }
+    }
+});
+        function showCustomConfirm(title, message, icon = "🚀") {
+    return new Promise((resolve) => {
+        const modal = document.getElementById('customConfirmModal');
+        document.getElementById('modalTitle').innerText = title;
+        document.getElementById('modalMessage').innerText = message;
+        document.getElementById('modalIcon').innerText = icon;
+
+        modal.classList.add('active');
+
+        const btnConfirm = document.getElementById('btnModalConfirm');
+        const btnCancel = document.getElementById('btnModalCancel');
+
+        const onConfirm = () => { cleanup(); resolve(true); };
+        const onCancel = () => { cleanup(); resolve(false); };
+
+        const cleanup = () => {
+            modal.classList.remove('active');
+            btnConfirm.removeEventListener('click', onConfirm);
+            btnCancel.removeEventListener('click', onCancel);
+        };
+
+        btnConfirm.addEventListener('click', onConfirm);
+        btnCancel.addEventListener('click', onCancel);
+    });
+}
+        // 🟢 FUNGSI BARU: CEK STATUS LAPORAN KELOMPOK UNTUK INDIKATOR & REVISI
+async function checkGroupSubmittedStatus() {
+    if (!currentStudentData || !currentStudentData.groupId) return;
+
+    try {
+        const targetUrl = getApiUrl(currentStudentData.kelas);
+        const res = await fetch(`${targetUrl}?action=getSubmittedReports&kelas=${encodeURIComponent(currentStudentData.kelas)}`);
+        const data = await res.json();
+
+        if (data.status === "success" && data.reports) {
+            // Cari apakah Group ID murid ini sudah ada di sheet SUBMITTED_REPORTS
+            const existingReport = data.reports.find(r => 
+                String(r.groupId).trim().toLowerCase() === String(currentStudentData.groupId).trim().toLowerCase()
+            );
+
+            const btn = document.getElementById('btnSubmitFinalLaporan');
+
+            if (existingReport) {
+                // 1. Ubah tombol agar tetap AKTIF untuk revisi
+                if (btn) {
+                    btn.disabled = false;
+                    btn.style.background = "#0284c7"; // Warna biru
+                    btn.innerHTML = `🔄 Kirim Revisi Laporan Kelompok`;
+                }
+
+                // 2. Tampilkan badge / kotak pesan hijau di atas tombol
+                let infoContainer = document.getElementById('infoStatusLaporanSubmitted');
+                if (!infoContainer && btn && btn.parentElement) {
+                    infoContainer = document.createElement('div');
+                    infoContainer.id = 'infoStatusLaporanSubmitted';
+                    infoContainer.style.cssText = "margin-bottom: 12px; padding: 10px 14px; background: #ecfdf5; border: 1px solid #10b981; border-radius: 8px; color: #065f46; font-size: 12px; text-align: center; font-weight: 500; line-height: 1.5;";
+                    btn.parentElement.insertBefore(infoContainer, btn);
+                }
+                if (infoContainer) {
+                    infoContainer.innerHTML = `✅ Laporan kelompok ini sudah pernah dikirimkan oleh <strong>${existingReport.nama || 'Anggota Kelompok'}</strong>.<br><span style="font-size: 11px; opacity: 0.9;">Anda tetap dapat mengirimkan revisi ulang kapan saja jika ada perbaikan.</span>`;
+                }
+            }
+        }
+    } catch (err) {
+        console.warn("Gagal cek status laporan terkirim:", err);
+    }
+}
+    // Kompresi Standar HD: Foto tetap jernih/tajam, tapi ukuran file cepat diunggah
+function compressImage(file, maxWidth = 1920, quality = 0.85) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (event) => {
+            const img = new Image();
+            img.src = event.target.result;
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                let width = img.width;
+                let height = img.height;
+
+                if (width > maxWidth) {
+                    height = Math.round((height * maxWidth) / width);
+                    width = maxWidth;
+                }
+
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                
+                ctx.drawImage(img, 0, 0, width, height);
+                resolve(canvas.toDataURL('image/jpeg', quality));
+            };
+            img.onerror = (err) => reject(err);
+        };
+    });
+}
+    </script>
+    <div id="customConfirmModal" class="modal-overlay-center">
+    <div class="modal-card-center">
+        <div id="modalIcon" class="modal-icon-wrapper">📬</div>
+        <h3 id="modalTitle" class="modal-title-text">Kirim Laporan Resmi?</h3>
+        <p id="modalMessage" class="modal-message-text">
+            Apakah kelompok Anda yakin ingin mengirim laporan akhir ini?
+        </p>
+        <div class="modal-action-btns">
+            <button id="btnModalCancel" class="btn-modal-secondary">Batal</button>
+            <button id="btnModalConfirm" class="btn-modal-primary">Ya, Kirim</button>
+        </div>
+    </div>
+</div>
+    <!-- ELEMEN NOTIFIKASI TOAST MELAYANG -->
+<div id="customToast" class="custom-toast">
+    <span id="toastIcon">🔔</span>
+    <span id="toastMessage">Pesan notifikasi...</span>
+</div>
+
+<!-- POP-UP MODAL KONFIRMASI TENGAH LAYAR -->
+<div id="customConfirmModal" class="modal-overlay-center">
+    <div class="modal-card-center">
+        <div id="modalIcon" class="modal-icon-wrapper">📬</div>
+        <h3 id="modalTitle" class="modal-title-text">Kirim Laporan Resmi?</h3>
+        <p id="modalMessage" class="modal-message-text">
+            Apakah kelompok Anda yakin ingin mengirim laporan akhir ini?
+        </p>
+        <div class="modal-action-btns">
+            <button id="btnModalCancel" class="btn-modal-secondary">Batal</button>
+            <button id="btnModalConfirm" class="btn-modal-primary">Ya, Kirim</button>
+        </div>
+    </div>
+</div>
+    <!-- MODAL INTIP JAWABAN ANGGOTA KELOMPOK -->
+<div id="modalViewAnswers" class="modal-overlay-center">
+    <div class="modal-card-center" style="max-width: 600px; max-height: 80vh; overflow-y: auto; text-align: left;">
+        <h3 id="modalMemberName" style="margin-top:0; color:var(--primary, #1e3a8a);">Isian LKPD</h3>
+        <div id="modalMemberContent"></div>
+        <div style="text-align: right; margin-top: 15px;">
+            <button onclick="closeModal()" class="btn-modal-secondary">Tutup</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>
