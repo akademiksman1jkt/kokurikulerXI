@@ -2009,53 +2009,61 @@ function applyAnswersToForm(mySub) {
     setText('detAnjungan', currentStudentData.anjungan);
     setText('detGuru', currentStudentData.guruPendamping);
 
-    // 2. Render Kartu Misi & Deskripsi
-    const elJudul = document.getElementById('detMisiJudul');
-    if (elJudul) elJudul.innerText = `🎯 Kartu Misi Proyek: ${currentStudentData.misiCode}`;
+    // 1. TAMBAHKAN PENGAMBAN DATA 'det' DARI MISI_DETAILS
+    const rawMisi = currentStudentData?.misiCode || currentStudentData?.misi || "";
+    let det = MISI_DETAILS[rawMisi];
 
+    // Jika pencarian langsung tidak cocok, cari kunci yang mirip (misal: "MISSION 01")
+    if (!det && rawMisi) {
+        const keyMatch = Object.keys(MISI_DETAILS).find(k => k.includes(rawMisi.trim()) || rawMisi.includes(k.split('—')[0].trim()));
+        if (keyMatch) det = MISI_DETAILS[keyMatch];
+    }
+    if (!det) det = {}; // Pengaman jika data kosong agar tidak crash
+
+    // 2. RENDER KARTU MISI & DESKRIPSI (Gunakan pengaman ?. dan || '-')
     const elDesk = document.getElementById('detMisiDeskripsi');
     if (elDesk) {
         elDesk.innerHTML = `
             <div class="mission-list">
                 <div class="mission-item">
                     <span class="mission-label">📌 Pertanyaan Utama Misi</span>
-                    <span class="mission-value"><strong>${det.tanya}</strong></span>
+                    <span class="mission-value"><strong>${det?.tanya || '-'}</strong></span>
                 </div>
                 <div class="mission-item">
                     <span class="mission-label">🔍 Fokus Observasi</span>
-                    <span class="mission-value">${det.amati}</span>
+                    <span class="mission-value">${det?.amati || '-'}</span>
                 </div>
                 <div class="mission-item">
                     <span class="mission-label">📸 Target Data (Min. 5 Foto)</span>
-                    <span class="mission-value">${det.data}</span>
+                    <span class="mission-value">${det?.data || '-'}</span>
                 </div>
                 <div class="mission-item">
                     <span class="mission-label">🧪 Integrasi Sains & Budaya</span>
-                    <span class="mission-value">${det.iptek}</span>
+                    <span class="mission-value">${det?.iptek || '-'}</span>
                 </div>
                 <div class="mission-item">
                     <span class="mission-label">🛠️ Tantangan STEAM Proyek</span>
-                    <span class="mission-value">${det.steam}</span>
+                    <span class="mission-value">${det?.steam || '-'}</span>
                 </div>
             </div>
         `;
     }
     
-    setText('lblPanduanMisiJudul', `📌 Misi Rumah Adat: ${currentStudentData.misiCode} (${currentStudentData.anjungan})`);
+    setText('lblPanduanMisiJudul', `📌 Misi Rumah Adat: ${currentStudentData?.misiCode || '-'} (${currentStudentData?.anjungan || '-'})`);
     
     const elPanduanText = document.getElementById('lblPanduanMisiText');
     if (elPanduanText) {
         elPanduanText.innerHTML = `
-            <div style="margin-bottom: 8px;"><strong>Fokus Pengamatan Arsitektur:</strong> ${det.amati}</div>
-            <div><strong>Data Wajib Dikumpulkan:</strong> ${det.data}</div>
+            <div style="margin-bottom: 8px;"><strong>Fokus Pengamatan Arsitektur:</strong> ${det?.amati || '-'}</div>
+            <div><strong>Data Wajib Dikumpulkan:</strong> ${det?.data || '-'}</div>
         `;
     }
 
-    setText('lblData1', det.d1);
-    setText('lblData2', det.d2);
-    setText('lblData3', det.d3);
-    setText('lblSteamTantanganJudul', `🛠️ Tantangan Proyek STEAM: ${currentStudentData.misiCode}`);
-    setText('lblSteamTantanganText', det.steam);
+    setText('lblData1', det?.d1 || '-');
+    setText('lblData2', det?.d2 || '-');
+    setText('lblData3', det?.d3 || '-');
+    setText('lblSteamTantanganJudul', `🛠️ Tantangan Proyek STEAM: ${currentStudentData?.misiCode || '-'}`);
+    setText('lblSteamTantanganText', det?.steam || '-');
 
     updateChecklistUI();
 
