@@ -1990,9 +1990,6 @@ function applyAnswersToForm(mySub) {
 }
 
         function updateUIProfile() {
-    const mCode = currentStudentData.misiCode;
-    const det = MISI_DETAILS[mCode] || MISI_DETAILS["MISSION 01 — ADAPT"];
-
     // Fungsi pembantu aman (bebas crash jika ID elemen tidak ada di HTML)
     const setText = (id, text) => {
         const el = document.getElementById(id);
@@ -2009,18 +2006,18 @@ function applyAnswersToForm(mySub) {
     setText('detAnjungan', currentStudentData.anjungan);
     setText('detGuru', currentStudentData.guruPendamping);
 
-    // 1. PENCARIAN DATA 'det' DARI MISI_DETAILS (Berdasarkan Nomor Misi)
+    // 2. Pencarian data 'det' berbasis nomor misi
     const rawMisi = currentStudentData?.misiCode || currentStudentData?.misi || "";
     const missionTag = rawMisi.match(/MISSION\s*\d+/i)?.[0]?.toUpperCase();
 
-    det = null; // HAPUS kata 'let' di sini (cukup 'det = null;')
+    let det = null;
     if (missionTag) {
         const keyMatch = Object.keys(MISI_DETAILS).find(k => k.toUpperCase().includes(missionTag));
         if (keyMatch) det = MISI_DETAILS[keyMatch];
     }
     if (!det) det = MISI_DETAILS[rawMisi] || {};
 
-    // 2. RENDER KARTU MISI & DESKRIPSI
+    // 3. Render Kartu Misi & Deskripsi
     const elDesk = document.getElementById('detMisiDeskripsi');
     if (elDesk) {
         elDesk.innerHTML = `
@@ -2067,7 +2064,7 @@ function applyAnswersToForm(mySub) {
 
     updateChecklistUI();
 
-    // 3. Render Daftar Anggota Kelompok di Profil
+    // 4. Render Daftar Anggota Kelompok
     const containerAnggota = document.getElementById('detListAnggota');
     if (containerAnggota) {
         const members = currentStudentData.groupMembers || [currentStudentData.nama];
