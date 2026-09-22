@@ -1749,13 +1749,15 @@ function applyAnswersToForm(mySub) {
         const hasLk1 = sub && (
             isValidInput(sub.lk1_a1_nama) || 
             isValidInput(sub.lk1_a1_hasil) || 
-            isValidInput(sub.lk1_aplikasi)
+            isValidInput(sub.lk1_aplikasi) ||
+            isValidInput(sub.lk1_c1_nama)
         );
 
         const hasLk2 = sub && (
             isValidInput(sub.lk2_fokus) || 
             isValidInput(sub.lk2_data1) || 
-            isValidInput(sub.lk2_koneksi)
+            isValidInput(sub.lk2_koneksi) ||
+            isValidInput(sub.lk1_e_t1)
         );
 
         const hasLk3 = sub && (
@@ -1765,10 +1767,19 @@ function applyAnswersToForm(mySub) {
             isValidInput(sub.steam_t) || 
             isValidInput(sub.steam_e) || 
             isValidInput(sub.steam_a) || 
-            isValidInput(sub.steam_m)
+            isValidInput(sub.steam_m) ||
+            isValidInput(sub.lk1_g_tekno) ||
+            isValidInput(sub.lk1_h_ide)
         );
 
+        // FIX: Tambahkan pengecekan ID Refleksi (LKPD 4)
         const hasLk4 = sub && (
+            isValidInput(sub.ref_pandang) || 
+            isValidInput(sub.ref_kompleks) || 
+            isValidInput(sub.ref_tanya) || 
+            isValidInput(sub.ref_kontribusi) || 
+            isValidInput(sub.lk1_i_pandang) || 
+            isValidInput(sub.lk1_i_kompleks) || 
             isValidInput(sub.lk4_kendala) || 
             isValidInput(sub.lk4_kerjasama)
         );
