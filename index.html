@@ -1155,15 +1155,15 @@
                             <div class="form-group">
                                 <label class="form-label">Pilih Kelas</label>
                                 <select id="adminLaporanFilterKelas" class="form-select" onchange="fetchAdminSubmittedReports(); fetchAdminProgressRealtime();">
-                                    <option value="X-1">Kelas X-1</option>
-                                    <option value="X-2">Kelas X-2</option>
-                                    <option value="X-3">Kelas X-3</option>
-                                    <option value="X-4">Kelas X-4</option>
-                                    <option value="X-5">Kelas X-5</option>
-                                    <option value="X-6">Kelas X-6</option>
-                                    <option value="X-7">Kelas X-7</option>
-                                    <option value="X-8">Kelas X-8</option>
-                                    <option value="X-10">Kelas X-10</option>
+                                    <option value="XI-1">Kelas XI-1</option>
+                                    <option value="XI-2">Kelas XI-2</option>
+                                    <option value="XI-3">Kelas XI-3</option>
+                                    <option value="XI-4">Kelas XI-4</option>
+                                    <option value="XI-5">Kelas XI-5</option>
+                                    <option value="XI-6">Kelas XI-6</option>
+                                    <option value="XI-7">Kelas XI-7</option>
+                                    <option value="XI-8">Kelas XI-8</option>
+                                    <option value="XI-10">Kelas XI-10</option>
                                 </select>
                             </div>
                             <div class="form-group" style="display: flex; align-items: flex-end;">
@@ -1267,11 +1267,11 @@
                             <div class="form-group">
                                 <label class="form-label">1. Filter Kelas Target</label>
                                 <select id="adminFilterKelas" class="form-select" onchange="populateMuridDropdown()">
-                                    <option value="X-1">Kelas X-1</option><option value="X-2">Kelas X-2</option>
-                                    <option value="X-3">Kelas X-3</option><option value="X-4">Kelas X-4</option>
-                                    <option value="X-5">Kelas X-5</option><option value="X-6">Kelas X-6</option>
-                                    <option value="X-7">Kelas X-7</option><option value="X-8">Kelas X-8</option>
-                                    <option value="X-10">Kelas X-10</option>
+                                    <option value="XI-1">Kelas XI-1</option><option value="XI-2">Kelas XI-2</option>
+                                    <option value="XI-3">Kelas XI-3</option><option value="XI-4">Kelas XI-4</option>
+                                    <option value="XI-5">Kelas XI-5</option><option value="XI-6">Kelas XI-6</option>
+                                    <option value="XI-7">Kelas XI-7</option><option value="XI-8">Kelas XI-8</option>
+                                    <option value="XI-10">Kelas XI-10</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -1303,11 +1303,11 @@
                                 <div class="form-group">
                                     <label class="form-label">Pilih Kelas</label>
                                     <select id="addKelas" class="form-select">
-                                        <option value="X-1">Kelas X-1</option><option value="X-2">Kelas X-2</option>
-                                        <option value="X-3">Kelas X-3</option><option value="X-4">Kelas X-4</option>
-                                        <option value="X-5">Kelas X-5</option><option value="X-6">Kelas X-6</option>
-                                        <option value="X-7">Kelas X-7</option><option value="X-8">Kelas X-8</option>
-                                        <option value="X-10">Kelas X-10</option>
+                                        <option value="XI-1">Kelas XI-1</option><option value="XI-2">Kelas XI-2</option>
+                                        <option value="XI-3">Kelas XI-3</option><option value="XI-4">Kelas XI-4</option>
+                                        <option value="XI-5">Kelas XI-5</option><option value="XI-6">Kelas XI-6</option>
+                                        <option value="XI-7">Kelas XI-7</option><option value="XI-8">Kelas XI-8</option>
+                                        <option value="XI-10">Kelas XI-10</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -1344,15 +1344,15 @@
                                 <div class="form-group">
                                     <label class="form-label">Pilih Kelas Target</label>
                                     <select id="selKelasAdmin" class="form-select" onchange="updateAdminGroupIdLabel()">
-                                        <option value="X-1">Kelas X-1</option>
-                                        <option value="X-2">Kelas X-2</option>
-                                        <option value="X-3">Kelas X-3</option>
-                                        <option value="X-4">Kelas X-4</option>
-                                        <option value="X-5">Kelas X-5</option>
-                                        <option value="X-6">Kelas X-6</option>
-                                        <option value="X-7">Kelas X-7</option>
-                                        <option value="X-8">Kelas X-8</option>
-                                        <option value="X-10">Kelas X-10</option>
+                                        <option value="XI-1">Kelas XI-1</option>
+                                        <option value="XI-2">Kelas XI-2</option>
+                                        <option value="XI-3">Kelas XI-3</option>
+                                        <option value="XI-4">Kelas XI-4</option>
+                                        <option value="XI-5">Kelas XI-5</option>
+                                        <option value="XI-6">Kelas XI-6</option>
+                                        <option value="XI-7">Kelas XI-7</option>
+                                        <option value="XI-8">Kelas XI-8</option>
+                                        <option value="XI-10">Kelas XI-10</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -1431,7 +1431,7 @@ function parseMisiDeskripsi(deskripsiStr) {
         window.adminReportsMap = {};
 
         function getApiUrl(kelas) {
-            return API_ENDPOINTS[kelas] || API_ENDPOINTS["X-1"];
+            return API_ENDPOINTS[kelas] || API_ENDPOINTS["XI-1"];
         }
 
         let currentAuthMode = 'murid';
@@ -1961,13 +1961,13 @@ function applyAnswersToForm(mySub) {
         currentStudentData = {
             nisn: st.nisn, 
             nama: st.nama, 
-            kelas: st.kelas || "X-1", 
+            kelas: st.kelas || "XI-1", 
             kelompok: st.kelompok || "Kelompok 1",
-            groupId: st.groupId || "X1-K1",
+            groupId: st.groupId || "XI1-K1",
             groupMembers: st.groupMembers || [st.nama],
             misiCode: ms.misiCode || "MISSION 01 — ADAPT",
             anjungan: ms.anjungan || "Anjungan NTB (Rumah Dalam Loka)",
-            guruPendamping: st.guruPendamping || "Nurul Faozi, S.Pd."
+            guruPendamping: st.guruPendamping || "-"
         };
 
         updateUIProfile();
@@ -2099,7 +2099,7 @@ function applyAnswersToForm(mySub) {
         return;
     }
 
-    const targetUrl = getApiUrl(currentStudentData ? currentStudentData.kelas : "X-1");
+    const targetUrl = getApiUrl(currentStudentData ? currentStudentData.kelas : "XI-1");
     const getVal = (id) => document.getElementById(id) ? document.getElementById(id).value.trim() : "";
 
     // 1. Susun payload langsung di tingkat paling luar (top-level)
@@ -2107,9 +2107,9 @@ function applyAnswersToForm(mySub) {
         action: "saveLKPD",
         nisn: currentStudentData.nisn || "",
         nama: currentStudentData.nama || "",
-        kelas: currentStudentData.kelas || "X-1",
+        kelas: currentStudentData.kelas || "XI-1",
         kelompok: currentStudentData.kelompok || "Kelompok 1",
-        groupId: currentStudentData.groupId || "X1-K1",
+        groupId: currentStudentData.groupId || "XI1-K1",
         anjungan: currentStudentData.anjungan || "",
         misiCode: currentStudentData.misiCode || "",
 
@@ -2223,7 +2223,7 @@ function applyAnswersToForm(mySub) {
 }
         function fetchAndMergeGroupData() {
             const gId = currentStudentData ? currentStudentData.groupId : "X1-K1";
-            const targetUrl = getApiUrl(currentStudentData ? currentStudentData.kelas : "X-1");
+            const targetUrl = getApiUrl(currentStudentData ? currentStudentData.kelas : "XI-1");
             alert(`Mengambil seluruh isian kelompok dengan Group ID (${gId})...`);
 
             fetch(`${targetUrl}?action=getGroupSubmissions&groupId=${encodeURIComponent(gId)}`)
