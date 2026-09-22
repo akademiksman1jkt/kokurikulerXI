@@ -1716,7 +1716,7 @@ function applyAnswersToForm(mySub) {
     updateChecklistUI();
 }
 
-        function renderGroupStatusTable(submissions) {function renderGroupStatusTable(submissions) {
+        function renderGroupStatusTable(submissions) {
     const tbody = document.getElementById('groupStatusTableBody');
     if (!tbody) return;
 
@@ -1755,7 +1755,7 @@ function applyAnswersToForm(mySub) {
             return nameInDb === cleanMember;
         });
 
-        // 🟢 LKPD 1: Mencari property dengan kata kunci "lk1", "a1", "c1", "alat", "aplikasi", "observasi"
+        // 🟢 LKPD 1: Mencari property dengan kata kunci "lk1", "a1", "c1", "alat", "aplikasi", "obs"
         const hasLk1 = hasAnyValidField(sub, ['lk1', 'a1', 'c1', 'alat', 'aplikasi', 'obs']);
 
         // 🟢 LKPD 2: Mencari property dengan kata kunci "lk2", "fokus", "data", "koneksi", "e_t1", "masalah"
