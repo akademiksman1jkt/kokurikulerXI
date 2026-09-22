@@ -1965,7 +1965,7 @@ function applyAnswersToForm(mySub) {
             kelompok: st.kelompok || "Kelompok 1",
             groupId: st.groupId || "XI1-K1",
             groupMembers: st.groupMembers || [st.nama],
-            misiCode: ms.misiCode || "MISSION 01 — ADAPT",
+            misiCode: ms.misiCode || "MISSION 01 — IDENTITY",
             anjungan: ms.anjungan || "Anjungan NTB (Rumah Dalam Loka)",
             guruPendamping: st.guruPendamping || "-"
         };
@@ -2009,18 +2009,18 @@ function applyAnswersToForm(mySub) {
     setText('detAnjungan', currentStudentData.anjungan);
     setText('detGuru', currentStudentData.guruPendamping);
 
-    // 1. TAMBAHKAN PENGAMBAN DATA 'det' DARI MISI_DETAILS
+    // 1. PENCARIAN DATA 'det' DARI MISI_DETAILS (Berdasarkan Nomor Misi)
     const rawMisi = currentStudentData?.misiCode || currentStudentData?.misi || "";
-    det = MISI_DETAILS[rawMisi];
+    const missionTag = rawMisi.match(/MISSION\s*\d+/i)?.[0]?.toUpperCase();
 
-    // Jika pencarian langsung tidak cocok, cari kunci yang mirip (misal: "MISSION 01")
-    if (!det && rawMisi) {
-        const keyMatch = Object.keys(MISI_DETAILS).find(k => k.includes(rawMisi.trim()) || rawMisi.includes(k.split('—')[0].trim()));
+    det = null;
+    if (missionTag) {
+        const keyMatch = Object.keys(MISI_DETAILS).find(k => k.toUpperCase().includes(missionTag));
         if (keyMatch) det = MISI_DETAILS[keyMatch];
     }
-    if (!det) det = {}; // Pengaman jika data kosong agar tidak crash
+    if (!det) det = MISI_DETAILS[rawMisi] || {};
 
-    // 2. RENDER KARTU MISI & DESKRIPSI (Gunakan pengaman ?. dan || '-')
+    // 2. RENDER KARTU MISI & DESKRIPSI
     const elDesk = document.getElementById('detMisiDeskripsi');
     if (elDesk) {
         elDesk.innerHTML = `
