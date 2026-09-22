@@ -1410,6 +1410,24 @@
             "XI-2": "https://script.google.com/macros/s/AKfycbxQX_Y0_NTKYIbCQOezXqLR4DQbIdUnCQ7geaNbSR-ZJmaJIWao-reRrbyC2bczmyGsvg/exec",
            
         };
+        // Fungsi pembantu untuk memecah teks Deskripsi_Misi dari spreadsheet
+function parseMisiDeskripsi(deskripsiStr) {
+  if (!deskripsiStr) return {};
+  
+  const result = {};
+  const parts = deskripsiStr.split('|');
+  
+  parts.forEach(part => {
+    const colonIndex = part.indexOf(':');
+    if (colonIndex !== -1) {
+      const key = part.substring(0, colonIndex).trim();
+      const value = part.substring(colonIndex + 1).trim();
+      result[key] = value;
+    }
+  });
+  
+  return result;
+}
         window.adminReportsMap = {};
 
         function getApiUrl(kelas) {
@@ -1433,67 +1451,67 @@
         };
 
         const MISI_DETAILS = {
-            "MISSION 01 — ADAPT": {
-                tanya: "Bagaimana arsitektur rumah adat menyesuaikan diri dengan kondisi iklim, potensi gempa, atau tata ruang kebudayaan lokal?",
-                amati: "Amati bentuk rumah panggung, konstruksi atap, sirkulasi udara alami, dan material kayu/bambu di rumah adat.",
-                data: "Minimal 3 karakteristik bangunan, 2 bentuk adaptasi lingkungan, 1 jenis material utama, 5 dokumentasi.",
-                iptek: "Hubungkan dengan ilmu sains dari Museum IPTEK (misal: simulasi gempa, struktur material, atau ventilasi alami).",
-                steam: "Rancang prototype maket rumah adat masa depan yang tangguh bencana dan ramah lingkungan.",
-                d1: "Item Data 1: Minimal 3 Karakteristik Utama Arsitektur Rumah Adat",
-                d2: "Item Data 2: Minimal 2 Bentuk Adaptasi (Gempa / Iklim Tropis / Aliran Udara)",
-                d3: "Item Data 3: Minimal 1 Jenis Material Utama (Kayu / Bambu / Atap Ijuk)"
-            },
-            "MISSION 02 — MOVE": {
-                tanya: "Bagaimana teknologi tradisional dan alat kerja lokal membantu masyarakat menyelesaikan pekerjaan fisik?",
-                amati: "Amati perkakas tradisional, alat penumbuk, perahu, mekanisme roda, atau pasak kayu di rumah adat.",
-                data: "Minimal 1 teknologi/alat tradisional, fungsi, cara kerja, analisis mekanisme, 5 dokumentasi.",
-                iptek: "Hubungkan dengan prinsip mekanika/robotika/gaya dari wahana Museum IPTEK.",
-                steam: "Rancang prototype alat sederhana pendukung aktivitas rumah adat.",
-                d1: "Item Data 1: Nama Alat / Mekanisme Tradisional yang Diamati",
-                d2: "Item Data 2: Fungsi Utama & Cara Kerja Mekanisnya",
-                d3: "Item Data 3: Analisis Energi / Prinsip Kerja Sainsnya"
-            },
-            "MISSION 03 — FLOW": {
-                tanya: "Bagaimana rumah adat memanfaatkan sirkulasi pencahayaan alami, aliran udara, serta sistem air?",
-                amati: "Amati posisi jendela, atap tinggi, drainase sekitar anjungan, dan sistem pencahayaan alami.",
-                data: "Minimal 1 sistem ventilasi/air, cara kerja, manfaat lingkungan, 5 dokumentasi.",
-                iptek: "Hubungkan dengan ilmu fisika/lingkungan dari Museum IPTEK (misal: tekanan udara/aliran fluid).",
-                steam: "Rancang prototype sistem sirkulasi udara / pemanen air hujan mandiri.",
-                d1: "Item Data 1: Sistem Aliran Udara / Air / Cahaya yang Diamati",
-                d2: "Item Data 2: Manfaat bagi Kenyamanan Penghuni Rumah Adat",
-                d3: "Item Data 3: Analisis Sains Aliran Lingkungannya"
-            },
-            "MISSION 04 — FOOD": {
-                tanya: "Bagaimana rumah adat menyediakan lumbung pangan lokal dan teknologi penyimpanan alami?",
-                amati: "Amati lumbung padi (leuit/rangkang), tempat penyimpanan pangan, dan wadah pengolahan tradisional.",
-                data: "Minimal 2 cara penyimpanan/pangan lokal, bahan wadah, kondisi suhu/kelembaban, 5 dokumentasi.",
-                iptek: "Hubungkan dengan ilmu bioteknologi/kimia pangan dari wahana Museum IPTEK.",
-                steam: "Rancang model/prototype lumbung pangan efisien berbasis material alami.",
-                d1: "Item Data 1: Bentuk Lumbung / Wadah Penyimpanan Pangan Tradisional",
-                d2: "Item Data 2: Cara Menjaga Keawetan Pangan dari Hama / Kelembaban",
-                d3: "Item Data 3: Prinsip Sains / Kimia Pangan yang Terlibat"
-            },
-            "MISSION 05 — CONNECT": {
-                tanya: "Bagaimana media teknologi dapat membantu mengenalkan keunikan arsitektur rumah adat kepada generasi muda?",
-                amati: "Amati ukiran, simbol filosofis budaya, ornamen rumah adat, dan sajian visual di anjungan.",
-                data: "Minimal 3 simbol/ornamen rumah adat, makna filosofisnya, 5 dokumentasi, 1 gagasan media digital.",
-                iptek: "Gunakan inspirasi teknologi komputer/interaktif yang ada di Museum IPTEK.",
-                steam: "Rancang Digital Cultural Experience (aplikasi interaktif, QR cerita budaya, atau maket 3D).",
-                d1: "Item Data 1: Minimal 3 Ornamen / Simbol Filosofis Rumah Adat",
-                d2: "Item Data 2: Makna Kebudayaan & Nilai Historisnya",
-                d3: "Item Data 3: Gagasan Media Teknologi Digital untuk Mempromosikannya"
-            },
-            "MISSION 06 — FUTURE": {
-                tanya: "Apa kearifan lokal arsitektur rumah adat yang dapat diintegrasikan menjadi inovasi bangunan masa depan?",
-                amati: "Amati penggunaan material ramah lingkungan, struktur pasak tanpa paku, dan tata hijau di anjungan.",
-                data: "Minimal 2 kearifan arsitektur lokal, keunggulannya, 5 dokumentasi.",
-                iptek: "Hubungkan satu keunggulan rumah adat dengan konsep sains modern dari Museum IPTEK.",
-                steam: "Rancang concept innovation bangunan ramah lingkungan masa depan.",
-                d1: "Item Data 1: Minimal 2 Keunggulan Arsitektur Rumah Adat Nusantara",
-                d2: "Item Data 2: Alasan Ilmiah Mengapa Konstruksi Tersebut Berkelanjutan",
-                d3: "Item Data 3: Inovasi Konsep Bangunan Masa Depan yang Ditawarkan"
-            }
-        };
+    "MISSION 01 — IDENTITY": {
+        tanya: "Apa yang membuat daerah ini memiliki identitas yang khas?",
+        amati: "Identitas daerah, sejarah, arsitektur, rumah/bangunan, simbol, dan makna.",
+        data: "Dokumentasi dan catatan identitas daerah, arsitektur/bangunan, serta simbol/makna khas (minimal 5 dokumentasi + rincian pengamatan).",
+        iptek: "Temuan sains atau teknologi apa di museum yang dapat membantu menjelaskan, menjaga, memperkuat, atau memperkenalkan identitas daerah ini?",
+        steam: "Rancang media/penjelasan interaktif untuk memperkenalkan kekhasan identitas daerah.",
+        d1: "Item Data 1: Identitas & Sejarah Daerah",
+        d2: "Item Data 2: Arsitektur / Bangunan Khas",
+        d3: "Item Data 3: Simbol & Makna Filosofis"
+    },
+    "MISSION 02 — CULTURE": {
+        tanya: "Bagaimana budaya daerah diwariskan dan tetap hidup di tengah perubahan zaman?",
+        amati: "Kesenian, pakaian, tradisi, musik, tari, nilai, dan kearifan lokal.",
+        data: "Dokumentasi dan catatan bentuk budaya, tradisi, serta pola pewarisan (minimal 5 dokumentasi + rincian pengamatan).",
+        iptek: "Temuan sains atau teknologi apa di museum yang dapat digunakan untuk menjaga, mengembangkan, atau memperkenalkan budaya daerah ini agar tetap hidup di tengah perubahan zaman?",
+        steam: "Rancang strategi / konsep pelestarian budaya berbasis media atau teknologi.",
+        d1: "Item Data 1: Bentuk Budaya / Kesenian / Tradisi",
+        d2: "Item Data 2: Nilai & Kearifan Lokal yang Terkandung",
+        d3: "Item Data 3: Mekanisme Pewarisan Budaya"
+    },
+    "MISSION 03 — RESOURCE": {
+        tanya: "Apa potensi sumber daya daerah ini dan bagaimana manusia memanfaatkannya?",
+        amati: "Sumber daya alam, kondisi lingkungan, flora dan fauna, potensi wilayah, serta pemanfaatan sumber daya.",
+        data: "Catatan potensi SDA, kondisi lingkungan/wilayah, dan cara pemanfaatan (minimal 5 dokumentasi + rincian data).",
+        iptek: "Pengetahuan, prinsip, atau teknologi apa di museum yang dapat dikaitkan dengan pemanfaatan sumber daya daerah secara lebih efektif, aman, atau berkelanjutan?",
+        steam: "Rancang model pemanfaatan/pengelolaan potensi SDA yang berkelanjutan.",
+        d1: "Item Data 1: Potensi Sumber Daya Alam / Wilayah",
+        d2: "Item Data 2: Kondisi Lingkungan & Ekosistem",
+        d3: "Item Data 3: Pola Pemanfaatan oleh Manusia"
+    },
+    "MISSION 04 — TECHNOLOGY": {
+        tanya: "Teknologi apa yang digunakan masyarakat untuk memenuhi kebutuhan hidupnya?",
+        amati: "Teknologi tradisional, alat, mekanisme, cara kerja, pemanfaatan energi, dan inovasi masyarakat.",
+        data: "Dokumentasi dan analisis teknologi lokal/tradisional, cara kerja, dan fungsi (minimal 5 dokumentasi + rincian alat).",
+        iptek: "Adakah prinsip, mekanisme, atau teknologi di museum yang memiliki hubungan dengan teknologi yang digunakan masyarakat daerah ini? Jelaskan hubungan dan kemungkinan pengembangannya.",
+        steam: "Rancang pengembangan / inovasi dari teknologi tradisional yang diamati.",
+        d1: "Item Data 1: Nama / Bentuk Teknologi Tradisional",
+        d2: "Item Data 2: Mekanisme Kerja & Energi yang Digunakan",
+        d3: "Item Data 3: Hubungan dengan Teknologi Museum & Potensi Pengembangan"
+    },
+    "MISSION 05 — LIFE": {
+        tanya: "Bagaimana lingkungan, sumber daya, budaya, dan teknologi membentuk kehidupan masyarakat?",
+        amati: "Kehidupan masyarakat, mata pencaharian, aktivitas ekonomi, hubungan manusia dengan lingkungan, nilai sosial, dan perubahan kehidupan.",
+        data: "Catatan pola hidup, mata pencaharian, dan dinamika interaksi sosial-lingkungan (minimal 5 dokumentasi).",
+        iptek: "Bagaimana pengetahuan atau teknologi yang ditemukan di museum dapat dikaitkan dengan kebutuhan, aktivitas, atau perubahan kehidupan masyarakat di daerah ini?",
+        steam: "Rancang solusi adaptasi/penunjang aktivitas kehidupan masyarakat.",
+        d1: "Item Data 1: Mata Pencaharian & Aktivitas Ekonomi Utama",
+        d2: "Item Data 2: Hubungan Sosial & Interaksi dengan Lingkungan",
+        d3: "Item Data 3: Analisis Perubahan & Pengaruh Teknologi"
+    },
+    "MISSION 06 — FUTURE": {
+        tanya: "Jika kamu menjadi bagian dari generasi berikutnya, apa yang dapat kamu lakukan untuk mengembangkan potensi daerah ini?",
+        amati: "Potensi, masalah, peluang, kebutuhan, kemungkinan inovasi, dan gagasan pengembangan daerah.",
+        data: "Identifikasi peluang, tantangan, dan gagasan aksi generasi muda (minimal 5 dokumentasi/catatan gagasan).",
+        iptek: "Temuan sains atau teknologi apa yang dapat menjadi inspirasi untuk menjawab masalah, memenuhi kebutuhan, atau mengembangkan potensi daerah ini di masa depan?",
+        steam: "Rancang concept innovation / gagasan aksi masa depan untuk daerah.",
+        d1: "Item Data 1: Identifikasi Potensi & Tantangan / Masalah Daerah",
+        d2: "Item Data 2: Inspirasi Sains/Teknologi dari Museum yang Relevan",
+        d3: "Item Data 3: Gagasan / Inovasi Aksi Generasi Berikutnya"
+    }
+};
 
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebarMenu');
