@@ -2103,26 +2103,65 @@ function applyAnswersToForm(mySub) {
 
     // 1. Susun payload langsung di tingkat paling luar (top-level)
     const payload = {
-        action: "saveLKPD",
-        nisn: currentStudentData.nisn || "",
-        nama: currentStudentData.nama || "",
-        kelas: currentStudentData.kelas || "XI-1",
-        kelompok: currentStudentData.kelompok || "Kelompok 1",
-        groupId: currentStudentData.groupId || "XI1-K1",
-        anjungan: currentStudentData.anjungan || "",
-        misiCode: currentStudentData.misiCode || "",
+    action: "saveLKPD",
+    nisn: currentStudentData.nisn || "",
+    nama: currentStudentData.nama || "",
+    kelas: currentStudentData.kelas || "XI-1",
+    waliKelas: currentStudentData.waliKelas || "",
+    guruPendamping: currentStudentData.guruPendamping || "",
+    sesi: currentStudentData.sesi || "",
+    kelompok: currentStudentData.kelompok || "Kelompok 1",
+    groupId: currentStudentData.groupId || "XI1-K1",
+    anjungan: currentStudentData.anjungan || "",
+    misiCode: currentStudentData.misiCode || "",
 
-        // Data Isian LKPD 1 - 4
-        lk1_a1_nama: getVal('lk1_alat1_nama'), lk1_a1_zona: getVal('lk1_alat1_zona'), lk1_a1_hasil: getVal('lk1_alat1_hasil'), lk1_a1_konsep: getVal('lk1_alat1_konsep'),
-        lk1_a2_nama: getVal('lk1_alat2_nama'), lk1_a2_zona: getVal('lk1_alat2_zona'), lk1_a2_hasil: getVal('lk1_alat2_hasil'), lk1_a2_konsep: getVal('lk1_alat2_konsep'),
-        lk1_a3_nama: getVal('lk1_alat3_nama'), lk1_a3_zona: getVal('lk1_alat3_zona'), lk1_a3_hasil: getVal('lk1_alat3_hasil'), lk1_a3_konsep: getVal('lk1_alat3_konsep'),
-        lk1_aplikasi: getVal('lk1_aplikasi'),
+    // Bagian C (Wahana / Alat 1, 2, 3)
+    lk1_c1_nama: getVal('lk1_c1_nama') || getVal('lk1_alat1_nama'),
+    lk1_c1_hasil: getVal('lk1_c1_hasil') || getVal('lk1_alat1_hasil'),
+    lk1_c1_paham: getVal('lk1_c1_paham') || getVal('lk1_alat1_konsep'),
 
-        lk2_fokus: getVal('lk2_fokus'), lk2_data1: getVal('lk2_data1'), lk2_data2: getVal('lk2_data2'), lk2_data3: getVal('lk2_data3'), lk2_koneksi: getVal('lk2_koneksi'),
-        lk3_judul: getVal('lk3_judul'), lk3_format: getVal('lk3_format'),
-        steam_s: getVal('steam_s'), steam_t: getVal('steam_t'), steam_e: getVal('steam_e'), steam_a: getVal('steam_a'), steam_m: getVal('steam_m'),
-        lk4_kendala: getVal('lk4_kendala'), lk4_kerjasama: getVal('lk4_kerjasama')
-    };
+    lk1_c2_nama: getVal('lk1_c2_nama') || getVal('lk1_alat2_nama'),
+    lk1_c2_hasil: getVal('lk1_c2_hasil') || getVal('lk1_alat2_hasil'),
+    lk1_c2_paham: getVal('lk1_c2_paham') || getVal('lk1_alat2_konsep'),
+
+    lk1_c3_nama: getVal('lk1_c3_nama') || getVal('lk1_alat3_nama'),
+    lk1_c3_hasil: getVal('lk1_c3_hasil') || getVal('lk1_alat3_hasil'),
+    lk1_c3_paham: getVal('lk1_c3_paham') || getVal('lk1_alat3_konsep'),
+
+    // Bagian D
+    lk1_d_pilihan: getVal('lk1_d_pilihan'),
+    lk1_d_prinsip: getVal('lk1_d_prinsip'),
+    lk1_d_alasan: getVal('lk1_d_alasan'),
+    lk1_d_terap: getVal('lk1_d_terap'),
+
+    // Bagian E
+    lk1_e_t1: getVal('lk1_e_t1'),
+    lk1_e_t2: getVal('lk1_e_t2'),
+    lk1_e_t3: getVal('lk1_e_t3'),
+
+    // Bagian F
+    lk1_f_tanya: getVal('lk1_f_tanya'),
+    lk1_f_terkuat: getVal('lk1_f_terkuat'),
+    lk1_f_penting: getVal('lk1_f_penting'),
+    lk1_f_potensi: getVal('lk1_f_potensi'),
+
+    // Bagian G
+    lk1_g_hubung: getVal('lk1_g_hubung'),
+    lk1_g_relevan: getVal('lk1_g_relevan'),
+    lk1_g_peluang: getVal('lk1_g_peluang'),
+    lk1_g_tekno: getVal('lk1_g_tekno'),
+
+    // Bagian H
+    lk1_h_ide: getVal('lk1_h_ide'),
+    lk1_h_untuk: getVal('lk1_h_untuk'),
+    lk1_h_kembang: getVal('lk1_h_kembang'),
+
+    // Bagian I (Refleksi)
+    lk1_i_pandang: getVal('lk1_i_pandang') || getVal('lk4_i_pandang'),
+    lk1_i_kompleks: getVal('lk1_i_kompleks') || getVal('lk4_i_kompleks'),
+    lk1_i_tanya: getVal('lk1_i_tanya') || getVal('lk4_i_tanya'),
+    lk1_i_peran: getVal('lk1_i_peran') || getVal('lk4_i_peran')
+};
 
     // 2. Simpan cadangan lokal
     localStorage.setItem(`backup_lkpd_${payload.groupId}_${payload.nisn}`, JSON.stringify(payload));
