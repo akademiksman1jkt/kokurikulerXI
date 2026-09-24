@@ -3716,6 +3716,181 @@ function compressImage(file, maxWidth = 1920, quality = 0.85) {
         };
     });
 }
+        // 1. Fungsi Menghitung Metrik Teks (Karakter, Kata, Kalimat, Spam)
+function hitungMetrikTeks(teks) {
+    if (!teks || teks.trim() === "") {
+        return { totalKarakter: 0, totalKata: 0, totalKalimat: 0, kataAneh: false };
+    }
+
+    const totalKarakter = teks.length;
+    const kataArray = teks.trim().split(/\s+/).filter(w => w.length > 0);
+    const totalKata = kataArray.length;
+    const kalimatArray = teks.split(/[.!?]+/).filter(s => s.trim().length > 0);
+    const totalKalimat = kalimatArray.length;
+
+    // Deteksi spam tombol keyboard (misal: "asdfghjkl", "qwertyuiop")
+    const kataAneh = kataArray.some(w => w.length > 25);
+
+    return { totalKarakter, totalKata, totalKalimat, kataAneh };
+}
+
+// 2. Fungsi Evaluasi Skor dan Status Kualitas
+function evaluasiKualitasJawaban(siswa) {
+    let score = 100;
+    let catatan = [];
+
+    // Gabungkan seluruh teks refleksi / jawaban esai utama
+    const gabunganTeks = [
+        siswa.lk1_i_pandang || '',
+        siswa.lk1_i_kompleks || '',
+        siswa.lk1_i_tanya || '',
+        siswa.lk1_i_peran || ''
+    ].join(' ');
+
+    const metrik = hitungMetrikTeks(gabunganTeks);
+
+    // Filter 1: Jumlah Kata
+    if (metrik.totalKata === 0) {
+        score = 0;
+        catatan.push("Belum diisi");
+    } else if (metrik.totalKata < 10) {
+        score -= 50;
+        catatan.push(`Sangat singkat (${metrik.totalKata} kata)`);
+    } else if (metrik.totalKata < 25) {
+        score -= 20;
+        catatan.push(`Kurang mendalam (${metrik.totalKata} kata)`);
+    }
+
+    // Filter 2: Jumlah Kalimat
+    if (metrik.totalKalimat < 2 && metrik.totalKata >= 10) {
+        score -= 10;
+        catatan.push("Tidak memakai tanda baca kalimat");
+    }
+
+    // Filter 3: Deteksi Kata Asal / Malas
+    const polaAsal = /(gk tau|gatau|tes|asdf|qwerty|aaa|zzz|ok|ya|tidak tahu|engga tau|bebas|sembarang)/i;
+    if (polaAsal.test(gabunganTeks)) {
+        score -= 40;
+        catatan.push("Terdeteksi kata asal-asalan");
+    }
+
+    // Filter 4: Deteksi Spam Karakter Panjanng
+    if (metrik.kataAneh) {
+        score -= 30;
+        catatan.push("Terdeteksi spam tombol keyboard");
+    }
+
+    // Penentuan Badge dan Label
+    let statusLabel = "✅ Berbobot";
+    let colorClass = "badge-success"; // Hijau
+
+    if (score < 50) {
+        statusLabel = "⚠️ Indikator Asal";
+        colorClass = "badge-danger"; // Merah
+    } else if (score < 80) {
+        statusLabel = "⚡ Perlu Review";
+        colorClass = "badge-warning"; // Kuning
+    }
+
+    return {
+        score,
+        metrik,
+        statusLabel,
+        colorClass,
+        detailCatatan: catatan.length > 0 ? catatan.join(" • ") : "Isian lengkap dan sesuai"
+    };
+}
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxQX_Y0_NTKYIbCQOezXqLR4DQbIdUnCQ7geaNbSR-ZJmaJIWao-reRrbyC2bczmyGsvg/exec"; // Tempel URL Apps Script Web App kamu di sini
+
+// 1. Fungsi Ambil Data dari Spreadsheet
+function fetchAdminSubmissions() {
+    const tbody = document.getElementById('adminTableBody');
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 20px;">Memuat dan menganalisis isian siswa...</td></tr>';
+
+    fetch(`${SCRIPT_URL}?action=getAdminSubmissions`)
+        .then(res => res.json())
+        .then(res => {
+            if (res.status === "success") {
+                renderAdminTable(res.data);
+            } else {
+                alert("Gagal memuat data: " + res.message);
+            }
+        })
+        .catch(err => {
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:red; padding: 20px;">Gagal terhubung ke server.</td></tr>';
+        });
+}
+
+// 2. Render Tabel Data dengan Evaluasi Otomatis
+function renderAdminTable(dataSiswa) {
+    const tbody = document.getElementById('adminTableBody');
+    tbody.innerHTML = '';
+
+    if (!dataSiswa || dataSiswa.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 20px;">Belum ada data isian siswa.</td></tr>';
+        return;
+    }
+
+    dataSiswa.forEach(siswa => {
+        const evaluasi = evaluasiKualitasJawaban(siswa);
+        const statusRevisiSaatIni = siswa.statusRevisi || "-";
+
+        const row = `
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 10px;">
+                    <strong>${siswa.nama || '-'}</strong><br>
+                    <small style="color: #64748b;">NISN: ${siswa.nisn || '-'}</small>
+                </td>
+                <td style="padding: 10px;">${siswa.kelas || '-'} / ${siswa.kelompok || '-'}</td>
+                <td style="padding: 10px;">
+                    <span class="${evaluasi.colorClass}">${evaluasi.statusLabel}</span><br>
+                    <small style="color: #64748b; display: block; margin-top: 4px;">${evaluasi.detailCatatan}</small>
+                </td>
+                <td style="padding: 10px; font-size: 12px; line-height: 1.4;">
+                    • <b>Kata:</b> ${evaluasi.metrik.totalKata}<br>
+                    • <b>Kalimat:</b> ${evaluasi.metrik.totalKalimat}<br>
+                    • <b>Karakter:</b> ${evaluasi.metrik.totalKarakter}
+                </td>
+                <td style="padding: 10px; font-size: 12px; max-width: 250px;">
+                    <b>Pandang:</b> ${siswa.lk1_i_pandang || '-'}<br>
+                    <b style="color: #dc2626;">Status Revisi:</b> ${statusRevisiSaatIni}
+                </td>
+                <td style="padding: 10px;">
+                    <button style="background: #dc2626; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 12px;" 
+                            onclick="mintaRevisiSiswa('${siswa.nisn}', '${siswa.nama}')">
+                        ❌ Minta Revisi
+                    </button>
+                </td>
+            </tr>
+        `;
+        tbody.innerHTML += row;
+    });
+}
+
+// 3. Fungsi Kirim Instruksi Revisi ke Spreadsheet
+function mintaRevisiSiswa(nisn, nama) {
+    const catatan = prompt(`Berikan catatan revisi untuk ${nama}:`, "Jawaban terlalu singkat dan tidak menjelaskan alasan secara detail. Mohon diperbaiki.");
+    
+    if (!catatan) return;
+
+    fetch(SCRIPT_URL, {
+        method: "POST",
+        body: JSON.stringify({
+            action: "requestRevision",
+            nisn: nisn,
+            catatan: catatan
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.status === "success") {
+            alert(`Status revisi berhasil dikirim untuk ${nama}`);
+            fetchAdminSubmissions(); // Refresh tabel setelah pembaruan
+        } else {
+            alert("Gagal menyimpan revisi: " + data.message);
+        }
+    });
+}
     </script>
     <div id="customConfirmModal" class="modal-overlay-center">
     <div class="modal-card-center">
@@ -3760,5 +3935,38 @@ function compressImage(file, maxWidth = 1920, quality = 0.85) {
         </div>
     </div>
 </div>
+    <div class="admin-container" style="padding: 20px; font-family: sans-serif;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <h2>🔍 Evaluasi Kualitas Isian LKPD</h2>
+        <button onclick="fetchAdminSubmissions()" style="padding: 10px 16px; background: #0284c7; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
+            🔄 Refresh Data
+        </button>
+    </div>
+
+    <!-- Tabel Data Siswa -->
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid #cbd5e1; text-align: left;">
+        <thead>
+            <tr style="background-color: #0f172a; color: white;">
+                <th style="padding: 10px;">Siswa</th>
+                <th style="padding: 10px;">Kelas / Kelompok</th>
+                <th style="padding: 10px;">Kualitas Isian</th>
+                <th style="padding: 10px;">Metrik Teks</th>
+                <th style="padding: 10px;">Pratinjau Refleksi</th>
+                <th style="padding: 10px;">Aksi</th>
+            </tr>
+        </thead>
+        <tbody id="adminTableBody">
+            <tr>
+                <td colspan="6" style="text-align: center; padding: 20px;">Silakan klik "Refresh Data" untuk memuat hasil isian siswa.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<style>
+    .badge-success { background-color: #10b981; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; }
+    .badge-warning { background-color: #f59e0b; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; }
+    .badge-danger { background-color: #ef4444; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; }
+</style>
 </body>
 </html>
