@@ -558,8 +558,9 @@
                 <div class="sidebar-item item-murid" onclick="openSection('secLkpd4')">🧠 LKPD 4: Refleksi Mandiri</div>
                 <div class="sidebar-item item-murid" onclick="openSection('secDocs')">📸 Unggah Dokumentasi</div>
                 <div class="sidebar-item item-murid" onclick="openSection('secExport')">📄 Buat Laporan Jurnal Kelompok</div>
-                <div class="sidebar-item item-admin" style="display:none;" onclick="openSection('secAdminLaporan')">📥 Cek Laporan Masuk</div>
                 
+                <div class="sidebar-item item-admin" style="display:none;" onclick="openSection('secAdminEvaluasi'); if(typeof fetchAdminSubmissions === 'function') fetchAdminSubmissions();">🔍 Evaluasi Isian LKPD</div>
+                <div class="sidebar-item item-admin" style="display:none;" onclick="openSection('secAdminLaporan')">📥 Cek Laporan Masuk</div>
                 <div class="sidebar-item item-admin" style="display:none;" onclick="openSection('secAdminPeserta')">👥 Kelola Data Murid</div>
                 <div class="sidebar-item item-admin" style="display:none;" onclick="openSection('secAdminKelompok')">⚙️ Plotting Kelas</div>
             </nav>
@@ -1142,6 +1143,38 @@
                     </div>
                 </section>
 
+                <!-- SECTION ADMIN: EVALUASI KUALITAS ISIAN -->
+<section class="content-section" id="secAdminEvaluasi">
+    <button class="btn-back-hub" onclick="backToHub()">⬅️ Kembali ke Menu Utama</button>
+    <div class="admin-container" style="padding: 20px; font-family: sans-serif;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <h2>🔍 Evaluasi Kualitas Isian LKPD</h2>
+            <button onclick="fetchAdminSubmissions()" style="padding: 10px 16px; background: #0284c7; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
+                🔄 Refresh Data
+            </button>
+        </div>
+
+        <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; border: 1px solid #cbd5e1; text-align: left;">
+                <thead>
+                    <tr style="background-color: #0f172a; color: white;">
+                        <th style="padding: 10px;">Siswa</th>
+                        <th style="padding: 10px;">Kelas / Kelompok</th>
+                        <th style="padding: 10px;">Kualitas Isian</th>
+                        <th style="padding: 10px;">Metrik Teks</th>
+                        <th style="padding: 10px;">Pratinjau Refleksi</th>
+                        <th style="padding: 10px;">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="adminTableBody">
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 20px;">Silakan klik "Refresh Data" untuk memuat hasil isian siswa.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
                 <!-- SECTION ADMIN: CEK LAPORAN MASUK -->
                 <section class="content-section" id="secAdminLaporan">
                     <button class="btn-back-hub" onclick="backToHub()">⬅️ Kembali ke Menu Utama</button>
@@ -1560,28 +1593,34 @@ function closeSidebarMobile() {
         }
 
         function openSection(secId) {
-            document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
-            const targetSidebar = Array.from(document.querySelectorAll('.sidebar-item')).find(item => {
-                return item.getAttribute('onclick') && item.getAttribute('onclick').includes(secId);
-            });
-            if (targetSidebar) targetSidebar.classList.add('active');
+    document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
+    const targetSidebar = Array.from(document.querySelectorAll('.sidebar-item')).find(item => {
+        return item.getAttribute('onclick') && item.getAttribute('onclick').includes(secId);
+    });
+    if (targetSidebar) targetSidebar.classList.add('active');
 
-            document.querySelectorAll('.content-section').forEach(el => el.classList.remove('active'));
-            document.getElementById(secId).classList.add('active');
-            window.scrollTo({top: 0, behavior: 'smooth'});
+    document.querySelectorAll('.content-section').forEach(el => el.classList.remove('active'));
+    
+    const targetSection = document.getElementById(secId);
+    if (targetSection) targetSection.classList.add('active');
+    
+    window.scrollTo({top: 0, behavior: 'smooth'});
 
-            if (window.innerWidth <= 992) {
-                const sidebar = document.getElementById('sidebarMenu');
-                const overlay = document.getElementById('sidebarOverlay');
-                if (sidebar) sidebar.classList.remove('mobile-open');
-                if (overlay) overlay.classList.remove('active');
-            }
-
-            if(secId === 'secExport') updateDraftPreview();
-            if(secId === 'secDocs') {
-        loadGroupPhotosQuota();
+    if (window.innerWidth <= 992) {
+        const sidebar = document.getElementById('sidebarMenu');
+        const overlay = document.getElementById('sidebarOverlay');
+        if (sidebar) sidebar.classList.remove('mobile-open');
+        if (overlay) overlay.classList.remove('active');
     }
-        }
+
+    if(secId === 'secExport') updateDraftPreview();
+    if(secId === 'secDocs') loadGroupPhotosQuota();
+
+    // ➕ KODE BARU: Otomatis muat data saat halaman Evaluasi LKPD dibuka
+    if(secId === 'secAdminEvaluasi' && typeof fetchAdminSubmissions === 'function') {
+        fetchAdminSubmissions();
+    }
+}
 
         function backToHub() {
             openSection('secHub');
@@ -3966,38 +4005,6 @@ function mintaRevisiSiswa(nisn, nama) {
         </div>
     </div>
 </div>
-    <div class="admin-container" id="adminSection" style="display: none; padding: 20px; font-family: sans-serif;">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-        <h2>🔍 Evaluasi Kualitas Isian LKPD</h2>
-        <button onclick="fetchAdminSubmissions()" style="padding: 10px 16px; background: #0284c7; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
-            🔄 Refresh Data
-        </button>
-    </div>
 
-    <!-- Tabel Data Siswa -->
-    <table style="width: 100%; border-collapse: collapse; border: 1px solid #cbd5e1; text-align: left;">
-        <thead>
-            <tr style="background-color: #0f172a; color: white;">
-                <th style="padding: 10px;">Siswa</th>
-                <th style="padding: 10px;">Kelas / Kelompok</th>
-                <th style="padding: 10px;">Kualitas Isian</th>
-                <th style="padding: 10px;">Metrik Teks</th>
-                <th style="padding: 10px;">Pratinjau Refleksi</th>
-                <th style="padding: 10px;">Aksi</th>
-            </tr>
-        </thead>
-        <tbody id="adminTableBody">
-            <tr>
-                <td colspan="6" style="text-align: center; padding: 20px;">Silakan klik "Refresh Data" untuk memuat hasil isian siswa.</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-<style>
-    .badge-success { background-color: #10b981; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; }
-    .badge-warning { background-color: #f59e0b; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; }
-    .badge-danger { background-color: #ef4444; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; }
-</style>
 </body>
 </html>
