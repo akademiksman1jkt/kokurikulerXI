@@ -2074,18 +2074,34 @@ function applyAnswersToForm(mySub) {
 }
 
         function handleLoginAdmin(e) {
-            e.preventDefault();
-            const u = document.getElementById('usernameAdmin').value.trim();
-            const p = document.getElementById('passwordAdmin').value.trim();
+    e.preventDefault();
+    const u = document.getElementById('usernameAdmin').value.trim();
+    const p = document.getElementById('passwordAdmin').value.trim();
 
-            if(u === "admin.guru" && p === "admin123") {
-                document.querySelectorAll('.item-murid').forEach(el => el.style.display = 'none');
-                document.querySelectorAll('.item-admin').forEach(el => el.style.display = 'flex');
-                document.getElementById('loginScreen').style.display = 'none';
-                document.getElementById('dashboardScreen').classList.add('active');
-                openSection('secAdminPeserta');
-            } else { alert("Password Admin Salah!"); }
+    if (u === "admin.guru" && p === "admin123") {
+        // 1. Sembunyikan elemen khusus murid, tampilkan elemen khusus admin
+        document.querySelectorAll('.item-murid').forEach(el => el.style.display = 'none');
+        document.querySelectorAll('.item-admin').forEach(el => el.style.display = 'flex');
+        
+        // 2. Sembunyikan layar login dan tampilkan dashboard
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('dashboardScreen').classList.add('active');
+        
+        // 3. Tampilkan tabel admin yang tadi disembunyikan
+        const adminSection = document.getElementById('adminSection');
+        if (adminSection) {
+            adminSection.style.display = 'block';
         }
+
+        // 4. Buka section admin dan otomatis ambil/refresh data dari server
+        openSection('secAdminPeserta');
+        if (typeof fetchAdminSubmissions === "function") {
+            fetchAdminSubmissions(); // Otomatis muat data tanpa harus klik tombol refresh
+        }
+    } else { 
+        alert("Password Admin Salah!"); 
+    }
+}
 
         function handleLogout() {
             document.getElementById('dashboardScreen').classList.remove('active');
@@ -3950,7 +3966,7 @@ function mintaRevisiSiswa(nisn, nama) {
         </div>
     </div>
 </div>
-    <div class="admin-container" style="padding: 20px; font-family: sans-serif;">
+    <div class="admin-container" id="adminSection" style="display: none; padding: 20px; font-family: sans-serif;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
         <h2>🔍 Evaluasi Kualitas Isian LKPD</h2>
         <button onclick="fetchAdminSubmissions()" style="padding: 10px 16px; background: #0284c7; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
