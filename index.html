@@ -2099,69 +2099,106 @@ function applyAnswersToForm(mySub) {
     }
 
     const targetUrl = getApiUrl(currentStudentData ? currentStudentData.kelas : "XI-1");
-    const getVal = (id) => document.getElementById(id) ? document.getElementById(id).value.trim() : "";
 
-    // 1. Susun payload langsung di tingkat paling luar (top-level)
+    // Helper untuk mengambil nilai input dari beberapa kemungkinan ID di HTML
+    const getVal = (...ids) => {
+        for (let id of ids) {
+            const el = document.getElementById(id);
+            if (el && el.value.trim() !== "") {
+                return el.value.trim();
+            }
+        }
+        return "";
+    };
+
+    // 1. Susun payload
     const payload = {
-    action: "saveLKPD",
-    nisn: currentStudentData.nisn || "",
-    nama: currentStudentData.nama || "",
-    kelas: currentStudentData.kelas || "XI-1",
-    waliKelas: currentStudentData.waliKelas || "",
-    guruPendamping: currentStudentData.guruPendamping || "",
-    sesi: currentStudentData.sesi || "",
-    kelompok: currentStudentData.kelompok || "Kelompok 1",
-    groupId: currentStudentData.groupId || "XI1-K1",
-    anjungan: currentStudentData.anjungan || "",
-    misiCode: currentStudentData.misiCode || "",
+        action: "saveLKPD",
+        nisn: currentStudentData.nisn || "",
+        nama: currentStudentData.nama || "",
+        kelas: currentStudentData.kelas || "XI-1",
+        waliKelas: currentStudentData.waliKelas || "",
+        guruPendamping: currentStudentData.guruPendamping || "",
+        sesi: currentStudentData.sesi || "",
+        kelompok: currentStudentData.kelompok || "Kelompok 1",
+        groupId: currentStudentData.groupId || "XI1-K1",
+        anjungan: currentStudentData.anjungan || "",
+        misiCode: currentStudentData.misiCode || "",
 
-    // Bagian C (Wahana / Alat 1, 2, 3)
-    lk1_c1_nama: getVal('lk1_c1_nama') || getVal('lk1_alat1_nama'),
-    lk1_c1_hasil: getVal('lk1_c1_hasil') || getVal('lk1_alat1_hasil'),
-    lk1_c1_paham: getVal('lk1_c1_paham') || getVal('lk1_alat1_konsep'),
+        // Bagian C (Wahana / Alat 1, 2, 3)
+        lk1_c1_nama: getVal('lk1_c1_nama', 'lk1_alat1_nama'),
+        lk1_c1_hasil: getVal('lk1_c1_hasil', 'lk1_alat1_hasil'),
+        lk1_c1_paham: getVal('lk1_c1_paham', 'lk1_alat1_konsep'),
 
-    lk1_c2_nama: getVal('lk1_c2_nama') || getVal('lk1_alat2_nama'),
-    lk1_c2_hasil: getVal('lk1_c2_hasil') || getVal('lk1_alat2_hasil'),
-    lk1_c2_paham: getVal('lk1_c2_paham') || getVal('lk1_alat2_konsep'),
+        lk1_c2_nama: getVal('lk1_c2_nama', 'lk1_alat2_nama'),
+        lk1_c2_hasil: getVal('lk1_c2_hasil', 'lk1_alat2_hasil'),
+        lk1_c2_paham: getVal('lk1_c2_paham', 'lk1_alat2_konsep'),
 
-    lk1_c3_nama: getVal('lk1_c3_nama') || getVal('lk1_alat3_nama'),
-    lk1_c3_hasil: getVal('lk1_c3_hasil') || getVal('lk1_alat3_hasil'),
-    lk1_c3_paham: getVal('lk1_c3_paham') || getVal('lk1_alat3_konsep'),
+        lk1_c3_nama: getVal('lk1_c3_nama', 'lk1_alat3_nama'),
+        lk1_c3_hasil: getVal('lk1_c3_hasil', 'lk1_alat3_hasil'),
+        lk1_c3_paham: getVal('lk1_c3_paham', 'lk1_alat3_konsep'),
 
-    // Bagian D
-    lk1_d_pilihan: getVal('lk1_d_pilihan'),
-    lk1_d_prinsip: getVal('lk1_d_prinsip'),
-    lk1_d_alasan: getVal('lk1_d_alasan'),
-    lk1_d_terap: getVal('lk1_d_terap'),
+        // Bagian D
+        lk1_d_pilihan: getVal('lk1_d_pilihan'),
+        lk1_d_prinsip: getVal('lk1_d_prinsip'),
+        lk1_d_alasan: getVal('lk1_d_alasan'),
+        lk1_d_terap: getVal('lk1_d_terap'),
 
-    // Bagian E
-    lk1_e_t1: getVal('lk1_e_t1'),
-    lk1_e_t2: getVal('lk1_e_t2'),
-    lk1_e_t3: getVal('lk1_e_t3'),
+        // Bagian E
+        lk1_e_t1: getVal('lk1_e_t1'),
+        lk1_e_t2: getVal('lk1_e_t2'),
+        lk1_e_t3: getVal('lk1_e_t3'),
 
-    // Bagian F
-    lk1_f_tanya: getVal('lk1_f_tanya'),
-    lk1_f_terkuat: getVal('lk1_f_terkuat'),
-    lk1_f_penting: getVal('lk1_f_penting'),
-    lk1_f_potensi: getVal('lk1_f_potensi'),
+        // Bagian F
+        lk1_f_tanya: getVal('lk1_f_tanya'),
+        lk1_f_terkuat: getVal('lk1_f_terkuat'),
+        lk1_f_penting: getVal('lk1_f_penting'),
+        lk1_f_potensi: getVal('lk1_f_potensi'),
 
-    // Bagian G
-    lk1_g_hubung: getVal('lk1_g_hubung'),
-    lk1_g_relevan: getVal('lk1_g_relevan'),
-    lk1_g_peluang: getVal('lk1_g_peluang'),
-    lk1_g_tekno: getVal('lk1_g_tekno'),
+        // Bagian G
+        lk1_g_hubung: getVal('lk1_g_hubung'),
+        lk1_g_relevan: getVal('lk1_g_relevan'),
+        lk1_g_peluang: getVal('lk1_g_peluang'),
+        lk1_g_tekno: getVal('lk1_g_tekno'),
 
-    // Bagian H
-    lk1_h_ide: getVal('lk1_h_ide'),
-    lk1_h_untuk: getVal('lk1_h_untuk'),
-    lk1_h_kembang: getVal('lk1_h_kembang'),
+        // Bagian H
+        lk1_h_ide: getVal('lk1_h_ide'),
+        lk1_h_untuk: getVal('lk1_h_untuk'),
+        lk1_h_kembang: getVal('lk1_h_kembang'),
 
-    // Bagian I (Refleksi)
-    lk1_i_pandang: getVal('lk1_i_pandang') || getVal('lk4_i_pandang'),
-    lk1_i_kompleks: getVal('lk1_i_kompleks') || getVal('lk4_i_kompleks'),
-    lk1_i_tanya: getVal('lk1_i_tanya') || getVal('lk4_i_tanya'),
-    lk1_i_peran: getVal('lk1_i_peran') || getVal('lk4_i_peran')
-};
+        // Bagian I (Refleksi / LKPD 4) - Pengecekan ID berlapis
+        lk1_i_pandang: getVal('lk1_i_pandang', 'lk4_i_pandang', 'lk4_pandang', 'refleksi_pandang'),
+        lk1_i_kompleks: getVal('lk1_i_kompleks', 'lk4_i_kompleks', 'lk4_kompleks', 'refleksi_kompleks'),
+        lk1_i_tanya: getVal('lk1_i_tanya', 'lk4_i_tanya', 'lk4_tanya', 'refleksi_tanya'),
+        lk1_i_peran: getVal('lk1_i_peran', 'lk4_i_peran', 'lk4_peran', 'refleksi_peran')
+    };
+
+    // 🔍 Cek payload di console F12 browser sebelum dikirim
+    console.log("📤 Mengirim Payload ke Spreadsheet:", payload);
+
+    showToast("💾 Menyimpan progresses...", "info");
+
+    // 2. Kirim Data ke Apps Script
+    fetch(targetUrl, {
+        method: "POST",
+        headers: {
+            "Content-Type": "text/plain;charset=utf-8"
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === "success") {
+            showToast("✅ Berhasil menyimpan LKPD!", "success");
+        } else {
+            showToast("⚠️ Gagal menyimpan: " + data.message, "error");
+        }
+    })
+    .catch(error => {
+        console.error("Error saving LKPD:", error);
+        showToast("❌ Terjadi kesalahan jaringan saat menyimpan.", "error");
+    });
+}
 
     // 2. Simpan cadangan lokal
     localStorage.setItem(`backup_lkpd_${payload.groupId}_${payload.nisn}`, JSON.stringify(payload));
