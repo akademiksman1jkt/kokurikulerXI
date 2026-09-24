@@ -2100,7 +2100,7 @@ function applyAnswersToForm(mySub) {
 
     const targetUrl = getApiUrl(currentStudentData ? currentStudentData.kelas : "XI-1");
 
-    // Helper untuk mengambil nilai input dari beberapa kemungkinan ID di HTML
+    // Helper untuk mengambil nilai input berdasarkan ID HTML
     const getVal = (...ids) => {
         for (let id of ids) {
             const el = document.getElementById(id);
@@ -2111,7 +2111,7 @@ function applyAnswersToForm(mySub) {
         return "";
     };
 
-    // 1. Susun payload
+    // 1. Susun payload (Nama ID di HTML disesuaikan secara presisi di sini)
     const payload = {
         action: "saveLKPD",
         nisn: currentStudentData.nisn || "",
@@ -2125,52 +2125,52 @@ function applyAnswersToForm(mySub) {
         anjungan: currentStudentData.anjungan || "",
         misiCode: currentStudentData.misiCode || "",
 
-        // Bagian C (Wahana / Alat 1, 2, 3)
-        lk1_c1_nama: getVal('lk1_c1_nama', 'lk1_alat1_nama'),
-        lk1_c1_hasil: getVal('lk1_c1_hasil', 'lk1_alat1_hasil'),
-        lk1_c1_paham: getVal('lk1_c1_paham', 'lk1_alat1_konsep'),
+        // Bagian C (Museum Science / IPTEK)
+        lk1_c1_nama: getVal('lk1_alat1_nama', 'lk1_c1_nama'),
+        lk1_c1_hasil: getVal('lk1_alat1_hasil', 'lk1_c1_hasil'),
+        lk1_c1_paham: getVal('lk1_alat1_konsep', 'lk1_c1_paham'),
 
-        lk1_c2_nama: getVal('lk1_c2_nama', 'lk1_alat2_nama'),
-        lk1_c2_hasil: getVal('lk1_c2_hasil', 'lk1_alat2_hasil'),
-        lk1_c2_paham: getVal('lk1_c2_paham', 'lk1_alat2_konsep'),
+        lk1_c2_nama: getVal('lk1_alat2_nama', 'lk1_c2_nama'),
+        lk1_c2_hasil: getVal('lk1_alat2_hasil', 'lk1_c2_hasil'),
+        lk1_c2_paham: getVal('lk1_alat2_konsep', 'lk1_c2_paham'),
 
-        lk1_c3_nama: getVal('lk1_c3_nama', 'lk1_alat3_nama'),
-        lk1_c3_hasil: getVal('lk1_c3_hasil', 'lk1_alat3_hasil'),
-        lk1_c3_paham: getVal('lk1_c3_paham', 'lk1_alat3_konsep'),
+        lk1_c3_nama: getVal('lk1_alat3_nama', 'lk1_c3_nama'),
+        lk1_c3_hasil: getVal('lk1_alat3_hasil', 'lk1_c3_hasil'),
+        lk1_c3_paham: getVal('lk1_alat3_konsep', 'lk1_c3_paham'),
 
-        // Bagian D
-        lk1_d_pilihan: getVal('lk1_d_pilihan'),
-        lk1_d_prinsip: getVal('lk1_d_prinsip'),
-        lk1_d_alasan: getVal('lk1_d_alasan'),
-        lk1_d_terap: getVal('lk1_d_terap'),
+        // Bagian D (Temuan Museum Utama)
+        lk1_d_pilihan: getVal('lk1_a1_zona', 'lk1_d_pilihan'),
+        lk1_d_prinsip: getVal('lk1_a2_zona', 'lk1_d_prinsip'),
+        lk1_d_alasan: getVal('lk1_a3_zona', 'lk1_d_alasan'),
+        lk1_d_terap: getVal('lk1_aplikasi', 'lk1_d_terap'),
 
-        // Bagian E
-        lk1_e_t1: getVal('lk1_e_t1'),
-        lk1_e_t2: getVal('lk1_e_t2'),
-        lk1_e_t3: getVal('lk1_e_t3'),
+        // Bagian E (Anjungan Daerah)
+        lk1_e_t1: getVal('lk2_fokus', 'lk1_e_t1'),
+        lk1_e_t2: getVal('lk2_data1', 'lk1_e_t2'),
+        lk1_e_t3: getVal('lk2_data2', 'lk1_e_t3'),
 
-        // Bagian F
-        lk1_f_tanya: getVal('lk1_f_tanya'),
-        lk1_f_terkuat: getVal('lk1_f_terkuat'),
-        lk1_f_penting: getVal('lk1_f_penting'),
-        lk1_f_potensi: getVal('lk1_f_potensi'),
+        // Bagian F (Mission Card)
+        lk1_f_tanya: getVal('lk2_koneksi', 'lk1_f_tanya'),
+        lk1_f_terkuat: getVal('lk2_data3', 'lk1_f_terkuat'),
+        lk1_f_penting: getVal('steam_s', 'lk1_f_penting'),
+        lk1_f_potensi: getVal('steam_t', 'lk1_f_potensi'),
 
-        // Bagian G
-        lk1_g_hubung: getVal('lk1_g_hubung'),
-        lk1_g_relevan: getVal('lk1_g_relevan'),
-        lk1_g_peluang: getVal('lk1_g_peluang'),
-        lk1_g_tekno: getVal('lk1_g_tekno'),
+        // Bagian G (Hubungkan)
+        lk1_g_hubung: getVal('steam_e', 'lk1_g_hubung'),
+        lk1_g_relevan: getVal('steam_a', 'lk1_g_relevan'),
+        lk1_g_peluang: getVal('steam_m', 'lk1_g_peluang'),
+        lk1_g_tekno: getVal('lk3_judul', 'lk1_g_tekno'),
 
-        // Bagian H
-        lk1_h_ide: getVal('lk1_h_ide'),
-        lk1_h_untuk: getVal('lk1_h_untuk'),
-        lk1_h_kembang: getVal('lk1_h_kembang'),
+        // Bagian H (Gagasan)
+        lk1_h_ide: getVal('lk3_format', 'lk1_h_ide'),
+        lk1_h_untuk: getVal('lk4_kendala', 'lk1_h_untuk'),
+        lk1_h_kembang: getVal('lk4_kerjasama', 'lk1_h_kembang'),
 
         // Bagian I (Refleksi / LKPD 4)
-        lk1_i_pandang: getVal('lk1_i_pandang', 'lk4_i_pandang', 'lk4_pandang', 'refleksi_pandang'),
-        lk1_i_kompleks: getVal('lk1_i_kompleks', 'lk4_i_kompleks', 'lk4_kompleks', 'refleksi_kompleks'),
-        lk1_i_tanya: getVal('lk1_i_tanya', 'lk4_i_tanya', 'lk4_tanya', 'refleksi_tanya'),
-        lk1_i_peran: getVal('lk1_i_peran', 'lk4_i_peran', 'lk4_peran', 'refleksi_peran')
+        lk1_i_pandang: getVal('ref_pandang', 'lk1_i_pandang', 'lk4_i_pandang'),
+        lk1_i_kompleks: getVal('ref_kompleks', 'lk1_i_kompleks', 'lk4_i_kompleks'),
+        lk1_i_tanya: getVal('ref_tanya', 'lk1_i_tanya', 'lk4_i_tanya'),
+        lk1_i_peran: getVal('ref_kontribusi', 'lk1_i_peran', 'lk4_i_peran')
     };
 
     console.log("📤 Mengirim Payload ke Spreadsheet:", payload);
@@ -2203,7 +2203,7 @@ function applyAnswersToForm(mySub) {
     })
     .catch(error => {
         console.error("Error saving LKPD:", error);
-        showToast("⚠️ Gagal kirim ke server, tapi data tersimpan di HP/Browser ini.", "error");
+        showToast("⚠️ Gagal kirim ke server, tapi data tersimpan lokal.", "error");
         if (type && typeof completionStatus !== "undefined") completionStatus[type] = true;
         if (typeof updateChecklistUI === "function") updateChecklistUI();
         if (typeof backToHub === "function") backToHub();
