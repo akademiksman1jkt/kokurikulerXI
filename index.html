@@ -2166,19 +2166,21 @@ function applyAnswersToForm(mySub) {
         lk1_h_untuk: getVal('lk1_h_untuk'),
         lk1_h_kembang: getVal('lk1_h_kembang'),
 
-        // Bagian I (Refleksi / LKPD 4) - Pengecekan ID berlapis
+        // Bagian I (Refleksi / LKPD 4)
         lk1_i_pandang: getVal('lk1_i_pandang', 'lk4_i_pandang', 'lk4_pandang', 'refleksi_pandang'),
         lk1_i_kompleks: getVal('lk1_i_kompleks', 'lk4_i_kompleks', 'lk4_kompleks', 'refleksi_kompleks'),
         lk1_i_tanya: getVal('lk1_i_tanya', 'lk4_i_tanya', 'lk4_tanya', 'refleksi_tanya'),
         lk1_i_peran: getVal('lk1_i_peran', 'lk4_i_peran', 'lk4_peran', 'refleksi_peran')
     };
 
-    // 🔍 Cek payload di console F12 browser sebelum dikirim
     console.log("📤 Mengirim Payload ke Spreadsheet:", payload);
 
-    showToast("💾 Menyimpan progresses...", "info");
+    // 2. Simpan cadangan lokal di browser/HP
+    localStorage.setItem(`backup_lkpd_${payload.groupId}_${payload.nisn}`, JSON.stringify(payload));
 
-    // 2. Kirim Data ke Apps Script
+    showToast("💾 Menyimpan data...", "info");
+
+    // 3. Kirim payload ke Google Apps Script
     fetch(targetUrl, {
         method: "POST",
         headers: {
@@ -2189,46 +2191,22 @@ function applyAnswersToForm(mySub) {
     .then(response => response.json())
     .then(data => {
         if (data.status === "success") {
-            showToast("✅ Berhasil menyimpan LKPD!", "success");
-        } else {
-            showToast("⚠️ Gagal menyimpan: " + data.message, "error");
-        }
-    })
-    .catch(error => {
-        console.error("Error saving LKPD:", error);
-        showToast("❌ Terjadi kesalahan jaringan saat menyimpan.", "error");
-    });
-}
-
-    // 2. Simpan cadangan lokal
-    localStorage.setItem(`backup_lkpd_${payload.groupId}_${payload.nisn}`, JSON.stringify(payload));
-
-    showToast("Menyimpan data...", "info");
-
-    // 3. Kirim payload JSON murni
-    fetch(targetUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify(payload)
-    })
-    .then(res => res.json())
-    .then(data => {
-        if(data.status === "success") {
-            if (type) completionStatus[type] = true;
-            updateChecklistUI();
-            syncGroupStatusProgress();
+            if (type && typeof completionStatus !== "undefined") completionStatus[type] = true;
+            if (typeof updateChecklistUI === "function") updateChecklistUI();
+            if (typeof syncGroupStatusProgress === "function") syncGroupStatusProgress();
+            
             showToast("✅ Tersimpan! Data LKPD berhasil disinkronkan.", "success");
-            backToHub();
+            if (typeof backToHub === "function") backToHub();
         } else {
             showToast("⚠️ " + (data.message || "Gagal menyimpan"), "error");
         }
     })
-    .catch(err => {
-        console.error(err);
+    .catch(error => {
+        console.error("Error saving LKPD:", error);
         showToast("⚠️ Gagal kirim ke server, tapi data tersimpan di HP/Browser ini.", "error");
-        if (type) completionStatus[type] = true;
-        updateChecklistUI();
-        backToHub();
+        if (type && typeof completionStatus !== "undefined") completionStatus[type] = true;
+        if (typeof updateChecklistUI === "function") updateChecklistUI();
+        if (typeof backToHub === "function") backToHub();
     });
 }
 
