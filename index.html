@@ -3286,7 +3286,7 @@ async function saveGroupPhotosServer() {
 
     daftarKelompok.forEach(namaKelompok => {
         const kelNum = namaKelompok.replace(/[^0-9]/g, '');
-        const expectedGroupId = `X${klsNum}-K${kelNum}`;
+        const expectedGroupId = `XI${klsNum}-K${kelNum}`;
 
         const report = reports.find(r => 
             r.groupId && r.groupId.trim().toUpperCase() === expectedGroupId.toUpperCase()
