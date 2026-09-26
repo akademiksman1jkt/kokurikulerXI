@@ -1680,26 +1680,35 @@ function applyAnswersToForm(mySub) {
     console.log("📦 Data dari Spreadsheet yang diterima:", mySub);
     if (!mySub) return;
 
-    // 1. Bersihkan nama header dari spasi tersembunyi di ujung kata
+    // 1. Bersihkan spasi tak sengaja dari header Spreadsheet (misal: "lk1_c1_hasil ")
     const cleanSub = {};
-    Object.keys(mySub).forEach(k => {
-        cleanSub[k.trim()] = mySub[k];
+    Object.keys(mySub).forEach(key => {
+        if (key) {
+            cleanSub[key.trim()] = mySub[key];
+        }
     });
 
-    // 2. Daftar ID elemen HTML & Header Spreadsheet yang berurutan presisi 1:1 (Kolom 1 - 31)
+    // 2. Daftar 31 Key LKPD yang sudah 100% SAMA ANTARA SPREADSHEET DAN HTML
     const LKPD_KEYS = [
+        // Bagian C
         'lk1_c1_nama', 'lk1_c1_hasil', 'lk1_c1_paham',
         'lk1_c2_nama', 'lk1_c2_hasil', 'lk1_c2_paham',
         'lk1_c3_nama', 'lk1_c3_hasil', 'lk1_c3_paham',
+        // Bagian D
         'lk1_d_pilihan', 'lk1_d_prinsip', 'lk1_d_alasan', 'lk1_d_terap',
+        // Bagian E
         'lk1_e_t1', 'lk1_e_t2', 'lk1_e_t3',
+        // Bagian F
         'lk1_f_tanya', 'lk1_f_terkuat', 'lk1_f_penting', 'lk1_f_potensi',
+        // Bagian G
         'lk1_g_hubung', 'lk1_g_relevan', 'lk1_g_peluang', 'lk1_g_tekno',
+        // Bagian H
         'lk1_h_ide', 'lk1_h_untuk', 'lk1_h_kembang',
+        // Bagian I
         'lk1_i_pandang', 'lk1_i_kompleks', 'lk1_i_tanya', 'lk1_i_peran'
     ];
 
-    // 3. Masukkan data secara tepat ke masing-masing elemen HTML
+    // 3. Masukkan data 1-banding-1 langsung ke kotak HTML
     LKPD_KEYS.forEach(key => {
         const el = document.getElementById(key);
         if (el && cleanSub[key] !== undefined && cleanSub[key] !== null && cleanSub[key] !== '') {
