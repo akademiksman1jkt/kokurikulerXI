@@ -1715,44 +1715,117 @@ function closeSidebarMobile() {
 
 // Fungsi pembantu mengisi form
 function applyAnswersToForm(mySub) {
-    if (document.getElementById('lk1_alat1_nama')) document.getElementById('lk1_alat1_nama').value = mySub.lk1_a1_nama || '';
-    if (document.getElementById('lk1_alat1_zona')) document.getElementById('lk1_alat1_zona').value = mySub.lk1_a1_zona || '';
-    if (document.getElementById('lk1_alat1_hasil')) document.getElementById('lk1_alat1_hasil').value = mySub.lk1_a1_hasil || '';
-    if (document.getElementById('lk1_alat1_konsep')) document.getElementById('lk1_alat1_konsep').value = mySub.lk1_a1_konsep || '';
+    if (!mySub) return;
 
-    if (document.getElementById('lk1_alat2_nama')) document.getElementById('lk1_alat2_nama').value = mySub.lk1_a2_nama || '';
-    if (document.getElementById('lk1_alat2_zona')) document.getElementById('lk1_alat2_zona').value = mySub.lk1_a2_zona || '';
-    if (document.getElementById('lk1_alat2_hasil')) document.getElementById('lk1_alat2_hasil').value = mySub.lk1_a2_hasil || '';
-    if (document.getElementById('lk1_alat2_konsep')) document.getElementById('lk1_alat2_konsep').value = mySub.lk1_a2_konsep || '';
+    // Helper untuk memasukkan nilai ke elemen HTML jika ID-nya ditemukan
+    const setVal = (elementId, value) => {
+        const el = document.getElementById(elementId);
+        if (el) el.value = value || '';
+    };
 
-    if (document.getElementById('lk1_alat3_nama')) document.getElementById('lk1_alat3_nama').value = mySub.lk1_a3_nama || '';
-    if (document.getElementById('lk1_alat3_zona')) document.getElementById('lk1_alat3_zona').value = mySub.lk1_a3_zona || '';
-    if (document.getElementById('lk1_alat3_hasil')) document.getElementById('lk1_alat3_hasil').value = mySub.lk1_a3_hasil || '';
-    if (document.getElementById('lk1_alat3_konsep')) document.getElementById('lk1_alat3_konsep').value = mySub.lk1_a3_konsep || '';
-    if (document.getElementById('lk1_aplikasi')) document.getElementById('lk1_aplikasi').value = mySub.lk1_aplikasi || '';
+    // ==========================================
+    // 🟢 LKPD 1: BAGIAN C (Eksplorasi Sains & Teknologi)
+    // Header Spreadsheet: lk1_c1_..., lk1_c2_..., lk1_c3_...
+    // ==========================================
+    // Alat/Wahana 1
+    setVal('lk1_c1_nama', mySub.lk1_c1_nama);
+    setVal('lk1_c1_hasil', mySub.lk1_c1_hasil);
+    setVal('lk1_c1_paham', mySub.lk1_c1_paham);
+    // Support ID HTML versi lama
+    setVal('lk1_alat1_nama', mySub.lk1_c1_nama || mySub.lk1_a1_nama);
+    setVal('lk1_alat1_hasil', mySub.lk1_c1_hasil || mySub.lk1_a1_hasil);
+    setVal('lk1_alat1_konsep', mySub.lk1_c1_paham || mySub.lk1_a1_konsep);
 
-    if (document.getElementById('lk2_fokus')) document.getElementById('lk2_fokus').value = mySub.lk2_fokus || '';
-    if (document.getElementById('lk2_data1')) document.getElementById('lk2_data1').value = mySub.lk2_data1 || '';
-    if (document.getElementById('lk2_data2')) document.getElementById('lk2_data2').value = mySub.lk2_data2 || '';
-    if (document.getElementById('lk2_data3')) document.getElementById('lk2_data3').value = mySub.lk2_data3 || '';
-    if (document.getElementById('lk2_koneksi')) document.getElementById('lk2_koneksi').value = mySub.lk2_koneksi || '';
+    // Alat/Wahana 2
+    setVal('lk1_c2_nama', mySub.lk1_c2_nama);
+    setVal('lk1_c2_hasil', mySub.lk1_c2_hasil);
+    setVal('lk1_c2_paham', mySub.lk1_c2_paham);
+    // Support ID HTML versi lama
+    setVal('lk1_alat2_nama', mySub.lk1_c2_nama || mySub.lk1_a2_nama);
+    setVal('lk1_alat2_hasil', mySub.lk1_c2_hasil || mySub.lk1_a2_hasil);
+    setVal('lk1_alat2_konsep', mySub.lk1_c2_paham || mySub.lk1_a2_konsep);
 
-    if (document.getElementById('lk3_judul')) document.getElementById('lk3_judul').value = mySub.lk3_judul || '';
-    if (document.getElementById('lk3_format')) document.getElementById('lk3_format').value = mySub.lk3_format || '';
-    if (document.getElementById('steam_s')) document.getElementById('steam_s').value = mySub.steam_s || '';
-    if (document.getElementById('steam_t')) document.getElementById('steam_t').value = mySub.steam_t || '';
-    if (document.getElementById('steam_e')) document.getElementById('steam_e').value = mySub.steam_e || '';
-    if (document.getElementById('steam_a')) document.getElementById('steam_a').value = mySub.steam_a || '';
-    if (document.getElementById('steam_m')) document.getElementById('steam_m').value = mySub.steam_m || '';
+    // Alat/Wahana 3
+    setVal('lk1_c3_nama', mySub.lk1_c3_nama);
+    setVal('lk1_c3_hasil', mySub.lk1_c3_hasil);
+    setVal('lk1_c3_paham', mySub.lk1_c3_paham);
+    // Support ID HTML versi lama
+    setVal('lk1_alat3_nama', mySub.lk1_c3_nama || mySub.lk1_a3_nama);
+    setVal('lk1_alat3_hasil', mySub.lk1_c3_hasil || mySub.lk1_a3_hasil);
+    setVal('lk1_alat3_konsep', mySub.lk1_c3_paham || mySub.lk1_a3_konsep);
 
-    if (document.getElementById('lk4_kendala')) document.getElementById('lk4_kendala').value = mySub.lk4_kendala || '';
-    if (document.getElementById('lk4_kerjasama')) document.getElementById('lk4_kerjasama').value = mySub.lk4_kerjasama || '';
 
-    completionStatus.lkpd1 = !!(mySub.lk1_a1_nama || mySub.lk1_a1_hasil);
-    completionStatus.lkpd2 = !!(mySub.lk2_fokus || mySub.lk2_data1);
-    completionStatus.lkpd3 = !!(mySub.lk3_judul || mySub.steam_s);
-    completionStatus.lkpd4 = !!(mySub.lk4_kendala || mySub.lk4_kerjasama);
-    updateChecklistUI();
+    // ==========================================
+    // 🟢 LKPD 2: BAGIAN D & E (Observasi Arsitektur Adaptif)
+    // Header Spreadsheet: lk1_d_..., lk1_e_...
+    // ==========================================
+    setVal('lk1_d_pilihan', mySub.lk1_d_pilihan);
+    setVal('lk1_d_prinsip', mySub.lk1_d_prinsip);
+    setVal('lk1_d_alasan', mySub.lk1_d_alasan);
+    setVal('lk1_d_terap', mySub.lk1_d_terap);
+    setVal('lk1_e_t1', mySub.lk1_e_t1);
+    setVal('lk1_e_t2', mySub.lk1_e_t2);
+    setVal('lk1_e_t3', mySub.lk1_e_t3);
+    // Support ID HTML versi lama
+    setVal('lk2_fokus', mySub.lk1_d_pilihan || mySub.lk2_fokus);
+    setVal('lk2_data1', mySub.lk1_d_prinsip || mySub.lk2_data1);
+    setVal('lk2_data2', mySub.lk1_d_alasan || mySub.lk2_data2);
+    setVal('lk2_data3', mySub.lk1_d_terap || mySub.lk2_data3);
+    setVal('lk2_koneksi', mySub.lk1_e_t1 || mySub.lk2_koneksi);
+
+
+    // ==========================================
+    // 🟢 LKPD 3: BAGIAN F & G (Perancangan Proyek / STEAM)
+    // Header Spreadsheet: lk1_f_..., lk1_g_...
+    // ==========================================
+    setVal('lk1_f_tanya', mySub.lk1_f_tanya);
+    setVal('lk1_f_terkuat', mySub.lk1_f_terkuat);
+    setVal('lk1_f_penting', mySub.lk1_f_penting);
+    setVal('lk1_f_potensi', mySub.lk1_f_potensi);
+    setVal('lk1_g_hubung', mySub.lk1_g_hubung);
+    setVal('lk1_g_relevan', mySub.lk1_g_relevan);
+    setVal('lk1_g_peluang', mySub.lk1_g_peluang);
+    setVal('lk1_g_tekno', mySub.lk1_g_tekno);
+    // Support ID HTML versi lama
+    setVal('lk3_judul', mySub.lk1_f_tanya || mySub.lk3_judul);
+    setVal('lk3_format', mySub.lk1_f_terkuat || mySub.lk3_format);
+    setVal('steam_s', mySub.lk1_f_penting || mySub.steam_s);
+    setVal('steam_t', mySub.lk1_f_potensi || mySub.steam_t);
+    setVal('steam_e', mySub.lk1_g_hubung || mySub.steam_e);
+    setVal('steam_a', mySub.lk1_g_relevan || mySub.steam_a);
+    setVal('steam_m', mySub.lk1_g_peluang || mySub.steam_m);
+
+
+    // ==========================================
+    // 🟢 LKPD 4: BAGIAN H & I (Refleksi & Kerja Sama Tim)
+    // Header Spreadsheet: lk1_h_..., lk1_i_...
+    // ==========================================
+    setVal('lk1_h_ide', mySub.lk1_h_ide);
+    setVal('lk1_h_untuk', mySub.lk1_h_untuk);
+    setVal('lk1_h_kembang', mySub.lk1_h_kembang);
+    setVal('lk1_i_pandang', mySub.lk1_i_pandang);
+    setVal('lk1_i_kompleks', mySub.lk1_i_kompleks);
+    setVal('lk1_i_tanya', mySub.lk1_i_tanya);
+    setVal('lk1_i_peran', mySub.lk1_i_peran);
+    
+    // Support ID HTML versi lama LKPD 4
+    setVal('lk4_kendala', mySub.lk1_i_pandang || mySub.lk1_h_ide || mySub.lk4_kendala);
+    setVal('lk4_solusi', mySub.lk1_i_kompleks || mySub.lk1_h_untuk || mySub.lk4_solusi);
+    setVal('lk4_kerjasama', mySub.lk1_i_tanya || mySub.lk1_h_kembang || mySub.lk4_kerjasama);
+    setVal('lk4_refleksi', mySub.lk1_i_peran || mySub.lk4_refleksi);
+
+
+    // ==========================================
+    // 🟢 STATUS VERIFIKASI KELENGKAPAN ISIAN
+    // ==========================================
+    completionStatus.lkpd1 = !!(mySub.lk1_c1_nama || mySub.lk1_c1_hasil || mySub.lk1_a1_nama);
+    completionStatus.lkpd2 = !!(mySub.lk1_d_pilihan || mySub.lk1_d_prinsip || mySub.lk2_fokus);
+    completionStatus.lkpd3 = !!(mySub.lk1_f_tanya || mySub.lk1_g_hubung || mySub.lk3_judul);
+    completionStatus.lkpd4 = !!(mySub.lk1_i_pandang || mySub.lk1_h_ide || mySub.lk1_i_kompleks || mySub.lk4_kendala || mySub.lk4_kerjasama);
+
+    if (typeof updateChecklistUI === "function") {
+        updateChecklistUI();
+    }
 }
 
         function renderGroupStatusTable(submissions) {
