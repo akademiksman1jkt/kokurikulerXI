@@ -1797,22 +1797,26 @@ function applyAnswersToForm(mySub) {
 
 
     // ==========================================
-    // 🟢 LKPD 4: BAGIAN H & I (Refleksi & Kerja Sama Tim)
-    // Header Spreadsheet: lk1_h_..., lk1_i_...
+    // 🟢 LKPD 4: REFLEKSI MANDIRI (PANDANG, KOMPLEKS, TANYA, PERAN/KONTRIBUSI)
     // ==========================================
-    setVal('lk1_h_ide', mySub.lk1_h_ide);
-    setVal('lk1_h_untuk', mySub.lk1_h_untuk);
-    setVal('lk1_h_kembang', mySub.lk1_h_kembang);
-    setVal('lk1_i_pandang', mySub.lk1_i_pandang);
-    setVal('lk1_i_kompleks', mySub.lk1_i_kompleks);
-    setVal('lk1_i_tanya', mySub.lk1_i_tanya);
-    setVal('lk1_i_peran', mySub.lk1_i_peran);
-    
-    // Support ID HTML versi lama LKPD 4
-    setVal('lk4_kendala', mySub.lk1_i_pandang || mySub.lk1_h_ide || mySub.lk4_kendala);
-    setVal('lk4_solusi', mySub.lk1_i_kompleks || mySub.lk1_h_untuk || mySub.lk4_solusi);
-    setVal('lk4_kerjasama', mySub.lk1_i_tanya || mySub.lk1_h_kembang || mySub.lk4_kerjasama);
-    setVal('lk4_refleksi', mySub.lk1_i_peran || mySub.lk4_refleksi);
+    // 1. Ambil Nilai dari Data Server (Spreadsheet) dengan Variasi Key
+    const valPandang   = mySub.lk1_i_pandang   || mySub.lk4_i_pandang   || mySub.lk4_pandang   || mySub.lk4_kendala   || mySub.lk1_h_ide || '';
+    const valKompleks  = mySub.lk1_i_kompleks  || mySub.lk4_i_kompleks  || mySub.lk4_kompleks  || mySub.lk4_solusi    || mySub.lk1_h_untuk || '';
+    const valTanya     = mySub.lk1_i_tanya     || mySub.lk4_i_tanya     || mySub.lk4_tanya     || mySub.lk4_kerjasama || mySub.lk1_h_kembang || '';
+    const valKontribusi= mySub.lk1_i_peran     || mySub.lk4_i_peran     || mySub.lk4_peran     || mySub.lk4_kontribusi|| mySub.lk4_refleksi || '';
+
+    // 2. Tembak ke Seluruh Kemungkinan ID HTML Elemen LKPD 4
+    // Field 1: Cara Pandang
+    ['lk4_i_pandang', 'lk1_i_pandang', 'lk4_pandang', 'i_pandang', 'ref_pandang', 'lk4_kendala'].forEach(id => setVal(id, valPandang));
+
+    // Field 2: Lebih Kompleks
+    ['lk4_i_kompleks', 'lk1_i_kompleks', 'lk4_kompleks', 'i_kompleks', 'ref_kompleks', 'lk4_solusi'].forEach(id => setVal(id, valKompleks));
+
+    // Field 3: Pertanyaan
+    ['lk4_i_tanya', 'lk1_i_tanya', 'lk4_tanya', 'i_tanya', 'ref_tanya', 'lk4_kerjasama'].forEach(id => setVal(id, valTanya));
+
+    // Field 4: Kontribusi / Peran
+    ['lk4_i_peran', 'lk1_i_peran', 'lk4_peran', 'i_peran', 'ref_kontribusi', 'lk4_kontribusi', 'lk4_refleksi'].forEach(id => setVal(id, valKontribusi));
 
 
     // ==========================================
