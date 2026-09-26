@@ -990,25 +990,25 @@
     </div>
 
     <!-- H. DARI TEMUAN MENJADI GAGASAN -->
-    <div class="card" style="border-left:6px solid #d97706;">
-        <h3 class="card-title">H. DARI TEMUAN MENJADI GAGASAN</h3>
-        <p style="font-size:13px; color:var(--text-muted); margin-top:-10px; margin-bottom:14px;">Belum perlu menentukan produk akhir. Fokus pada gagasan yang paling masuk akal berdasarkan bukti.</p>
+<div class="card" style="border-left:6px solid #d97706;">
+    <h3 class="card-title">H. DARI TEMUAN MENJADI GAGASAN</h3>
+    <p style="font-size:13px; color:var(--text-muted); margin-top:-10px; margin-bottom:14px;">Belum perlu menentukan produk akhir. Fokus pada gagasan yang paling masuk akal berdasarkan bukti.</p>
 
-        <div class="form-group">
-            <label class="form-label">IDE</label>
-            <input type="text" id="lk3_format" class="form-input" placeholder="Tuliskan gagasan ide...">
-        </div>
-        <div class="form-group">
-            <label class="form-label">Untuk siapa / kebutuhan apa?</label>
-            <input type="text" id="lk4_kendala" class="form-input" placeholder="Target pengguna / kebutuhan...">
-        </div>
-        <div class="form-group">
-            <label class="form-label">Apa yang ingin diperbaiki atau dikembangkan?</label>
-            <textarea id="lk4_kerjasama" class="form-textarea" placeholder="Jelaskan hal yang ingin dikembangkan/diperbaiki..."></textarea>
-        </div>
+    <div class="form-group">
+        <label class="form-label">IDE</label>
+        <input type="text" id="lk3_format" class="form-input" placeholder="Tuliskan gagasan ide...">
     </div>
+    <div class="form-group">
+        <label class="form-label">Untuk siapa / kebutuhan apa?</label>
+        <input type="text" id="lk3_untuk" class="form-input" placeholder="Target pengguna / kebutuhan..."> <!-- ✅ ID diperbaiki dari lk4_kendala -->
+    </div>
+    <div class="form-group">
+        <label class="form-label">Apa yang ingin diperbaiki atau dikembangkan?</label>
+        <textarea id="lk3_kembang" class="form-textarea" placeholder="Jelaskan hal yang ingin dikembangkan/diperbaiki..."></textarea> <!-- ✅ ID diperbaiki dari lk4_kerjasama -->
+    </div>
+</div>
 
-    <button class="btn-primary" onclick="saveProgress('lkpd3')">💾 Simpan Bagian G & H</button>
+<button class="btn-primary" onclick="saveProgress('lkpd3')">💾 Simpan Bagian G & H</button>
 </section>
 
 <!-- BAGIAN I: REFLEKSI PERJALANAN -->
@@ -1713,7 +1713,7 @@ function closeSidebarMobile() {
     }
 }
 
-// Fungsi pembantu mengisi form
+// Fungsi pembantu mengisi form (DIPERBAIKI PRESISI)
 function applyAnswersToForm(mySub) {
     if (!mySub) return;
 
@@ -1724,108 +1724,81 @@ function applyAnswersToForm(mySub) {
     };
 
     // ==========================================
-    // 🟢 LKPD 1: BAGIAN C (Eksplorasi Sains & Teknologi)
-    // Header Spreadsheet: lk1_c1_..., lk1_c2_..., lk1_c3_...
+    // 🟢 BAGIAN C: MUSEUM SCIENCE / IPTEK 01
     // ==========================================
-    // Alat/Wahana 1
-    setVal('lk1_c1_nama', mySub.lk1_c1_nama);
-    setVal('lk1_c1_hasil', mySub.lk1_c1_hasil);
-    setVal('lk1_c1_paham', mySub.lk1_c1_paham);
-    // Support ID HTML versi lama
-    setVal('lk1_alat1_nama', mySub.lk1_c1_nama || mySub.lk1_a1_nama);
-    setVal('lk1_alat1_hasil', mySub.lk1_c1_hasil || mySub.lk1_a1_hasil);
-    setVal('lk1_alat1_konsep', mySub.lk1_c1_paham || mySub.lk1_a1_konsep);
+    setVal('lk1_alat1_nama',   mySub.lk1_c1_nama);
+    setVal('lk1_alat1_hasil',  mySub.lk1_c1_hasil);
+    setVal('lk1_alat1_konsep', mySub.lk1_c1_paham);
 
-    // Alat/Wahana 2
-    setVal('lk1_c2_nama', mySub.lk1_c2_nama);
-    setVal('lk1_c2_hasil', mySub.lk1_c2_hasil);
-    setVal('lk1_c2_paham', mySub.lk1_c2_paham);
-    // Support ID HTML versi lama
-    setVal('lk1_alat2_nama', mySub.lk1_c2_nama || mySub.lk1_a2_nama);
-    setVal('lk1_alat2_hasil', mySub.lk1_c2_hasil || mySub.lk1_a2_hasil);
-    setVal('lk1_alat2_konsep', mySub.lk1_c2_paham || mySub.lk1_a2_konsep);
+    setVal('lk1_alat2_nama',   mySub.lk1_c2_nama);
+    setVal('lk1_alat2_hasil',  mySub.lk1_c2_hasil);
+    setVal('lk1_alat2_konsep', mySub.lk1_c2_paham);
 
-    // Alat/Wahana 3
-    setVal('lk1_c3_nama', mySub.lk1_c3_nama);
-    setVal('lk1_c3_hasil', mySub.lk1_c3_hasil);
-    setVal('lk1_c3_paham', mySub.lk1_c3_paham);
-    // Support ID HTML versi lama
-    setVal('lk1_alat3_nama', mySub.lk1_c3_nama || mySub.lk1_a3_nama);
-    setVal('lk1_alat3_hasil', mySub.lk1_c3_hasil || mySub.lk1_a3_hasil);
-    setVal('lk1_alat3_konsep', mySub.lk1_c3_paham || mySub.lk1_a3_konsep);
-
+    setVal('lk1_alat3_nama',   mySub.lk1_c3_nama);
+    setVal('lk1_alat3_hasil',  mySub.lk1_c3_hasil);
+    setVal('lk1_alat3_konsep', mySub.lk1_c3_paham);
 
     // ==========================================
-    // 🟢 LKPD 2: BAGIAN D & E (Observasi Arsitektur Adaptif)
-    // Header Spreadsheet: lk1_d_..., lk1_e_...
+    // 🟢 BAGIAN D: SATU TEMUAN MUSEUM UTAMA
     // ==========================================
-    setVal('lk1_d_pilihan', mySub.lk1_d_pilihan);
-    setVal('lk1_d_prinsip', mySub.lk1_d_prinsip);
-    setVal('lk1_d_alasan', mySub.lk1_d_alasan);
-    setVal('lk1_d_terap', mySub.lk1_d_terap);
-    setVal('lk1_e_t1', mySub.lk1_e_t1);
-    setVal('lk1_e_t2', mySub.lk1_e_t2);
-    setVal('lk1_e_t3', mySub.lk1_e_t3);
-    // Support ID HTML versi lama
-    setVal('lk2_fokus', mySub.lk1_d_pilihan || mySub.lk2_fokus);
-    setVal('lk2_data1', mySub.lk1_d_prinsip || mySub.lk2_data1);
-    setVal('lk2_data2', mySub.lk1_d_alasan || mySub.lk2_data2);
-    setVal('lk2_data3', mySub.lk1_d_terap || mySub.lk2_data3);
-    setVal('lk2_koneksi', mySub.lk1_e_t1 || mySub.lk2_koneksi);
-
+    setVal('lk1_a1_zona',  mySub.lk1_d_pilihan);
+    setVal('lk1_a2_zona',  mySub.lk1_d_prinsip);
+    setVal('lk1_a3_zona',  mySub.lk1_d_alasan);
+    setVal('lk1_aplikasi', mySub.lk1_d_terap);
 
     // ==========================================
-    // 🟢 LKPD 3: BAGIAN F & G (Perancangan Proyek / STEAM)
-    // Header Spreadsheet: lk1_f_..., lk1_g_...
+    // 🟢 BAGIAN E: ANJUNGAN DAERAH 02
     // ==========================================
-    setVal('lk1_f_tanya', mySub.lk1_f_tanya);
-    setVal('lk1_f_terkuat', mySub.lk1_f_terkuat);
-    setVal('lk1_f_penting', mySub.lk1_f_penting);
-    setVal('lk1_f_potensi', mySub.lk1_f_potensi);
-    setVal('lk1_g_hubung', mySub.lk1_g_hubung);
-    setVal('lk1_g_relevan', mySub.lk1_g_relevan);
-    setVal('lk1_g_peluang', mySub.lk1_g_peluang);
-    setVal('lk1_g_tekno', mySub.lk1_g_tekno);
-    // Support ID HTML versi lama
-    setVal('lk3_judul', mySub.lk1_f_tanya || mySub.lk3_judul);
-    setVal('lk3_format', mySub.lk1_f_terkuat || mySub.lk3_format);
-    setVal('steam_s', mySub.lk1_f_penting || mySub.steam_s);
-    setVal('steam_t', mySub.lk1_f_potensi || mySub.steam_t);
-    setVal('steam_e', mySub.lk1_g_hubung || mySub.steam_e);
-    setVal('steam_a', mySub.lk1_g_relevan || mySub.steam_a);
-    setVal('steam_m', mySub.lk1_g_peluang || mySub.steam_m);
-
+    setVal('lk2_fokus', mySub.lk1_e_t1);
+    setVal('lk2_data1', mySub.lk1_e_t2);
+    setVal('lk2_data2', mySub.lk1_e_t3);
 
     // ==========================================
-    // 🟢 LKPD 4: REFLEKSI MANDIRI (PANDANG, KOMPLEKS, TANYA, PERAN/KONTRIBUSI)
+    // 🟢 BAGIAN F: MISSION CARD SAYA
     // ==========================================
-    // 1. Ambil Nilai dari Data Server (Spreadsheet) dengan Variasi Key
-    const valPandang   = mySub.lk1_i_pandang   || mySub.lk4_i_pandang   || mySub.lk4_pandang   || mySub.lk4_kendala   || mySub.lk1_h_ide || '';
-    const valKompleks  = mySub.lk1_i_kompleks  || mySub.lk4_i_kompleks  || mySub.lk4_kompleks  || mySub.lk4_solusi    || mySub.lk1_h_untuk || '';
-    const valTanya     = mySub.lk1_i_tanya     || mySub.lk4_i_tanya     || mySub.lk4_tanya     || mySub.lk4_kerjasama || mySub.lk1_h_kembang || '';
-    const valKontribusi= mySub.lk1_i_peran     || mySub.lk4_i_peran     || mySub.lk4_peran     || mySub.lk4_kontribusi|| mySub.lk4_refleksi || '';
+    setVal('lk2_koneksi', mySub.lk1_f_tanya);
+    setVal('lk2_data3',   mySub.lk1_f_terkuat);
+    setVal('steam_s',     mySub.lk1_f_penting);
+    setVal('steam_t',     mySub.lk1_f_potensi);
 
-    // 2. Tembak ke Seluruh Kemungkinan ID HTML Elemen LKPD 4
-    // Field 1: Cara Pandang
-    ['lk4_i_pandang', 'lk1_i_pandang', 'lk4_pandang', 'i_pandang', 'ref_pandang', 'lk4_kendala'].forEach(id => setVal(id, valPandang));
+    // ==========================================
+    // 🟢 BAGIAN G: HUBUNGKAN (MUSEUM x ANJUNGAN)
+    // ==========================================
+    setVal('steam_e',   mySub.lk1_g_hubung);
+    setVal('steam_a',   mySub.lk1_g_relevan);
+    setVal('steam_m',   mySub.lk1_g_peluang);
+    setVal('lk3_judul', mySub.lk1_g_tekno);
 
-    // Field 2: Lebih Kompleks
-    ['lk4_i_kompleks', 'lk1_i_kompleks', 'lk4_kompleks', 'i_kompleks', 'ref_kompleks', 'lk4_solusi'].forEach(id => setVal(id, valKompleks));
+    // ==========================================
+    // 🟢 BAGIAN H: DARI TEMUAN MENJADI GAGASAN (LKPD 3)
+    // ==========================================
+    setVal('lk3_format',    mySub.lk1_h_ide);
+    setVal('lk3_untuk',     mySub.lk1_h_untuk);
+    setVal('lk4_kendala',   mySub.lk1_h_untuk);   // Dukung ID HTML lama
+    setVal('lk3_kembang',   mySub.lk1_h_kembang);
+    setVal('lk4_kerjasama', mySub.lk1_h_kembang); // Dukung ID HTML lama
 
-    // Field 3: Pertanyaan
-    ['lk4_i_tanya', 'lk1_i_tanya', 'lk4_tanya', 'i_tanya', 'ref_tanya', 'lk4_kerjasama'].forEach(id => setVal(id, valTanya));
+    // ==========================================
+    // 🟢 BAGIAN I: REFLEKSI PERJALANAN (LKPD 4)
+    // ==========================================
+    setVal('ref_pandang',    mySub.lk1_i_pandang);
+    setVal('ref_kompleks',   mySub.lk1_i_kompleks);
+    setVal('ref_tanya',      mySub.lk1_i_tanya);
+    setVal('ref_kontribusi', mySub.lk1_i_peran);
 
-    // Field 4: Kontribusi / Peran
-    ['lk4_i_peran', 'lk1_i_peran', 'lk4_peran', 'i_peran', 'ref_kontribusi', 'lk4_kontribusi', 'lk4_refleksi'].forEach(id => setVal(id, valKontribusi));
-
+    // Dukung variasi ID HTML LKPD 4 lainnya
+    setVal('lk4_i_pandang',  mySub.lk1_i_pandang);
+    setVal('lk4_i_kompleks', mySub.lk1_i_kompleks);
+    setVal('lk4_i_tanya',    mySub.lk1_i_tanya);
+    setVal('lk4_i_peran',    mySub.lk1_i_peran);
 
     // ==========================================
     // 🟢 STATUS VERIFIKASI KELENGKAPAN ISIAN
     // ==========================================
-    completionStatus.lkpd1 = !!(mySub.lk1_c1_nama || mySub.lk1_c1_hasil || mySub.lk1_a1_nama);
-    completionStatus.lkpd2 = !!(mySub.lk1_d_pilihan || mySub.lk1_d_prinsip || mySub.lk2_fokus);
-    completionStatus.lkpd3 = !!(mySub.lk1_f_tanya || mySub.lk1_g_hubung || mySub.lk3_judul);
-    completionStatus.lkpd4 = !!(mySub.lk1_i_pandang || mySub.lk1_h_ide || mySub.lk1_i_kompleks || mySub.lk4_kendala || mySub.lk4_kerjasama);
+    completionStatus.lkpd1 = !!(mySub.lk1_c1_nama || mySub.lk1_c1_hasil);
+    completionStatus.lkpd2 = !!(mySub.lk1_d_pilihan || mySub.lk1_e_t1);
+    completionStatus.lkpd3 = !!(mySub.lk1_f_tanya || mySub.lk1_g_hubung || mySub.lk1_h_ide);
+    completionStatus.lkpd4 = !!(mySub.lk1_i_pandang || mySub.lk1_i_kompleks);
 
     if (typeof updateChecklistUI === "function") {
         updateChecklistUI();
@@ -2293,10 +2266,10 @@ function applyAnswersToForm(mySub) {
         lk1_g_peluang: getVal('steam_m', 'lk1_g_peluang'),
         lk1_g_tekno: getVal('lk3_judul', 'lk1_g_tekno'),
 
-        // Bagian H (Gagasan)
+        // Bagian H (Gagasan / LKPD 3) - DIPERBAIKI
         lk1_h_ide: getVal('lk3_format', 'lk1_h_ide'),
-        lk1_h_untuk: getVal('lk4_kendala', 'lk1_h_untuk'),
-        lk1_h_kembang: getVal('lk4_kerjasama', 'lk1_h_kembang'),
+        lk1_h_untuk: getVal('lk3_untuk', 'lk4_kendala', 'lk1_h_untuk'),      // Mengutamakan lk3_untuk
+        lk1_h_kembang: getVal('lk3_kembang', 'lk4_kerjasama', 'lk1_h_kembang'),// Mengutamakan lk3_kembang
 
         // Bagian I (Refleksi / LKPD 4)
         lk1_i_pandang: getVal('ref_pandang', 'lk1_i_pandang', 'lk4_i_pandang'),
