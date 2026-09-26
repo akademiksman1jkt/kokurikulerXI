@@ -2051,7 +2051,9 @@ function applyAnswersToForm(mySub) {
     }
     if (!det) det = MISI_DETAILS[rawMisi] || {};
 
-    // 3. Render Kartu Misi & Deskripsi
+    // 🟢 3. Render Judul Kartu Misi & Deskripsi
+    setText('detMisiJudul', `🎯 Kartu Misi: ${currentStudentData?.misiCode || 'MISSION 01 — IDENTITY'}`);
+
     const elDesk = document.getElementById('detMisiDeskripsi');
     if (elDesk) {
         elDesk.innerHTML = `
