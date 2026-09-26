@@ -1677,42 +1677,46 @@ function closeSidebarMobile() {
 }
 
 function applyAnswersToForm(mySub) {
-    console.log("📦 1. Data mentah dari Spreadsheet:", mySub);
+    console.log("📦 1. Data mentah dari Spreadsheet (mySub):", mySub);
     if (!mySub) {
-        console.error("❌ Data mySub kosong atau undefined!");
+        console.error("❌ Data mySub null atau undefined!");
         return;
     }
 
-    // 1. OTOMATIS HANDLE JIKA DATA BERBENTUK ARRAY [ {...} ]
-    let dataObj = mySub;
+    // 1. OTOMATIS BUKA PEMBUNGKUS DATA (JIKA TERBUNGKUS DALAM PROPERTI LAIN)
+    let targetObj = mySub;
     if (Array.isArray(mySub)) {
-        if (mySub.length === 0) {
-            console.error("❌ Array data dari Spreadsheet kosong!");
-            return;
+        targetObj = mySub[0] || {};
+    }
+    
+    // Cek apakah data dibungkus dalam properti umum dari Google Apps Script
+    const possibleWrappers = ['data', 'submission', 'row', 'result', 'payload', 'records', 'values'];
+    for (let wrap of possibleWrappers) {
+        if (targetObj[wrap] && typeof targetObj[wrap] === 'object') {
+            console.log(`ℹ️ Data terdeteksi terbungkus dalam properti '.${wrap}'`);
+            targetObj = targetObj[wrap];
+            break;
         }
-        dataObj = mySub[0]; // Ambil elemen pertama dari array
-        console.log("ℹ️ Data berupa Array, mengambil objek pertama:", dataObj);
     }
 
-    // 2. OTOMATIS HANDLE JIKA DATA DIBUNGKUS DALAM .data / .result
-    if (dataObj.data && typeof dataObj.data === 'object') {
-        dataObj = dataObj.data;
-    } else if (dataObj.result && typeof dataObj.result === 'object') {
-        dataObj = dataObj.result;
-    }
+    // CETAK NAMA KUNCI ASLI KE CONSOLE UNTUK PEMERIKSAAN
+    console.log("🔑 Daftar Kunci (Keys) Asli yang Terbaca dari Data:", Object.keys(targetObj));
 
-    // 3. BERSIHKAN & NORMALISASI SEMUA HEADER (Ubah ke huruf kecil & hapus spasi)
-    const cleanData = {};
-    Object.keys(dataObj).forEach(key => {
+    // 2. NORMALISASI KUNCI SANGAT KETAT (Hapus Non-Breaking Space & Zero-Width Space)
+    const cleanMap = {};
+    Object.keys(targetObj).forEach(key => {
         if (key) {
-            const normalizedKey = String(key).trim().toLowerCase();
-            cleanData[normalizedKey] = dataObj[key];
+            const cleanKey = String(key)
+                .replace(/[\u200B-\u200D\uFEFF]/g, '') // Hapus zero-width space
+                .replace(/\u00A0/g, '')               // Hapus non-breaking space
+                .trim()
+                .toLowerCase();
+            
+            cleanMap[cleanKey] = targetObj[key];
         }
     });
 
-    console.log("🧹 2. Data setelah dibersihkan (Clean Data):", cleanData);
-
-    // 4. DAFTAR ID ELEMEN HTML (Huruf Kecil)
+    // 3. DAFTAR ID ELEMEN HTML (31 Isian)
     const LKPD_KEYS = [
         'lk1_c1_nama', 'lk1_c1_hasil', 'lk1_c1_paham',
         'lk1_c2_nama', 'lk1_c2_hasil', 'lk1_c2_paham',
@@ -1725,24 +1729,31 @@ function applyAnswersToForm(mySub) {
         'lk1_i_pandang', 'lk1_i_kompleks', 'lk1_i_tanya', 'lk1_i_peran'
     ];
 
-    let matchedCount = 0;
+    let filledCount = 0;
 
-    // 5. PENISIAN KE FORMULIR HTML
-    LKPD_KEYS.forEach(key => {
-        const el = document.getElementById(key);
-        if (!el) {
-            console.warn(`⚠️ Elemen HTML dengan ID '${key}' tidak ditemukan di halaman!`);
-            return;
+    // 4. PROSES PENGISIAN PINTAR (DIRECT + FUZZY MATCHING)
+    LKPD_KEYS.forEach(htmlId => {
+        const el = document.getElementById(htmlId);
+        if (!el) return;
+
+        const targetKey = htmlId.toLowerCase();
+        let val = cleanMap[targetKey];
+
+        // Jika tidak ketemu persis, cari kunci yang mengandung/kembar dengan nama targetKey
+        if (val === undefined || val === null || val === '') {
+            const foundKey = Object.keys(cleanMap).find(k => k.includes(targetKey) || targetKey.includes(k));
+            if (foundKey) {
+                val = cleanMap[foundKey];
+            }
         }
 
-        const val = cleanData[key];
         if (val !== undefined && val !== null && val !== '') {
             el.value = val;
-            matchedCount++;
+            filledCount++;
         }
     });
 
-    console.log(`🎉 3. BERHASIL: ${matchedCount} dari ${LKPD_KEYS.length} kotak form telah terisi!`);
+    console.log(`🎉 HASIL AKHIR: ${filledCount} dari ${LKPD_KEYS.length} kotak form berhasil terisi!`);
 }
 
         function renderGroupStatusTable(submissions) {
