@@ -1677,83 +1677,83 @@ function closeSidebarMobile() {
 }
 
 function applyAnswersToForm(mySub) {
-    console.log("📦 1. Data mentah dari Spreadsheet (mySub):", mySub);
-    if (!mySub) {
-        console.error("❌ Data mySub null atau undefined!");
-        return;
+    console.log("📦 Data dari Spreadsheet diterima:", mySub);
+    if (!mySub) return;
+
+    // 1. Ambil objek data (dukung array atau objek langsung)
+    let dataObj = Array.isArray(mySub) ? mySub[0] : mySub;
+    if (dataObj.data && typeof dataObj.data === 'object') {
+        dataObj = dataObj.data;
     }
 
-    // 1. OTOMATIS BUKA PEMBUNGKUS DATA (JIKA TERBUNGKUS DALAM PROPERTI LAIN)
-    let targetObj = mySub;
-    if (Array.isArray(mySub)) {
-        targetObj = mySub[0] || {};
-    }
-    
-    // Cek apakah data dibungkus dalam properti umum dari Google Apps Script
-    const possibleWrappers = ['data', 'submission', 'row', 'result', 'payload', 'records', 'values'];
-    for (let wrap of possibleWrappers) {
-        if (targetObj[wrap] && typeof targetObj[wrap] === 'object') {
-            console.log(`ℹ️ Data terdeteksi terbungkus dalam properti '.${wrap}'`);
-            targetObj = targetObj[wrap];
-            break;
-        }
-    }
+    // 2. Pemetaan Eksplisit Khusus (ID HTML -> [Kunci Baru, Kunci Lama])
+    const MAPPING = {
+        // --- BAGIAN C ---
+        'lk1_c1_nama':   ['lk1_c1_nama', 'lk1_a1_nama'],
+        'lk1_c1_hasil':  ['lk1_c1_hasil', 'lk1_a1_hasil'],
+        'lk1_c1_paham':  ['lk1_c1_paham', 'lk1_a1_konsep'],
 
-    // CETAK NAMA KUNCI ASLI KE CONSOLE UNTUK PEMERIKSAAN
-    console.log("🔑 Daftar Kunci (Keys) Asli yang Terbaca dari Data:", Object.keys(targetObj));
+        'lk1_c2_nama':   ['lk1_c2_nama', 'lk1_a2_nama'],
+        'lk1_c2_hasil':  ['lk1_c2_hasil', 'lk1_a2_hasil'],
+        'lk1_c2_paham':  ['lk1_c2_paham', 'lk1_a2_konsep'],
 
-    // 2. NORMALISASI KUNCI SANGAT KETAT (Hapus Non-Breaking Space & Zero-Width Space)
-    const cleanMap = {};
-    Object.keys(targetObj).forEach(key => {
-        if (key) {
-            const cleanKey = String(key)
-                .replace(/[\u200B-\u200D\uFEFF]/g, '') // Hapus zero-width space
-                .replace(/\u00A0/g, '')               // Hapus non-breaking space
-                .trim()
-                .toLowerCase();
-            
-            cleanMap[cleanKey] = targetObj[key];
-        }
-    });
+        'lk1_c3_nama':   ['lk1_c3_nama', 'lk1_a3_nama'],
+        'lk1_c3_hasil':  ['lk1_c3_hasil', 'lk1_a3_hasil'],
+        'lk1_c3_paham':  ['lk1_c3_paham', 'lk1_a3_konsep'],
 
-    // 3. DAFTAR ID ELEMEN HTML (31 Isian)
-    const LKPD_KEYS = [
-        'lk1_c1_nama', 'lk1_c1_hasil', 'lk1_c1_paham',
-        'lk1_c2_nama', 'lk1_c2_hasil', 'lk1_c2_paham',
-        'lk1_c3_nama', 'lk1_c3_hasil', 'lk1_c3_paham',
-        'lk1_d_pilihan', 'lk1_d_prinsip', 'lk1_d_alasan', 'lk1_d_terap',
-        'lk1_e_t1', 'lk1_e_t2', 'lk1_e_t3',
-        'lk1_f_tanya', 'lk1_f_terkuat', 'lk1_f_penting', 'lk1_f_potensi',
-        'lk1_g_hubung', 'lk1_g_relevan', 'lk1_g_peluang', 'lk1_g_tekno',
-        'lk1_h_ide', 'lk1_h_untuk', 'lk1_h_kembang',
-        'lk1_i_pandang', 'lk1_i_kompleks', 'lk1_i_tanya', 'lk1_i_peran'
-    ];
+        // --- BAGIAN D ---
+        'lk1_d_pilihan': ['lk1_d_pilihan', 'lk1_a1_zona'],
+        'lk1_d_prinsip': ['lk1_d_prinsip', 'lk1_a2_zona'],
+        'lk1_d_alasan':  ['lk1_d_alasan', 'lk1_a3_zona'],
+        'lk1_d_terap':   ['lk1_d_terap', 'lk1_aplikasi'],
+
+        // --- BAGIAN E ---
+        'lk1_e_t1':      ['lk1_e_t1', 'lk2_fokus'],
+        'lk1_e_t2':      ['lk1_e_t2', 'lk2_data1'],
+        'lk1_e_t3':      ['lk1_e_t3', 'lk2_data2'],
+
+        // --- BAGIAN F ---
+        'lk1_f_tanya':   ['lk1_f_tanya', 'lk2_koneksi'],
+        'lk1_f_terkuat': ['lk1_f_terkuat', 'lk2_data3'],
+        'lk1_f_penting': ['lk1_f_penting', 'steam_s'],
+        'lk1_f_potensi': ['lk1_f_potensi', 'steam_t'],
+
+        // --- BAGIAN G ---
+        'lk1_g_hubung':  ['lk1_g_hubung', 'steam_e'],
+        'lk1_g_relevan': ['lk1_g_relevan', 'steam_a'],
+        'lk1_g_peluang': ['lk1_g_peluang', 'steam_m'],
+        'lk1_g_tekno':   ['lk1_g_tekno', 'lk3_judul'],
+
+        // --- BAGIAN H ---
+        'lk1_h_ide':     ['lk1_h_ide', 'lk3_format'],
+        'lk1_h_untuk':   ['lk1_h_untuk', 'lk4_kendala'],
+        'lk1_h_kembang': ['lk1_h_kembang', 'lk4_kerjasama'],
+
+        // --- BAGIAN I ---
+        'lk1_i_pandang':  ['lk1_i_pandang', 'ref_pandang', 'lk4_i_pandang'],
+        'lk1_i_kompleks': ['lk1_i_kompleks', 'ref_kompleks', 'lk4_i_kompleks'],
+        'lk1_i_tanya':    ['lk1_i_tanya', 'ref_tanya', 'lk4_i_tanya'],
+        'lk1_i_peran':    ['lk1_i_peran', 'ref_kontribusi', 'lk4_i_peran']
+    };
 
     let filledCount = 0;
 
-    // 4. PROSES PENGISIAN PINTAR (DIRECT + FUZZY MATCHING)
-    LKPD_KEYS.forEach(htmlId => {
+    // 3. Masukkan data tepat sasaran
+    Object.keys(MAPPING).forEach(htmlId => {
         const el = document.getElementById(htmlId);
         if (!el) return;
 
-        const targetKey = htmlId.toLowerCase();
-        let val = cleanMap[targetKey];
-
-        // Jika tidak ketemu persis, cari kunci yang mengandung/kembar dengan nama targetKey
-        if (val === undefined || val === null || val === '') {
-            const foundKey = Object.keys(cleanMap).find(k => k.includes(targetKey) || targetKey.includes(k));
-            if (foundKey) {
-                val = cleanMap[foundKey];
+        const possibleKeys = MAPPING[htmlId];
+        for (let key of possibleKeys) {
+            if (dataObj[key] !== undefined && dataObj[key] !== null && dataObj[key] !== '') {
+                el.value = dataObj[key];
+                filledCount++;
+                break; // Ambil nilai pertama yang cocok lalu lanjut ke elemen HTML berikutnya
             }
-        }
-
-        if (val !== undefined && val !== null && val !== '') {
-            el.value = val;
-            filledCount++;
         }
     });
 
-    console.log(`🎉 HASIL AKHIR: ${filledCount} dari ${LKPD_KEYS.length} kotak form berhasil terisi!`);
+    console.log(`🎉 HASIL AKHIR: ${filledCount} kotak form berhasil terisi secara presisi!`);
 }
 
         function renderGroupStatusTable(submissions) {
