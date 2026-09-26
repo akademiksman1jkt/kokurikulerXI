@@ -3029,7 +3029,7 @@ async function saveGroupPhotosServer() {
         return `<li><strong>${mNama}</strong></li>`;
     }).join('');
 
-    // 🟢 FUNGSI MERGE BISA MEMBACA BANYAK KEY SEKALIGUS (ARRAY ATAL STRING)
+    // 🟢 FUNGSI MERGE BISA MEMBACA BANYAK KEY SEKALIGUS (ARRAY ATAU STRING)
     const mergeField = (fieldKeys) => {
         const keys = Array.isArray(fieldKeys) ? fieldKeys : [fieldKeys];
         const items = [];
@@ -3075,7 +3075,7 @@ async function saveGroupPhotosServer() {
         return url;
     }
 
-    // 🟢 RENDER TABEL FOTO RAMAH MS WORD DAN PDF (DESKRIPSI DI TENGAH BWAH)
+    // 🟢 RENDER TABEL FOTO RAMAH MS WORD DAN PDF
     let photosHTML = '';
     if (photos && photos.length > 0) {
         photosHTML = `
@@ -3087,7 +3087,6 @@ async function saveGroupPhotosServer() {
             const safeSrc = getSafePhotoUrl(p);
             const author = (typeof p === 'object' && p.uploadedBy) ? p.uploadedBy : 'Tim';
 
-            // Setiap 2 foto, buat baris tabel baru
             if (idx > 0 && idx % 2 === 0) {
                 photosHTML += `</tr><tr>`;
             }
@@ -3107,7 +3106,6 @@ async function saveGroupPhotosServer() {
             `;
         });
 
-        // Sempurnakan sisa kolom jika jumlah foto ganjil
         if (photos.length % 2 !== 0) {
             photosHTML += `<td style="width: 50%;"></td>`;
         }
@@ -3120,7 +3118,7 @@ async function saveGroupPhotosServer() {
         photosHTML = `<p style="font-style: italic; color: #94a3b8; font-size: 13px;">Belum ada foto dokumentasi yang diunggah.</p>`;
     }
 
-    // RENDER LENGKAP LAPORAN GABUNGAN KELOMPOK
+    // 🟢 RENDER LENGKAP LAPORAN GABUNGAN KELOMPOK
     container.innerHTML = `
         <div id="printableReport" style="background: #ffffff; padding: 25px; border-radius: 8px; border: 1px solid #e2e8f0; font-family: sans-serif; color: #1e293b; line-height: 1.6;">
             <div style="text-align: center; border-bottom: 2.5px solid #0284c7; padding-bottom: 12px; margin-bottom: 20px;">
@@ -3148,65 +3146,73 @@ async function saveGroupPhotosServer() {
                 ${namaAnggotaList}
             </ol>
 
-            <h4 style="border-left: 4px solid #0284c7; padding-left: 8px; margin: 20px 0 8px; color: #0f172a;">II. LKPD 1: EKSPLORASI SAINS & TEKNOLOGI TERPADU (PP-IPTEK)</h4>
+            <h4 style="border-left: 4px solid #0284c7; padding-left: 8px; margin: 20px 0 8px; color: #0f172a;">II. JURNAL PERJALANAN 01 — MUSEUM SCIENCE / IPTEK</h4>
             <div style="font-size: 13px; display: flex; flex-direction: column; gap: 8px;">
-                <!-- 🟢 WAHANA 1 (MEMERIKSA SEMUA VARIABEL) -->
                 <div style="background:#f8fafc; padding:8px 12px; border-radius:6px; border:1px solid #e2e8f0;">
-                    <strong>1. Wahana Pertama:</strong>
-                    <p style="margin:4px 0 2px;"><em>Hasil Observasi & Nama Alat:</em></p>
-                    ${mergeField(['lk1_alat1_hasil', 'lk1_alat1_nama', 'lk1_alat1_zona', 'lk1_a1_hasil', 'lk1_a1_nama', 'lk1_a1_zona'])}
-                    <p style="margin:4px 0 2px;"><em>Prinsip Sains:</em></p>
-                    ${mergeField(['lk1_alat1_konsep', 'lk1_a1_konsep'])}
+                    <strong>1. Temuan / Wahana 1:</strong>
+                    <p style="margin:4px 0 2px;"><em>Nama Alat / Objek:</em></p>
+                    ${mergeField(['lk1_c1_nama', 'lk1_alat1_nama', 'lk1_a1_nama'])}
+                    <p style="margin:4px 0 2px;"><em>Cara Kerja / Hasil Observasi:</em></p>
+                    ${mergeField(['lk1_c1_hasil', 'lk1_alat1_hasil', 'lk1_a1_hasil'])}
+                    <p style="margin:4px 0 2px;"><em>Pemahaman / Prinsip Sains:</em></p>
+                    ${mergeField(['lk1_c1_paham', 'lk1_alat1_konsep', 'lk1_a1_konsep'])}
                 </div>
 
-                <!-- 🟢 WAHANA 2 (MEMERIKSA SEMUA VARIABEL) -->
                 <div style="background:#f8fafc; padding:8px 12px; border-radius:6px; border:1px solid #e2e8f0;">
-                    <strong>2. Wahana Kedua:</strong>
-                    <p style="margin:4px 0 2px;"><em>Hasil Observasi & Nama Alat:</em></p>
-                    ${mergeField(['lk1_alat2_hasil', 'lk1_alat2_nama', 'lk1_alat2_zona', 'lk1_a2_hasil', 'lk1_a2_nama', 'lk1_a2_zona'])}
-                    <p style="margin:4px 0 2px;"><em>Prinsip Sains:</em></p>
-                    ${mergeField(['lk1_alat2_konsep', 'lk1_a2_konsep'])}
+                    <strong>2. Temuan / Wahana 2:</strong>
+                    <p style="margin:4px 0 2px;"><em>Nama Alat / Objek:</em></p>
+                    ${mergeField(['lk1_c2_nama', 'lk1_alat2_nama', 'lk1_a2_nama'])}
+                    <p style="margin:4px 0 2px;"><em>Cara Kerja / Hasil Observasi:</em></p>
+                    ${mergeField(['lk1_c2_hasil', 'lk1_alat2_hasil', 'lk1_a2_hasil'])}
+                    <p style="margin:4px 0 2px;"><em>Pemahaman / Prinsip Sains:</em></p>
+                    ${mergeField(['lk1_c2_paham', 'lk1_alat2_konsep', 'lk1_a2_konsep'])}
                 </div>
 
-                <!-- 🟢 WAHANA 3 (MEMERIKSA SEMUA VARIABEL) -->
                 <div style="background:#f8fafc; padding:8px 12px; border-radius:6px; border:1px solid #e2e8f0;">
-                    <strong>3. Wahana Ketiga:</strong>
-                    <p style="margin:4px 0 2px;"><em>Hasil Observasi & Nama Alat:</em></p>
-                    ${mergeField(['lk1_alat3_hasil', 'lk1_alat3_nama', 'lk1_alat3_zona', 'lk1_a3_hasil', 'lk1_a3_nama', 'lk1_a3_zona'])}
-                    <p style="margin:4px 0 2px;"><em>Prinsip Sains:</em></p>
-                    ${mergeField(['lk1_alat3_konsep', 'lk1_a3_konsep'])}
+                    <strong>3. Temuan / Wahana 3:</strong>
+                    <p style="margin:4px 0 2px;"><em>Nama Alat / Objek:</em></p>
+                    ${mergeField(['lk1_c3_nama', 'lk1_alat3_nama', 'lk1_a3_nama'])}
+                    <p style="margin:4px 0 2px;"><em>Cara Kerja / Hasil Observasi:</em></p>
+                    ${mergeField(['lk1_c3_hasil', 'lk1_alat3_hasil', 'lk1_a3_hasil'])}
+                    <p style="margin:4px 0 2px;"><em>Pemahaman / Prinsip Sains:</em></p>
+                    ${mergeField(['lk1_c3_paham', 'lk1_alat3_konsep', 'lk1_a3_konsep'])}
                 </div>
-
-                <p style="margin:4px 0;"><strong>Relevansi Kehidupan Modern:</strong><br>${mergeField(['lk1_aplikasi'])}</p>
             </div>
 
-            <h4 style="border-left: 4px solid #0284c7; padding-left: 8px; margin: 20px 0 8px; color: #0f172a;">III. LKPD 2: OBSERVASI ARSITEKTUR RUMAH ADAT</h4>
+            <h4 style="border-left: 4px solid #0284c7; padding-left: 8px; margin: 20px 0 8px; color: #0f172a;">III. SATU TEMUAN MUSEUM YANG PALING PENTING</h4>
             <div style="font-size: 13px; line-height: 1.5;">
-                <p><strong>Deskripsi Arsitektur Bangunan:</strong><br>${mergeField(['lk2_fokus'])}</p>
-                <p><strong>Item Data 1 (Karakteristik):</strong><br>${mergeField(['lk2_data1'])}</p>
-                <p><strong>Item Data 2 (Adaptasi Lingkungan):</strong><br>${mergeField(['lk2_data2'])}</p>
-                <p><strong>Item Data 3 (Material Utama):</strong><br>${mergeField(['lk2_data3'])}</p>
-                <p><strong>Integrasi Kebudayaan ↔ Sains Modern:</strong><br>${mergeField(['lk2_koneksi'])}</p>
+                <p><strong>Temuan Pilihan:</strong><br>${mergeField(['lk1_d_pilihan', 'lk1_a1_zona'])}</p>
+                <p><strong>Prinsip / Teknologi:</strong><br>${mergeField(['lk1_d_prinsip', 'lk1_a2_zona'])}</p>
+                <p><strong>Alasan Penting / Menarik:</strong><br>${mergeField(['lk1_d_alasan', 'lk1_a3_zona'])}</p>
+                <p><strong>Penerapan Kehidupan:</strong><br>${mergeField(['lk1_d_terap', 'lk1_aplikasi'])}</p>
             </div>
 
-            <h4 style="border-left: 4px solid #0284c7; padding-left: 8px; margin: 20px 0 8px; color: #0f172a;">IV. LKPD 3: PERANCANGAN PROYEK (STEAM)</h4>
-            <div style="font-size: 13px;">
-                <p><strong>Judul Proyek / Prototype:</strong><br>${mergeField(['lk3_judul'])}</p>
-                <p><strong>Format Produk:</strong><br>${mergeField(['lk3_format'])}</p>
-                <p><strong>1. Science:</strong> ${mergeField(['steam_s'])}</p>
-                <p><strong>2. Technology:</strong> ${mergeField(['steam_t'])}</p>
-                <p><strong>3. Engineering:</strong> ${mergeField(['steam_e'])}</p>
-                <p><strong>4. Arts:</strong> ${mergeField(['steam_a'])}</p>
-                <p><strong>5. Mathematics:</strong> ${mergeField(['steam_m'])}</p>
+            <h4 style="border-left: 4px solid #0284c7; padding-left: 8px; margin: 20px 0 8px; color: #0f172a;">IV. JURNAL PERJALANAN 02 — ANJUNGAN DAERAH</h4>
+            <div style="font-size: 13px; line-height: 1.5;">
+                <p><strong>Temuan 1 (Arsitektur / Karakteristik):</strong><br>${mergeField(['lk1_e_t1', 'lk2_fokus'])}</p>
+                <p><strong>Temuan 2 (Adaptasi / Budaya):</strong><br>${mergeField(['lk1_e_t2', 'lk2_data1'])}</p>
+                <p><strong>Temuan 3 (Material / Khas):</strong><br>${mergeField(['lk1_e_t3', 'lk2_data2'])}</p>
             </div>
 
-            <h4 style="border-left: 4px solid #0284c7; padding-left: 8px; margin: 20px 0 8px; color: #0f172a;">V. LKPD 4: REFLEKSI MANDIRI & TIM</h4>
-            <div style="font-size: 13px;">
-                <p><strong>Kendala Lapangan & Pemecahannya:</strong><br>${mergeField(['lk4_kendala'])}</p>
-                <p><strong>Refleksi Kolaborasi & Budaya:</strong><br>${mergeField(['lk4_kerjasama'])}</p>
+            <h4 style="border-left: 4px solid #0284c7; padding-left: 8px; margin: 20px 0 8px; color: #0f172a;">V. MISSION CARD & GAGASAN STEAM</h4>
+            <div style="font-size: 13px; line-height: 1.5;">
+                <p><strong>Pertanyaan Utama:</strong><br>${mergeField(['lk1_f_tanya', 'lk2_koneksi'])}</p>
+                <p><strong>Temuan Terkuat:</strong><br>${mergeField(['lk1_f_terkuat', 'lk2_data3'])}</p>
+                <p><strong>Penting Bagi Daerah:</strong><br>${mergeField(['lk1_f_penting', 'steam_s'])}</p>
+                <p><strong>Masalah / Potensi:</strong><br>${mergeField(['lk1_f_potensi', 'steam_t'])}</p>
+                <p><strong>Hubungan Temuan & Relevansi:</strong><br>${mergeField(['lk1_g_hubung', 'lk1_g_relevan', 'steam_e', 'steam_a'])}</p>
+                <p><strong>Teknologi / Prinsip Dimanfaatkan:</strong><br>${mergeField(['lk1_g_tekno', 'lk3_judul'])}</p>
+                <p><strong>Ide Gagasan & Peruntukan:</strong><br>${mergeField(['lk1_h_ide', 'lk1_h_untuk', 'lk3_format'])}</p>
+                <p><strong>Rencana Pengembangan:</strong><br>${mergeField(['lk1_h_kembang', 'steam_m'])}</p>
             </div>
 
-            <h4 style="border-left: 4px solid #0284c7; padding-left: 8px; margin: 20px 0 8px; color: #0f172a;">VI. LAMPIRAN DOKUMENTASI LAPANGAN KELOMPOK</h4>
+            <h4 style="border-left: 4px solid #0284c7; padding-left: 8px; margin: 20px 0 8px; color: #0f172a;">VI. REFLEKSI PERJALANAN & KELOMPOK</h4>
+            <div style="font-size: 13px; line-height: 1.5;">
+                <p><strong>Hal Mengubah Pandangan / Kompleks:</strong><br>${mergeField(['lk1_i_pandang', 'lk1_i_kompleks', 'lk4_kendala'])}</p>
+                <p><strong>Pertanyaan Tersisa & Peran Kelompok:</strong><br>${mergeField(['lk1_i_tanya', 'lk1_i_peran', 'lk4_kerjasama'])}</p>
+            </div>
+
+            <h4 style="border-left: 4px solid #0284c7; padding-left: 8px; margin: 20px 0 8px; color: #0f172a;">VII. LAMPIRAN DOKUMENTASI LAPANGAN KELOMPOK</h4>
             ${photosHTML}
         </div>
     `;
