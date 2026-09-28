@@ -3666,20 +3666,44 @@ function renderAdminProgressTable(progressMap, targetKelas) {
         const kelNum = namaKel.replace(/[^0-9]/g, '');
         
         // 🟢 DUKUNG BANYAK VARIASI FORMAT ID KELOMPOK
-        const keyXI = `XI${klsNum}-K${kelNum}`; // "XI1-K0" (Format Data Siswa)
-        const keyX  = `X${klsNum}-K${kelNum}`;  // "X1-K0" (Format Lama)
-        const keyDash = `X${klsNum}–K${kelNum}`; // "X1–K0" (Format En-Dash)
+        const keyXI   = `XI${klsNum}-K${kelNum}`; // "XI1-K0"
+        const keyX    = `X${klsNum}-K${kelNum}`;  // "X1-K0"
+        const keyDash = `X${klsNum}–K${kelNum}`; // "X1–K0"
 
-        // Ambil data dari progressMap dengan fleksibel
+        // Ambil data progres pengisian LKPD
         const p = (progressMap && (progressMap[keyXI] || progressMap[keyX] || progressMap[keyDash])) 
                   || { lk1: false, lk2: false, lk3: false, lk4: false, photosCount: 0, contributors: [] };
 
+        // 🟢 1. CARI SEMUA ANGGOTA KELOMPOK DARI MASTER DATA SISWA (adminCachedStudents)
+        let allMembers = [];
+        if (typeof adminCachedStudents !== 'undefined' && Array.isArray(adminCachedStudents) && adminCachedStudents.length > 0) {
+            allMembers = adminCachedStudents
+                .filter(s => {
+                    const matchKelas = s.kelas === targetKelas || s.kelas === `XI-${klsNum}`;
+                    const matchKel = s.kelompok === namaKel || s.groupId === keyXI || s.groupId === keyX;
+                    return matchKelas && matchKel;
+                })
+                .map(s => s.nama);
+        }
+
+        // 🟢 2. FORMAT TAMPILAN ANGGOTA (SEMUA ANGGOTA DENGAN PENANDA AKTIF)
+        let contributorsText = "";
+
+        if (allMembers.length > 0) {
+            contributorsText = allMembers.map(nama => {
+                const isSubmitted = (p.contributors || []).includes(nama);
+                return isSubmitted 
+                    ? `<strong style="color:#059669;" title="Sudah pernah mengisi/menyimpan">${nama} (Aktif)</strong>` 
+                    : `<span style="color:#64748b;">${nama}</span>`;
+            }).join(", ");
+        } else if (p.contributors && p.contributors.length > 0) {
+            // Fallback jika data master belum termuat
+            contributorsText = p.contributors.map(nama => `<strong style="color:#059669;">${nama} (Aktif)</strong>`).join(", ");
+        } else {
+            contributorsText = "<em style='color:#94a3b8;'>Belum ada anggota terdaftar</em>";
+        }
+
         const pill = (isDone) => isDone ? `<span class="status-pill done">✅</span>` : `<span class="status-pill yet">-</span>`;
-        
-        // Format daftar kontributor
-        const contributorsText = (p.contributors && p.contributors.length > 0) 
-            ? p.contributors.join(", ") 
-            : "<em style='color:#94a3b8;'>Belum ada isian</em>";
 
         const isFullyDone = p.lk1 && p.lk2 && p.lk3 && p.lk4 && (p.photosCount >= 5);
         const totalStatus = isFullyDone 
@@ -3689,7 +3713,7 @@ function renderAdminProgressTable(progressMap, targetKelas) {
         html += `
             <tr>
                 <td><strong>${keyXI}</strong><br><small style="color:var(--text-muted);">${namaKel === "Kelompok 0" ? "Demo" : namaKel}</small></td>
-                <td style="text-align:left; font-size:12px; max-width:200px;">${contributorsText}</td>
+                <td style="text-align:left; font-size:12px; max-width:250px; line-height:1.5;">${contributorsText}</td>
                 <td>${pill(p.lk1)}</td>
                 <td>${pill(p.lk2)}</td>
                 <td>${pill(p.lk3)}</td>
