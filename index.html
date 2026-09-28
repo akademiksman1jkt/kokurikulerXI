@@ -3657,50 +3657,67 @@ function renderAdminProgressTable(progressMap, targetKelas) {
     const tbody = document.getElementById('adminProgressTableBody');
     if (!tbody) return;
 
-    const klsNum = targetKelas.replace(/[^0-9]/g, ''); // "XI-1" -> "1"
+    const klsNum = targetKelas.replace(/[^0-9]/g, ''); // "XI-2" -> "2"
     const daftarKelompok = ["Kelompok 0", "Kelompok 1", "Kelompok 2", "Kelompok 3", "Kelompok 4", "Kelompok 5", "Kelompok 6"];
+
+    // 🔍 1. CARI MASTER DATA SISWA (Cek beberapa nama variabel umum)
+    let rawStudents = [];
+    if (typeof adminCachedStudents !== 'undefined' && Array.isArray(adminCachedStudents)) {
+        rawStudents = adminCachedStudents;
+    } else if (typeof allStudents !== 'undefined' && Array.isArray(allStudents)) {
+        rawStudents = allStudents;
+    } else if (typeof masterSiswa !== 'undefined' && Array.isArray(masterSiswa)) {
+        rawStudents = masterSiswa;
+    }
+
+    // Diagnostic di Console Browser (Tekan F12 -> Console untuk melihat ini)
+    console.log("🔍 Master Data Siswa Ditemukan:", rawStudents.length, "siswa");
 
     let html = "";
 
     daftarKelompok.forEach(namaKel => {
-        const kelNum = namaKel.replace(/[^0-9]/g, '');
-        
-        // 🟢 DUKUNG BANYAK VARIASI FORMAT ID KELOMPOK
-        const keyXI   = `XI${klsNum}-K${kelNum}`; // "XI1-K0"
-        const keyX    = `X${klsNum}-K${kelNum}`;  // "X1-K0"
-        const keyDash = `X${klsNum}–K${kelNum}`; // "X1–K0"
+        const kelNum = namaKel.replace(/[^0-9]/g, ''); // "Kelompok 4" -> "4"
 
-        // Ambil data progres pengisian LKPD
+        // Format ID
+        const keyXI   = `XI${klsNum}-K${kelNum}`; // "XI2-K4"
+        const keyX    = `X${klsNum}-K${kelNum}`;  // "X2-K4"
+        const keyDash = `X${klsNum}–K${kelNum}`;
+
+        // Ambil data progres dari LKPD
         const p = (progressMap && (progressMap[keyXI] || progressMap[keyX] || progressMap[keyDash])) 
                   || { lk1: false, lk2: false, lk3: false, lk4: false, photosCount: 0, contributors: [] };
 
-        // 🟢 1. CARI SEMUA ANGGOTA KELOMPOK DARI MASTER DATA SISWA (adminCachedStudents)
+        // 🟢 2. FILTER ANGGOTA DENGAN LOGIKA FLEKSIBEL
         let allMembers = [];
-        if (typeof adminCachedStudents !== 'undefined' && Array.isArray(adminCachedStudents) && adminCachedStudents.length > 0) {
-            allMembers = adminCachedStudents
-                .filter(s => {
-                    const matchKelas = s.kelas === targetKelas || s.kelas === `XI-${klsNum}`;
-                    const matchKel = s.kelompok === namaKel || s.groupId === keyXI || s.groupId === keyX;
-                    return matchKelas && matchKel;
-                })
-                .map(s => s.nama);
+        if (rawStudents.length > 0) {
+            allMembers = rawStudents.filter(s => {
+                // Ambil nilai properti (akomodasi huruf besar/kecil)
+                const sKelas = String(s.kelas || s.Kelas || s.KELAS || '').replace(/[^0-9]/g, ''); // "XI-2" -> "2"
+                const sKel   = String(s.kelompok || s.Kelompok || s.groupId || s.group_id || '').toUpperCase();
+                
+                const matchKelas = (sKelas === klsNum);
+                const matchKel   = sKel.includes(`K${kelNum}`) || sKel.includes(`KELOMPOK ${kelNum}`) || sKel === kelNum;
+
+                return matchKelas && matchKel;
+            }).map(s => s.nama || s.Nama || s.NAMA || s.namaSiswa);
         }
 
-        // 🟢 2. FORMAT TAMPILAN ANGGOTA (SEMUA ANGGOTA DENGAN PENANDA AKTIF)
+        // 🟢 3. FORMAT DAFTAR NAMA TAMPILAN
         let contributorsText = "";
 
         if (allMembers.length > 0) {
+            // JIKA MASTER SISWA DITEMUKAN: Tampilkan SEMUA anggota + penanda (Aktif)
             contributorsText = allMembers.map(nama => {
-                const isSubmitted = (p.contributors || []).includes(nama);
+                const isSubmitted = (p.contributors || []).some(c => c.toLowerCase().trim() === nama.toLowerCase().trim());
                 return isSubmitted 
-                    ? `<strong style="color:#059669;" title="Sudah pernah mengisi/menyimpan">${nama} (Aktif)</strong>` 
+                    ? `<strong style="color:#059669;" title="Sudah pernah mengisi">${nama} (Aktif)</strong>` 
                     : `<span style="color:#64748b;">${nama}</span>`;
             }).join(", ");
         } else if (p.contributors && p.contributors.length > 0) {
-            // Fallback jika data master belum termuat
+            // FALLBACK: Jika master data siswa belum termuat di memori browser
             contributorsText = p.contributors.map(nama => `<strong style="color:#059669;">${nama} (Aktif)</strong>`).join(", ");
         } else {
-            contributorsText = "<em style='color:#94a3b8;'>Belum ada anggota terdaftar</em>";
+            contributorsText = "<em style='color:#94a3b8;'>Belum ada isian</em>";
         }
 
         const pill = (isDone) => isDone ? `<span class="status-pill done">✅</span>` : `<span class="status-pill yet">-</span>`;
