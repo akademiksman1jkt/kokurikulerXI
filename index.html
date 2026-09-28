@@ -1868,9 +1868,8 @@ function applyAnswersToForm(mySub) {
     }
 }
 
-        // FUNGSI MEMBUKA MODAL INTIP JAWABAN TEMAN
-        function viewMemberAnswers(memberNama) {
-    // 1. Cek apakah variabel array data tersedia
+        // FUNGSI MEMBUKA MODAL INTIP JAWABAN TEMAN (SUDAH DISESUAIKAN DENGAN KOLOM SPREADSHEET)
+function viewMemberAnswers(memberNama) {
     if (!mergedSubmissionsData || !Array.isArray(mergedSubmissionsData) || mergedSubmissionsData.length === 0) {
         alert("Data isian kelompok belum dimuat dari server. Silakan klik tombol 'Refresh Progress Tim'.");
         return;
@@ -1878,7 +1877,6 @@ function applyAnswersToForm(mySub) {
 
     const targetNama = (memberNama || "").trim().toLowerCase();
 
-    // 2. Pencarian aman (Abaikan perbedaan kapital & cegah error jika nama kosong)
     const sub = mergedSubmissionsData.find(s => {
         const namaDb = s && (s.nama || s.Nama || "");
         return namaDb.toString().trim().toLowerCase() === targetNama;
@@ -1889,7 +1887,6 @@ function applyAnswersToForm(mySub) {
         return;
     }
 
-    // 3. Cek keberadaan elemen Modal HTML
     const elTitle = document.getElementById('modalMemberName');
     const elContent = document.getElementById('modalMemberContent');
     const elModal = document.getElementById('modalViewAnswers');
@@ -1899,10 +1896,9 @@ function applyAnswersToForm(mySub) {
         return;
     }
 
-    // 4. Set Judul Modal
-    elTitle.innerText = `Isian LKPD: ${sub.nama || sub.Nama || memberNama}`;
+    elTitle.innerText = `Isian LKPD: ${sub.nama || memberNama}`;
 
-    // 5. Pembantu format teks aman (Konversi ke String dulu baru replace)
+    // Fungsi pembersih jika data kosong
     const v = (val) => {
         if (val === null || val === undefined || val.toString().trim() === "") {
             return '<i style="color:#94a3b8;">(Kosong)</i>';
@@ -1910,34 +1906,74 @@ function applyAnswersToForm(mySub) {
         return String(val).replace(/\n/g, '<br>');
     };
 
-    // 6. Susun Teks HTML
+    // Susun tampilan modal berdasarkan kolom asli Spreadsheet Anda
     let html = `
+        <!-- Bagian C: Eksplorasi Wahana -->
         <div style="margin-bottom:14px; padding:16px; background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:12px;">
-            <h4 style="margin:0 0 10px 0; color:#1e3a8a; font-size:15px; border-bottom:1px dashed #cbd5e1; padding-bottom:6px;">🔬 LKPD 1: Eksplorasi Sains</h4>
-            <p style="margin:4px 0;"><strong>Wahana 1:</strong> ${v(sub.lk1_a1_nama)} (${v(sub.lk1_a1_zona)})</p>
-            <p style="margin:4px 0 10px 0; font-size:13px; color:#475569;">${v(sub.lk1_a1_hasil)}</p>
-            <p style="margin:4px 0;"><strong>Wahana 2:</strong> ${v(sub.lk1_a2_nama)}</p>
-            <p style="margin:4px 0 10px 0; font-size:13px; color:#475569;">${v(sub.lk1_a2_hasil)}</p>
-            <p style="margin:4px 0;"><strong>Relevansi Kehidupan:</strong><br><span style="font-size:13.5px;">${v(sub.lk1_aplikasi)}</span></p>
+            <h4 style="margin:0 0 10px 0; color:#1e3a8a; font-size:15px; border-bottom:1px dashed #cbd5e1; padding-bottom:6px;">🔬 C. Eksplorasi Wahana</h4>
+            <p style="margin:4px 0;"><strong>Wahana 1:</strong> ${v(sub.lk1_c1_nama)}</p>
+            <p style="margin:4px 0;"><strong>Hasil Pengamatan:</strong> ${v(sub.lk1_c1_hasil)}</p>
+            <p style="margin:4px 0 10px 0; font-size:13px; color:#475569;"><strong>Pemahaman:</strong> ${v(sub.lk1_c1_paham)}</p>
+            
+            <hr style="border:none; border-top:1px dashed #e2e8f0; margin:10px 0;">
+
+            <p style="margin:4px 0;"><strong>Wahana 2:</strong> ${v(sub.lk1_c2_nama)}</p>
+            <p style="margin:4px 0;"><strong>Hasil Pengamatan:</strong> ${v(sub.lk1_c2_hasil)}</p>
+            <p style="margin:4px 0 10px 0; font-size:13px; color:#475569;"><strong>Pemahaman:</strong> ${v(sub.lk1_c2_paham)}</p>
+
+            <hr style="border:none; border-top:1px dashed #e2e8f0; margin:10px 0;">
+
+            <p style="margin:4px 0;"><strong>Wahana 3:</strong> ${v(sub.lk1_c3_nama)}</p>
+            <p style="margin:4px 0;"><strong>Hasil Pengamatan:</strong> ${v(sub.lk1_c3_hasil)}</p>
+            <p style="margin:4px 0 10px 0; font-size:13px; color:#475569;"><strong>Pemahaman:</strong> ${v(sub.lk1_c3_paham)}</p>
         </div>
 
+        <!-- Bagian D: Analisis & Penerapan Prinsip -->
         <div style="margin-bottom:14px; padding:16px; background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:12px;">
-            <h4 style="margin:0 0 10px 0; color:#1e3a8a; font-size:15px; border-bottom:1px dashed #cbd5e1; padding-bottom:6px;">🏛️ LKPD 2: Arsitektur Rumah Adat</h4>
-            <p style="margin:4px 0;"><strong>Deskripsi Bentuk & Tata Ruang:</strong><br><span style="font-size:13.5px;">${v(sub.lk2_fokus)}</span></p>
-            <p style="margin:8px 0 4px 0;"><strong>Data Kunci 1:</strong><br><span style="font-size:13.5px;">${v(sub.lk2_data1)}</span></p>
+            <h4 style="margin:0 0 10px 0; color:#1e3a8a; font-size:15px; border-bottom:1px dashed #cbd5e1; padding-bottom:6px;">⚙️ D. Penerapan Prinsip</h4>
+            <p style="margin:4px 0;"><strong>Pilihan Wahana:</strong> ${v(sub.lk1_d_pilihan)}</p>
+            <p style="margin:4px 0;"><strong>Prinsip Kerja:</strong> ${v(sub.lk1_d_prinsip)}</p>
+            <p style="margin:4px 0;"><strong>Alasan Pemilihan:</strong> ${v(sub.lk1_d_alasan)}</p>
+            <p style="margin:4px 0;"><strong>Penerapan:</strong> ${v(sub.lk1_d_terap)}</p>
         </div>
 
+        <!-- Bagian E: Tantangan -->
         <div style="margin-bottom:14px; padding:16px; background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:12px;">
-            <h4 style="margin:0 0 10px 0; color:#1e3a8a; font-size:15px; border-bottom:1px dashed #cbd5e1; padding-bottom:6px;">🛠️ LKPD 3: Tantangan STEAM</h4>
-            <p style="margin:4px 0;"><strong>Judul Proyek:</strong> <strong style="color:#059669;">${v(sub.lk3_judul)}</strong> (${v(sub.lk3_format)})</p>
-            <p style="margin:8px 0 4px 0;"><strong>[S] Science:</strong> ${v(sub.steam_s)}</p>
-            <p style="margin:4px 0;"><strong>[T] Technology:</strong> ${v(sub.steam_t)}</p>
+            <h4 style="margin:0 0 10px 0; color:#1e3a8a; font-size:15px; border-bottom:1px dashed #cbd5e1; padding-bottom:6px;">💡 E. Tantangan</h4>
+            <p style="margin:4px 0;"><strong>Tantangan 1:</strong> ${v(sub.lk1_e_t1)}</p>
+            <p style="margin:4px 0;"><strong>Tantangan 2:</strong> ${v(sub.lk1_e_t2)}</p>
+            <p style="margin:4px 0;"><strong>Tantangan 3:</strong> ${v(sub.lk1_e_t3)}</p>
         </div>
 
+        <!-- Bagian F: Refleksi Kunci -->
         <div style="margin-bottom:14px; padding:16px; background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:12px;">
-            <h4 style="margin:0 0 10px 0; color:#1e3a8a; font-size:15px; border-bottom:1px dashed #cbd5e1; padding-bottom:6px;">🧠 LKPD 4: Refleksi</h4>
-            <p style="margin:4px 0;"><strong>Kendala & Solusi Lapangan:</strong><br><span style="font-size:13.5px;">${v(sub.lk4_kendala)}</span></p>
-            <p style="margin:8px 0 4px 0;"><strong>Refleksi Kolaborasi & Budaya:</strong><br><span style="font-size:13.5px;">${v(sub.lk4_kerjasama)}</span></p>
+            <h4 style="margin:0 0 10px 0; color:#1e3a8a; font-size:15px; border-bottom:1px dashed #cbd5e1; padding-bottom:6px;">❓ F. Refleksi Kunci</h4>
+            <p style="margin:4px 0;"><strong>Pertanyaan Utama:</strong> ${v(sub.lk1_f_tanya)}</p>
+            <p style="margin:4px 0;"><strong>Aspek Terkuat:</strong> ${v(sub.lk1_f_terkuat)}</p>
+            <p style="margin:4px 0;"><strong>Poin Penting:</strong> ${v(sub.lk1_f_penting)}</p>
+            <p style="margin:4px 0;"><strong>Potensi Pengembangan:</strong> ${v(sub.lk1_f_potensi)}</p>
+        </div>
+
+        <!-- Bagian G: Relevansi & Teknologi -->
+        <div style="margin-bottom:14px; padding:16px; background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:12px;">
+            <h4 style="margin:0 0 10px 0; color:#1e3a8a; font-size:15px; border-bottom:1px dashed #cbd5e1; padding-bottom:6px;">🌐 G. Relevansi & Teknologi</h4>
+            <p style="margin:4px 0;"><strong>Keterhubungan:</strong> ${v(sub.lk1_g_hubung)}</p>
+            <p style="margin:4px 0;"><strong>Relevansi Kehidupan:</strong> ${v(sub.lk1_g_relevan)}</p>
+            <p style="margin:4px 0;"><strong>Peluang Pemanfaatan:</strong> ${v(sub.lk1_g_peluang)}</p>
+            <p style="margin:4px 0;"><strong>Dukungan Teknologi:</strong> ${v(sub.lk1_g_tekno)}</p>
+        </div>
+
+        <!-- Bagian H & I: Inovasi & Pandangan -->
+        <div style="margin-bottom:14px; padding:16px; background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:12px;">
+            <h4 style="margin:0 0 10px 0; color:#1e3a8a; font-size:15px; border-bottom:1px dashed #cbd5e1; padding-bottom:6px;">🚀 H & I. Inovasi & Pandangan Masa Depan</h4>
+            <p style="margin:4px 0;"><strong>Gagasan/Ide:</strong> ${v(sub.lk1_h_ide)}</p>
+            <p style="margin:4px 0;"><strong>Tujuan/Manfaat:</strong> ${v(sub.lk1_h_untuk)}</p>
+            <p style="margin:4px 0;"><strong>Rencana Pengembangan:</strong> ${v(sub.lk1_h_kembang)}</p>
+            <hr style="border:none; border-top:1px dashed #e2e8f0; margin:10px 0;">
+            <p style="margin:4px 0;"><strong>Pandangan:</strong> ${v(sub.lk1_i_pandang)}</p>
+            <p style="margin:4px 0;"><strong>Solusi Kompleksitas:</strong> ${v(sub.lk1_i_kompleks)}</p>
+            <p style="margin:4px 0;"><strong>Pertanyaan Lanjutan:</strong> ${v(sub.lk1_i_tanya)}</p>
+            <p style="margin:4px 0;"><strong>Peran Diri:</strong> ${v(sub.lk1_i_peran)}</p>
         </div>
     `;
 
@@ -3211,7 +3247,7 @@ async function saveGroupPhotosServer() {
             <h4 style="border-left: 4px solid #0284c7; padding-left: 8px; margin: 20px 0 8px; color: #0f172a;">VI. REFLEKSI PERJALANAN & KELOMPOK</h4>
             <div style="font-size: 13px; line-height: 1.5;">
                 <p><strong>Hal Mengubah Pandangan / Kompleks:</strong><br>${mergeField(['lk1_i_pandang', 'lk1_i_kompleks', 'lk4_kendala'])}</p>
-                <p><strong>Pertanyaan Tersisa & Peran Kelompok:</strong><br>${mergeField(['lk1_i_tanya', 'lk1_i_peran', 'lk4_kerjasama'])}</p>
+                <p><strong>Simpulan & Peran Kelompok:</strong><br>${mergeField(['lk1_i_tanya', 'lk1_i_peran', 'lk4_kerjasama'])}</p>
             </div>
 
             <h4 style="border-left: 4px solid #0284c7; padding-left: 8px; margin: 20px 0 8px; color: #0f172a;">VII. LAMPIRAN DOKUMENTASI LAPANGAN KELOMPOK</h4>
