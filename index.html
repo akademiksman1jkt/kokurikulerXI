@@ -3637,87 +3637,83 @@ async function fetchAdminProgressRealtime() {
     const tbody = document.getElementById('adminProgressTableBody');
     if (!kls) return;
 
-    tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:16px;">Memuat progres & foto Kelas ${kls}...</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:16px;">Memuat progres & data siswa Kelas ${kls}...</td></tr>`;
 
     try {
         const targetUrl = getApiUrl(kls);
-        const res = await fetch(`${targetUrl}?action=getGroupProgressAdmin&kelas=${encodeURIComponent(kls)}`);
-        const data = await res.json();
 
-        if (data.status === "success" && data.progress) {
-            renderAdminProgressTable(data.progress, kls);
-        }
+        // 🟢 AMBIL DATA PROGRES & MASTER SISWA SEKALIGUS
+        const [resProgress, resStudents] = await Promise.all([
+            fetch(`${targetUrl}?action=getGroupProgressAdmin&kelas=${encodeURIComponent(kls)}`).then(r => r.json()).catch(() => null),
+            fetch(`${targetUrl}?action=getSiswa&kelas=${encodeURIComponent(kls)}`).then(r => r.json()).catch(() => null)
+        ]);
+
+        const progressMap = (resProgress && resProgress.status === "success") ? resProgress.progress : {};
+        
+        // Ambil daftar siswa dari response API atau memori global
+        const studentList = (resStudents && (resStudents.siswa || resStudents.data)) || 
+                            (resProgress && (resProgress.students || resProgress.siswa)) || 
+                            window.adminCachedStudents || window.allStudents || [];
+
+        // Kirim progressMap dan studentList ke fungsi render
+        renderAdminProgressTable(progressMap, kls, studentList);
+
     } catch (err) {
         tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; color:red; padding:16px;">Gagal mengambil data progres.</td></tr>`;
     }
 }
 
 // RENDERING DOKUMENTASI & KELENGKAPAN KE TABEL ADMIN
-function renderAdminProgressTable(progressMap, targetKelas) {
+function renderAdminProgressTable(progressMap, targetKelas, studentList = []) {
     const tbody = document.getElementById('adminProgressTableBody');
     if (!tbody) return;
 
     const klsNum = targetKelas.replace(/[^0-9]/g, ''); // "XI-2" -> "2"
     const daftarKelompok = ["Kelompok 0", "Kelompok 1", "Kelompok 2", "Kelompok 3", "Kelompok 4", "Kelompok 5", "Kelompok 6"];
 
-    // 🔍 1. CARI MASTER DATA SISWA (Cek beberapa nama variabel umum)
-    let rawStudents = [];
-    if (typeof adminCachedStudents !== 'undefined' && Array.isArray(adminCachedStudents)) {
-        rawStudents = adminCachedStudents;
-    } else if (typeof allStudents !== 'undefined' && Array.isArray(allStudents)) {
-        rawStudents = allStudents;
-    } else if (typeof masterSiswa !== 'undefined' && Array.isArray(masterSiswa)) {
-        rawStudents = masterSiswa;
-    }
-
-    // Diagnostic di Console Browser (Tekan F12 -> Console untuk melihat ini)
-    console.log("🔍 Master Data Siswa Ditemukan:", rawStudents.length, "siswa");
-
     let html = "";
 
     daftarKelompok.forEach(namaKel => {
         const kelNum = namaKel.replace(/[^0-9]/g, ''); // "Kelompok 4" -> "4"
 
-        // Format ID
-        const keyXI   = `XI${klsNum}-K${kelNum}`; // "XI2-K4"
-        const keyX    = `X${klsNum}-K${kelNum}`;  // "X2-K4"
+        // Format Key ID
+        const keyXI   = `XI${klsNum}-K${kelNum}`;
+        const keyX    = `X${klsNum}-K${kelNum}`;
         const keyDash = `X${klsNum}–K${kelNum}`;
 
-        // Ambil data progres dari LKPD
+        // Ambil data progres pengisian LKPD
         const p = (progressMap && (progressMap[keyXI] || progressMap[keyX] || progressMap[keyDash])) 
                   || { lk1: false, lk2: false, lk3: false, lk4: false, photosCount: 0, contributors: [] };
 
-        // 🟢 2. FILTER ANGGOTA DENGAN LOGIKA FLEKSIBEL
+        // 🟢 1. FILTER SEMUA ANGGOTA KELOMPOK DARI MASTER DATA SISWA
         let allMembers = [];
-        if (rawStudents.length > 0) {
-            allMembers = rawStudents.filter(s => {
-                // Ambil nilai properti (akomodasi huruf besar/kecil)
-                const sKelas = String(s.kelas || s.Kelas || s.KELAS || '').replace(/[^0-9]/g, ''); // "XI-2" -> "2"
-                const sKel   = String(s.kelompok || s.Kelompok || s.groupId || s.group_id || '').toUpperCase();
-                
+        if (Array.isArray(studentList) && studentList.length > 0) {
+            allMembers = studentList.filter(s => {
+                const sKelas = String(s.kelas || s.Kelas || '').replace(/[^0-9]/g, '');
+                const sKel   = String(s.kelompok || s.Kelompok || s.groupId || '').toUpperCase();
+
                 const matchKelas = (sKelas === klsNum);
                 const matchKel   = sKel.includes(`K${kelNum}`) || sKel.includes(`KELOMPOK ${kelNum}`) || sKel === kelNum;
 
                 return matchKelas && matchKel;
-            }).map(s => s.nama || s.Nama || s.NAMA || s.namaSiswa);
+            }).map(s => s.nama || s.Nama || s.namaSiswa);
         }
 
-        // 🟢 3. FORMAT DAFTAR NAMA TAMPILAN
+        // 🟢 2. FORMAT DAFTAR ANGGOTA (SEMUA ANGGOTA + PENANDA AKTIF)
         let contributorsText = "";
 
         if (allMembers.length > 0) {
-            // JIKA MASTER SISWA DITEMUKAN: Tampilkan SEMUA anggota + penanda (Aktif)
             contributorsText = allMembers.map(nama => {
                 const isSubmitted = (p.contributors || []).some(c => c.toLowerCase().trim() === nama.toLowerCase().trim());
                 return isSubmitted 
-                    ? `<strong style="color:#059669;" title="Sudah pernah mengisi">${nama} (Aktif)</strong>` 
+                    ? `<strong style="color:#059669;" title="Sudah pernah mengisi/menyimpan">${nama} (Aktif)</strong>` 
                     : `<span style="color:#64748b;">${nama}</span>`;
             }).join(", ");
         } else if (p.contributors && p.contributors.length > 0) {
-            // FALLBACK: Jika master data siswa belum termuat di memori browser
+            // Fallback jika master data siswa belum termuat
             contributorsText = p.contributors.map(nama => `<strong style="color:#059669;">${nama} (Aktif)</strong>`).join(", ");
         } else {
-            contributorsText = "<em style='color:#94a3b8;'>Belum ada isian</em>";
+            contributorsText = "<em style='color:#94a3b8;'>Belum ada anggota terdaftar</em>";
         }
 
         const pill = (isDone) => isDone ? `<span class="status-pill done">✅</span>` : `<span class="status-pill yet">-</span>`;
@@ -3730,7 +3726,7 @@ function renderAdminProgressTable(progressMap, targetKelas) {
         html += `
             <tr>
                 <td><strong>${keyXI}</strong><br><small style="color:var(--text-muted);">${namaKel === "Kelompok 0" ? "Demo" : namaKel}</small></td>
-                <td style="text-align:left; font-size:12px; max-width:250px; line-height:1.5;">${contributorsText}</td>
+                <td style="text-align:left; font-size:12px; max-width:260px; line-height:1.5;">${contributorsText}</td>
                 <td>${pill(p.lk1)}</td>
                 <td>${pill(p.lk2)}</td>
                 <td>${pill(p.lk3)}</td>
